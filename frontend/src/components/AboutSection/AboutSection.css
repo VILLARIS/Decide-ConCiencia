@@ -1,0 +1,250 @@
+.about {
+  --about-navy: #173f67;
+  --about-blue: #2e5b87;
+  --about-text-muted: #627184;
+  --about-green: #569b3e;
+  --about-tint: #f2f8f3;
+  --about-divider: rgba(23, 63, 103, 0.12);
+
+  position: relative;
+  padding: 34px 0;
+  background-color: var(--about-tint);
+  background-image: var(--about-background-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Velo muy claro: el fondo queda como textura apenas perceptible y la
+   seccion se lee como una franja, no como un bloque con imagen dominante. */
+.about::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: rgba(242, 248, 243, 0.9);
+  pointer-events: none;
+}
+
+.about__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.about__layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  align-items: center;
+  gap: 44px;
+}
+
+/* ---------- Avatar ---------- */
+
+.about__figure {
+  margin: 0;
+  align-self: end;
+  justify-self: start;
+  width: 200px;
+  height: 232px;
+}
+
+.about__avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+/* ---------- Contenido ---------- */
+
+.about__content {
+  min-width: 0;
+}
+
+.about__eyebrow {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--about-blue);
+}
+
+.about__title {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.028em;
+  color: var(--about-navy);
+}
+
+.about__text {
+  max-width: 760px;
+  margin: 12px 0 0;
+  font-size: 16.5px;
+  line-height: 1.58;
+  color: var(--about-text-muted);
+}
+
+/* ---------- Valores ---------- */
+
+.about__values {
+  display: flex;
+  align-items: center;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__value {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-right: 30px;
+}
+
+.about__value + .about__value {
+  padding-left: 30px;
+  border-left: 1px solid var(--about-divider);
+}
+
+.about__value-icon {
+  flex-shrink: 0;
+  color: var(--about-green);
+}
+
+.about__value-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.about__value-title {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--about-navy);
+}
+
+.about__value-text {
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--about-text-muted);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1180px) {
+  .about__layout {
+    grid-template-columns: 178px minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .about__figure {
+    width: 178px;
+    height: 208px;
+  }
+
+  .about__value {
+    padding-right: 26px;
+  }
+
+  .about__value + .about__value {
+    padding-left: 26px;
+  }
+}
+
+/* ---------- Stack ---------- */
+
+@media (max-width: 900px) {
+  .about {
+    padding: 32px 0;
+  }
+
+  .about__container {
+    padding: 0 28px;
+  }
+
+
+  .about__layout {
+    grid-template-columns: 156px minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .about__figure {
+    width: 156px;
+    height: 186px;
+  }
+
+  .about__text {
+    font-size: 16px;
+  }
+
+  .about__value {
+    padding-right: 20px;
+  }
+
+  .about__value + .about__value {
+    padding-left: 20px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 760px) {
+  .about__container {
+    padding: 0 20px;
+  }
+
+  .about__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  /* Contenido arriba, avatar abajo. */
+  .about__figure {
+    order: 2;
+    width: 148px;
+    height: 172px;
+    justify-self: start;
+  }
+
+  .about__avatar {
+    object-position: center bottom;
+  }
+
+  .about__values {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  .about__value {
+    padding-right: 0;
+  }
+
+  .about__value + .about__value {
+    padding-top: 14px;
+    padding-left: 0;
+    border-top: 1px solid var(--about-divider);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 28px 0;
+  }
+
+  .about__figure {
+    height: 148px;
+  }
+}

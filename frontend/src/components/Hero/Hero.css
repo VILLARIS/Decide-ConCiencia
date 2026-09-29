@@ -1,0 +1,666 @@
+.hero {
+  --hero-navy: #173f67;
+  --hero-green: #62b747;
+  --hero-green-hover: #569b3e;
+  --hero-text: #24364a;
+  --hero-text-muted: #627184;
+  --hero-border: #e9eef2;
+  --hero-surface-soft: #eef6fb;
+  --hero-stage-width: min(36vw, 520px);
+  --hero-stage-height: clamp(440px, 39vw, 600px);
+  --hero-stage-inset-right: 26px;
+  --hero-stage-inset-bottom: 0px;
+  --hero-stage-offset: 0px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--hero-stage-height) + 40px);
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image: var(--hero-background-image);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.93) 0%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.4) 72%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  pointer-events: none;
+}
+
+/* Banda deunion: un lavado verde muy tenue en el borde inferior evita el
+   corte seco entre el Hero y la seccion de cursos. */
+.hero::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 88px;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(246, 251, 244, 0.5) 60%,
+    rgba(243, 250, 240, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- Capa 2: formas organicas ---------- */
+
+.hero__decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(23, 63, 103, 0.16) 1.5px,
+    transparent 1.6px
+  );
+  background-repeat: no-repeat;
+  background-size: 176px 132px;
+  background-position: calc(100% - 214px) 46px;
+}
+
+.hero__decor::before,
+.hero__decor::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hero__decor::before {
+  width: 620px;
+  height: 620px;
+  top: -170px;
+  right: -110px;
+  background-color: rgba(23, 63, 103, 0.07);
+}
+
+.hero__decor::after {
+  width: 340px;
+  height: 340px;
+  bottom: -150px;
+  right: 90px;
+  background-color: rgba(98, 183, 71, 0.12);
+}
+
+.hero__container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 44px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 32px 40px;
+}
+
+/* ---------- Badge ---------- */
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 7px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--hero-navy);
+  background-color: var(--hero-surface-soft);
+  border-radius: 999px;
+}
+
+/* ---------- Title ---------- */
+
+.hero__title {
+  margin: 18px 0 0;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-line--primary {
+  font-size: clamp(38px, 4.6vw, 60px);
+  color: var(--hero-navy);
+}
+
+.hero__title-line--accent {
+  font-size: clamp(36px, 4.3vw, 55px);
+  color: var(--hero-green);
+}
+
+/* ---------- Description ---------- */
+
+.hero__text {
+  max-width: 590px;
+  margin: 18px 0 0;
+  font-size: 18px;
+  line-height: 1.62;
+  color: var(--hero-text-muted);
+}
+
+/* ---------- Buttons ---------- */
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 26px;
+}
+
+.hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 46px;
+  padding: 0 24px;
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 11px;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.hero__button--primary {
+  color: #ffffff;
+  background-color: var(--hero-green);
+  border: 1px solid var(--hero-green);
+}
+
+.hero__button--primary:hover {
+  background-color: var(--hero-green-hover);
+  border-color: var(--hero-green-hover);
+  transform: translateY(-1px);
+}
+
+.hero__button--primary svg {
+  transition: transform 180ms ease;
+}
+
+.hero__button--primary:hover svg {
+  transform: translateX(2px);
+}
+
+.hero__button--primary:active {
+  transform: translateY(0);
+}
+
+.hero__button--secondary {
+  color: var(--hero-navy);
+  background-color: #ffffff;
+  border: 1px solid #d9e2ea;
+}
+
+.hero__button--secondary:hover {
+  background-color: #f7fafc;
+  border-color: #c4d2de;
+}
+
+.hero__button:focus-visible {
+  outline: 2px solid var(--hero-green);
+  outline-offset: 3px;
+}
+
+/* ---------- Beneficios ---------- */
+
+.hero__features {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__feature {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding-right: 36px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--hero-text);
+}
+
+.hero__feature:last-child {
+  padding-right: 0;
+}
+
+.hero__feature:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 1px;
+  height: 16px;
+  background-color: rgba(23, 63, 103, 0.14);
+  transform: translateY(-50%);
+}
+
+.hero__feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  color: var(--hero-green);
+  background-color: #eef7ea;
+  border-radius: 50%;
+}
+
+/* ---------- Capa 3: avatar anclado a la base con recorte editorial ---------- */
+
+.hero__spacer {
+  min-height: 1px;
+}
+
+.hero__stage {
+  position: absolute;
+  z-index: 2;
+  right: var(--hero-stage-inset-right);
+  bottom: var(--hero-stage-inset-bottom);
+  width: var(--hero-stage-width);
+  height: var(--hero-stage-height);
+  transform: translateX(var(--hero-stage-offset));
+}
+
+.hero__stage::before,
+.hero__stage::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero__stage::before {
+  width: 100%;
+  aspect-ratio: 1;
+  top: 1%;
+  right: 0;
+  background-color: rgba(23, 63, 103, 0.06);
+}
+
+.hero__stage::after {
+  width: 48%;
+  aspect-ratio: 1;
+  bottom: 4%;
+  right: 30%;
+  background-color: rgba(98, 183, 71, 0.11);
+}
+
+.hero__avatar {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+/* ---------- Capa 4: frase manuscrita ---------- */
+
+.hero__handnote {
+  position: absolute;
+  z-index: 3;
+  top: 2%;
+  left: -6%;
+  margin: 0;
+  pointer-events: none;
+}
+
+.hero__handnote-text {
+  display: block;
+  font-family: 'Caveat', ui-serif, cursive;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--hero-navy);
+  opacity: 0.7;
+  transform: rotate(-3deg);
+}
+
+.hero__handnote-arrow {
+  display: block;
+  width: 78px;
+  height: 26px;
+  margin-top: 5px;
+  margin-left: 6px;
+  color: var(--hero-green);
+  opacity: 0.7;
+}
+
+/* ---------- Capa 4: mini card ---------- */
+
+.hero__card {
+  position: absolute;
+  z-index: 3;
+  bottom: 13%;
+  left: -8%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 176px;
+  padding: 12px 14px;
+  background-color: #ffffff;
+  border: 1px solid var(--hero-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(20, 50, 80, 0.05);
+}
+
+.hero__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+  background-color: var(--hero-green);
+  border-radius: 9px;
+}
+
+.hero__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hero__card-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--hero-navy);
+}
+
+.hero__card-text {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--hero-text-muted);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1180px) {
+  .hero {
+    --hero-stage-width: min(33vw, 420px);
+    --hero-stage-height: clamp(360px, 32vw, 470px);
+    --hero-stage-inset-right: 20px;
+    --hero-stage-inset-bottom: 0px;
+  }
+
+  .hero__decor {
+    background-position: calc(100% - 150px) 40px;
+  }
+
+  .hero__decor::before {
+    width: 520px;
+    height: 520px;
+  }
+
+  .hero__container {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 32px;
+    padding-inline: 28px;
+  }
+
+  .hero__title-line--primary {
+    font-size: clamp(34px, 4.3vw, 48px);
+  }
+
+  .hero__title-line--accent {
+    font-size: clamp(32px, 4.1vw, 46px);
+  }
+
+  .hero__text {
+    font-size: 17.5px;
+  }
+
+  .hero__feature {
+    padding-right: 0;
+    font-size: 14px;
+  }
+
+  .hero__features {
+    gap: 10px 0;
+  }
+
+  .hero__feature:not(:last-child)::after {
+    display: none;
+  }
+
+  .hero__handnote-text {
+    font-size: 17px;
+  }
+
+  .hero__card {
+    width: 166px;
+    padding: 11px 13px;
+  }
+}
+
+/* ---------- Stack ---------- */
+
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .hero::before {
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.93) 0%,
+      rgba(255, 255, 255, 0.76) 55%,
+      rgba(255, 255, 255, 0.46) 100%
+    );
+  }
+
+  .hero__decor {
+    background-position: calc(50% - 88px) 34px;
+  }
+
+  .hero__decor::before {
+    width: 420px;
+    height: 420px;
+    top: -120px;
+    right: -60px;
+  }
+
+  .hero__decor::after {
+    width: 260px;
+    height: 260px;
+    bottom: -110px;
+    right: -40px;
+  }
+
+  .hero::after {
+    height: 64px;
+  }
+
+  .hero__container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+    padding: 44px 28px 8px;
+    text-align: center;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__spacer {
+    display: none;
+  }
+
+  .hero__text {
+    max-width: 620px;
+  }
+
+  .hero__actions,
+  .hero__features {
+    justify-content: center;
+  }
+
+  .hero__features {
+    gap: 12px 0;
+  }
+
+  .hero__feature {
+    padding-right: 26px;
+  }
+
+  .hero__feature:not(:last-child)::after {
+    display: none;
+  }
+
+  .hero__handnote {
+    display: none;
+  }
+
+  .hero__stage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    height: auto;
+    transform: none;
+    padding: 0 28px 32px;
+  }
+
+  .hero__stage::before {
+    width: 76%;
+    top: 0;
+    right: 12%;
+  }
+
+  .hero__stage::after {
+    width: 40%;
+    bottom: 20%;
+    right: 18%;
+  }
+
+  .hero__avatar {
+    width: auto;
+    max-width: 100%;
+    height: min(78vw, 430px);
+  }
+
+  .hero__card {
+    position: static;
+    width: 100%;
+    max-width: 290px;
+    padding: 14px 16px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 640px) {
+  .hero__container {
+    gap: 30px;
+    padding: 36px 20px 8px;
+  }
+
+  .hero__badge {
+    font-size: 12.5px;
+    padding: 6px 13px;
+  }
+
+  .hero__title {
+    margin-top: 18px;
+  }
+
+  .hero__title-line--primary {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+
+  .hero__title-line--accent {
+    font-size: clamp(28px, 7.6vw, 36px);
+  }
+
+  .hero__text {
+    margin-top: 18px;
+    font-size: 16.5px;
+    line-height: 1.6;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    margin-top: 28px;
+  }
+
+  .hero__button {
+    width: 100%;
+  }
+
+  .hero__features {
+    gap: 12px 0;
+    margin-top: 30px;
+  }
+
+  .hero__feature {
+    padding-right: 22px;
+    font-size: 13.5px;
+  }
+
+  .hero__feature:last-child {
+    padding-right: 0;
+  }
+
+  .hero__stage {
+    padding: 0 20px 28px;
+  }
+
+  .hero__avatar {
+    height: min(78vw, 300px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__button,
+  .hero__button svg {
+    transition: none;
+  }
+}
