@@ -1,125 +1,56 @@
-import {
-  ArrowRight,
-  BadgeCheck,
-  BookOpen,
-  GraduationCap,
-  HeartHandshake,
-  Lightbulb,
-} from 'lucide-react'
+﻿import { ArrowRight, Check } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import heroBackground from '../../assets/backgroundHero.png'
-import heroAvatar from '../../assets/avatarHero.png'
+import heroImage from '../../assets/Home/heroImage.png'
 import './Hero.css'
 
-const FEATURES = [
-  { icon: BadgeCheck, label: 'Basado en evidencia' },
-  { icon: Lightbulb, label: 'Aprendizaje práctico' },
-  { icon: HeartHandshake, label: 'Acompañamiento humano' },
+const ATTRIBUTES = [
+  'Basado en evidencia',
+  'Enfoque integral',
+  'Acompañamiento profesional',
 ]
 
 export default function Hero() {
   return (
-    <section
-      className="hero"
-      aria-labelledby="hero-title"
-      style={{ '--hero-background-image': `url(${heroBackground})` }}
-    >
-      <div className="hero__decor" aria-hidden="true" />
-
+    <section className="hero" aria-labelledby="hero-title">
       <div className="hero__container">
         <div className="hero__content">
-          <p className="hero__badge">
-            <GraduationCap size={15} strokeWidth={2} aria-hidden="true" />
-            Plataforma educativa
-          </p>
-
+          <p className="hero__eyebrow">Nutrición · Educación · Bienestar</p>
           <h1 className="hero__title" id="hero-title">
-            <span className="hero__title-line hero__title-line--primary">
-              Decide ConCiencia
-            </span>
-            <span className="hero__title-line hero__title-line--accent">
-              Aprende con Yulia
-            </span>
+            <span className="hero__title-line">Soluciones en nutrición,</span>
+            <span className="hero__title-line hero__title-line--accent">educación y bienestar</span>
           </h1>
-
-          <p className="hero__text">
-            Cursos, capacitación y acompañamiento en nutrición para tomar
-            decisiones informadas, mejorar tu salud y construir hábitos
-            sostenibles.
-          </p>
-
+          <p className="hero__text">Acompañamos a personas, profesionales y organizaciones a tomar decisiones informadas y construir hábitos sostenibles mediante asesoría, capacitación y educación basada en evidencia.</p>
           <div className="hero__actions">
-            <Link className="hero__button hero__button--primary" to="/cursos">
-              <span>Ver cursos</span>
+            <Link className="hero__button hero__button--primary" to="/servicios">
+              <span>Conocer servicios</span>
               <ArrowRight size={18} strokeWidth={2.25} aria-hidden="true" />
             </Link>
-            <Link className="hero__button hero__button--secondary" to="/servicios">
-              Conocer servicios
-            </Link>
+            <Link className="hero__button hero__button--secondary" to="/quienes-somos">Quiénes somos</Link>
           </div>
-
-          <ul className="hero__features">
-            {FEATURES.map(({ icon: Icon, label }) => (
-              <li className="hero__feature" key={label}>
-                <span className="hero__feature-icon">
-                  <Icon size={14} strokeWidth={2.25} aria-hidden="true" />
-                </span>
-                {label}
+          <ul className="hero__attributes">
+            {ATTRIBUTES.map((label) => (
+              <li className="hero__attribute" key={label}>
+                <Check size={14} strokeWidth={2.6} aria-hidden="true" />
+                <span>{label}</span>
               </li>
             ))}
           </ul>
+          <p className="hero__signature">
+            <span className="hero__signature-text">Conocimiento para decisiones reales</span>
+          </p>
         </div>
-
-        <div className="hero__spacer" />
       </div>
-
-      <div className="hero__stage">
+      <figure className="hero__figure">
         <img
-          className="hero__avatar"
-          src={heroAvatar}
-          alt="Yulia preparando un curso de nutrición junto a su laptop y sus libros"
-          width="1122"
-          height="1402"
+          className="hero__image"
+          src={heroImage}
+          alt="Dra. Yulia sentada junto a su laptop y sus libros, con saco blanco y blusa crema, en un entorno claro con plantas"
+          width="1448"
+          height="1086"
+          fetchPriority="high"
+          decoding="async"
         />
-
-        <p className="hero__handnote">
-          <span className="hero__handnote-text">
-            Conocimiento para decisiones reales
-          </span>
-          <svg
-            className="hero__handnote-arrow"
-            width="96"
-            height="32"
-            viewBox="0 0 96 32"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 5c14-3 34 3 52 15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M46 17l9 3-6 7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </p>
-
-        <aside className="hero__card">
-          <span className="hero__card-icon">
-            <BookOpen size={17} strokeWidth={2} aria-hidden="true" />
-          </span>
-          <span className="hero__card-body">
-            <span className="hero__card-title">Aprende a tu ritmo</span>
-            <span className="hero__card-text">Contenido práctico y accesible</span>
-          </span>
-        </aside>
-      </div>
+      </figure>
     </section>
   )
 }

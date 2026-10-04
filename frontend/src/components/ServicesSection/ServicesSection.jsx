@@ -1,31 +1,71 @@
-import { ArrowRight, ClipboardList, GraduationCap, UserRound } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import asesoríaImg from '../../assets/Home/OurServices/Asesoria.png'
+import capacitacionesImg from '../../assets/Home/OurServices/Capacitaciones.png'
+import bienestarImg from '../../assets/Home/OurServices/Bienestar.png'
+import cursosImg from '../../assets/Home/OurServices/Cursos.png'
 import './ServicesSection.css'
+
+/*
+  SERVICIOS
+
+  Composicion editorial asimetrica, no cuatro cards identicas: una tarjeta alta
+  con foto a la izquierda (asesoria, el servicio mas cercano a la persona) y dos
+  tarjetas apiladas a la derecha, mas una tarjeta ancha de cierre para cursos.
+  Asi el bloque tiene ritmo y no se lee como una grilla repetida.
+
+  NOTA DE ASSETS: la foto de la tarjeta grande es avatarHero.png, que el Hero
+  dejo de usar. Las otras tres tarjetas no tienen fotografia propia todavia, asi
+  que usan los fondos anchos que ya tenia el proyecto (backgroundCourses,
+  backgroundAbout, backgroundHero) como textura de marca al 12%: dan material
+  sin inventar imagenes. Cuando existan fotos reales de cada servicio, se
+  sustituyen por un <img> con object-fit: cover, igual que la tarjeta grande.
+*/
 
 const SERVICES = [
   {
-    id: 'asesoria-nutricional',
+    key: 'asesoria',
+    variant: 'lead',
+    category: 'Asesoría',
     title: 'Asesoría nutricional',
     description:
-      'Acompañamiento personalizado para mejorar hábitos, resolver dudas y tomar decisiones más informadas sobre tu alimentación.',
-    tone: 'sage',
-    icon: UserRound,
+      'Orientación cercana para comer con criterio y sostener cambios que duren en el tiempo.',
+    to: '/servicios',
+    image: asesoríaImg,
+    imagePosition: 'center 24%',
   },
   {
-    id: 'capacitaciones',
+    key: 'capacitaciones',
+    variant: 'stack',
+    category: 'Capacitación',
     title: 'Capacitaciones',
     description:
-      'Formación práctica en nutrición para profesionales, equipos e instituciones.',
-    tone: 'sky',
-    icon: GraduationCap,
+      'Formación para equipos y profesionales con herramientas aplicables a su día a día.',
+    to: '/servicios',
+    image: capacitacionesImg,
+    imagePosition: 'center 30%',
   },
   {
-    id: 'programas-y-talleres',
-    title: 'Programas y talleres',
+    key: 'programas',
+    variant: 'stack',
+    category: 'Bienestar',
+    title: 'Programas de bienestar',
     description:
-      'Experiencias educativas para grupos, empresas y comunidades que buscan aprender y aplicar hábitos saludables.',
-    tone: 'plain',
-    icon: ClipboardList,
+      'Acompañamiento sostenido para organizar hábitos de alimentación y cuidado personal.',
+    to: '/servicios',
+    image: bienestarImg,
+    imagePosition: 'center 26%',
+  },
+  {
+    key: 'cursos',
+    variant: 'wide',
+    category: 'Educación',
+    title: 'Cursos y formación',
+    description:
+      'Contenido para aprender a tu ritmo, desde la plataforma de cursos de Yumibiotic.',
+    to: '/cursos',
+    image: cursosImg,
+    imagePosition: 'center 22%',
   },
 ]
 
@@ -33,46 +73,51 @@ export default function ServicesSection() {
   return (
     <section className="services" id="servicios" aria-labelledby="services-title">
       <div className="services__container">
-        <header className="services__header">
-          <p className="services__eyebrow">Servicios</p>
-
+        <header className="services__head">
           <h2 className="services__title" id="services-title">
-            Acompañamiento más allá de los cursos
+            Nuestros servicios
           </h2>
-
           <p className="services__intro">
-            Asesorías, capacitaciones y programas pensados para ayudarte a aplicar el
-            conocimiento de forma práctica y cercana.
+            Soluciones pensadas para acompañar distintas necesidades en nutrición,
+            educación y bienestar.
           </p>
         </header>
 
-        <ul className="services__grid">
-          {SERVICES.map(({ id, title, description, tone, icon: Icon }) => (
-            <li className={`service-block service-block--${tone}`} key={id}>
-              <span className="service-block__icon">
-                <Icon size={24} strokeWidth={1.7} aria-hidden="true" />
-              </span>
+        <div className="services__grid">
+          {SERVICES.map((service) => (
+            <article
+              className={`services__card services__card--${service.variant}`}
+              key={service.key}
+              style={
+                service.imagePosition
+                  ? { '--card-image-position': service.imagePosition }
+                  : undefined
+              }
+            >
+              {service.image && (
+                <figure className="services__media">
+                  <img
+                    className="services__image"
+                    src={service.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              )}
 
-              <h3 className="service-block__title">{title}</h3>
-              <p className="service-block__text">{description}</p>
+              <div className="services__body">
+                <p className="services__category">{service.category}</p>
+                <h3 className="services__card-title">{service.title}</h3>
+                <p className="services__description">{service.description}</p>
 
-              <Link
-                className="service-block__link"
-                to={`/servicios/${id}`}
-                aria-label={`Conocer más sobre ${title}`}
-              >
-                Conocer más
-                <ArrowRight size={15} strokeWidth={2.25} aria-hidden="true" />
-              </Link>
-            </li>
+                <Link className="services__link" to={service.to}>
+                  <span>Conocer más</span>
+                  <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
           ))}
-        </ul>
-
-        <div className="services__footer">
-          <Link className="services__all" to="/servicios">
-            Ver todos los servicios
-            <ArrowRight size={16} strokeWidth={2.25} aria-hidden="true" />
-          </Link>
         </div>
       </div>
     </section>
