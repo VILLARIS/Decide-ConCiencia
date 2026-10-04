@@ -1,0 +1,214 @@
+/* =========================================================
+   Base comun del area de estudiante (Mi aprendizaje, Mi perfil,
+   Mis certificados).
+
+   Solo define el lienzo y la retícula. Cada pantalla aporta su propia
+   jerarquía visual encima.
+   ========================================================= */
+
+.student {
+  --student-navy: #173f67;
+  --student-blue: #2e5b87;
+  --student-blue-soft: #eaf1f8;
+  --student-green: #62b747;
+  --student-green-soft: #eef7e9;
+  --student-ink: #24364a;
+  --student-muted: #627184;
+  --student-faint: #8794a3;
+  --student-border: #e6ecf2;
+  --student-line: #eef2f6;
+  --student-surface: #ffffff;
+  --student-soft: #f7fafc;
+  --student-sand: #fdf8f1;
+  --student-amber: #a9782c;
+  --student-shadow-sm: 0 1px 2px rgba(23, 63, 103, 0.04);
+  --student-shadow: 0 8px 26px rgba(23, 63, 103, 0.06);
+  --student-shadow-lg: 0 18px 44px rgba(23, 63, 103, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: var(--student-ink);
+  background-color: var(--student-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.student__main {
+  flex: 1 0 auto;
+}
+
+.student__container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 72px;
+}
+
+/* =========================================================
+   CABECERA COMUN DE PANTALLA
+   Banda superior muy clara con formas sutiles y un pequeño motivo
+   académico. Sin ilustraciones grandes.
+   ========================================================= */
+
+.page-head {
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 36px;
+  padding: 40px 40px 34px;
+  overflow: hidden;
+  background-color: var(--student-soft);
+  border: 1px solid var(--student-line);
+  border-radius: 20px;
+}
+
+.page-head::before,
+.page-head::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.page-head::before {
+  top: -120px;
+  right: -60px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(98, 183, 71, 0.18) 0%,
+    rgba(98, 183, 71, 0) 68%
+  );
+}
+
+.page-head::after {
+  bottom: -140px;
+  left: -40px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle at 60% 40%,
+    rgba(46, 91, 135, 0.14) 0%,
+    rgba(46, 91, 135, 0) 70%
+  );
+}
+
+.page-head__inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 32px;
+}
+
+.page-head__text {
+  min-width: 0;
+}
+
+.page-head__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 14px 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+  border-radius: 999px;
+}
+
+.page-head__eyebrow svg {
+  flex-shrink: 0;
+  color: var(--student-green);
+}
+
+.page-head__title {
+  margin: 16px 0 0;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: var(--student-navy);
+}
+
+.page-head__title-accent {
+  color: var(--student-green);
+}
+
+.page-head__lead {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--student-muted);
+}
+
+.page-head__motif {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  color: var(--student-blue);
+  background-color: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--student-line);
+  border-radius: 24px;
+  box-shadow: var(--student-shadow-sm);
+}
+
+.page-head__motif svg {
+  width: 42px;
+  height: 42px;
+  stroke-width: 1.4;
+}
+
+@media (max-width: 860px) {
+  .student__container {
+    padding: 0 24px 60px;
+  }
+
+  .page-head {
+    margin-bottom: 28px;
+    padding: 30px 26px 28px;
+    border-radius: 18px;
+  }
+
+  .page-head__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .page-head__motif {
+    width: 66px;
+    height: 66px;
+    border-radius: 18px;
+  }
+
+  .page-head__motif svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 560px) {
+  .student__container {
+    padding: 0 18px 52px;
+  }
+
+  .page-head {
+    padding: 26px 20px 24px;
+  }
+
+  .page-head__title {
+    margin-top: 14px;
+  }
+
+  .page-head__lead {
+    font-size: 14.5px;
+  }
+}

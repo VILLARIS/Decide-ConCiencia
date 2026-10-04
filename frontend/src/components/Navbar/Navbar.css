@@ -1,34 +1,74 @@
+/*
+  NAVBAR DE YUMIBIOTIC
+
+  Blanco, ancho completo, 80px de alto y una linea inferior muy sutil: nada de
+  sombras fuertes. Rejilla de tres columnas para que los enlaces queden de verdad
+  centrados (logo | enlaces | CTA) en lugar de empujados por un margen auto.
+
+  Altura de 80px en escritorio y 72px en movil. La marca va en
+  src/assets/Navbar/Logo.png.
+*/
+
 .navbar {
-  --yulia-navy: #173f67;
-  --yulia-green: #62b747;
-  --yulia-green-hover: #569b3e;
-  --yulia-link: #24364a;
-  --yulia-border: #e9eef2;
-  --yulia-surface: #ffffff;
-  --yulia-surface-soft: #f7fafc;
-  --yulia-height: 80px;
+  /* Verde y azul de Yumibiotic. */
+  --yumibiotic-green: #62b747;
+  --yumibiotic-green-hover: #569b3e;
+  --yumibiotic-green-active: #4f8f39;
+  --yumibiotic-navy: #173f67;
+  --yumibiotic-link: #24364a;
+  --yumibiotic-muted: #7f8ea0;
+  --yumibiotic-border: #e9eef2;
+  --yumibiotic-border-strong: #d5dfe8;
+  --yumibiotic-surface: #ffffff;
+  --yumibiotic-surface-soft: #f7fafc;
+  --yumibiotic-danger: #9b3b32;
+
+  --navbar-height: 80px;
+
+  /*
+    Recorte del logo.
+
+    Logo.png son 1536x1024, pero el dibujo solo ocupa la franja central
+    (x 224..1296, y 402..582). Mostrar el archivo entero a 80px de alto deja el
+    logo visible de apenas 14px y ocupa 240px de ancho en blanco.
+
+    Por eso el <img> se escala y se desplaza dentro de un marco de tamano fijo
+    que recorta el margen. Se escala por igual en ambos ejes, asi que la
+    proporcion 1073x181 (~5.9:1) se respeta: el logo nunca se deforma.
+    Solo cambia el cropsize, no el archivo.
+  */
+  --brand-logo-box-w: 190px;
+  --brand-logo-box-h: 32px;
+  --brand-logo-img-w: 272px;
+  --brand-logo-img-h: 181px;
+  --brand-logo-x: -40px;
+  --brand-logo-y: -71px;
 
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
-  background-color: var(--yulia-surface);
-  border-bottom: 1px solid var(--yulia-border);
+  background-color: var(--yumibiotic-surface);
+  border-bottom: 1px solid var(--yumibiotic-border);
   transition: box-shadow 220ms ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Sombra minima al hacer scroll: separa del contenido sin recargar. */
 .navbar--scrolled {
   box-shadow: 0 8px 24px rgba(20, 50, 80, 0.05);
 }
 
 .navbar__inner {
-  display: flex;
+  display: grid;
+  /* 1fr | auto | 1fr -> los enlaces del centro quedan centrados de verdad. */
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 24px;
   width: 100%;
   max-width: 1280px;
-  height: var(--yulia-height);
+  height: var(--navbar-height);
   margin: 0 auto;
   padding-inline: 32px;
 }
@@ -39,7 +79,7 @@
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  justify-content: flex-start;
+  justify-self: start;
   text-decoration: none;
   cursor: pointer;
   border-radius: 8px;
@@ -51,41 +91,37 @@
 }
 
 .navbar-logo:focus-visible {
-  outline: 2px solid var(--yulia-green);
+  outline: 2px solid var(--yumibiotic-green);
   outline-offset: 4px;
 }
 
-.navbar-logo__img {
+/* Marco del recorte: es lo unico que ocupa sitio en la rejilla. */
+.navbar-logo__frame {
+  position: relative;
   display: block;
-  width: auto;
-  height: auto;
-  max-width: 198px;
-  max-height: 54px;
-  object-fit: contain;
-  object-position: left center;
+  width: var(--brand-logo-box-w);
+  height: var(--brand-logo-box-h);
+  overflow: hidden;
 }
 
-.navbar-logo__text {
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  line-height: 1;
-  color: var(--yulia-navy);
+.navbar-logo__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: var(--brand-logo-img-w);
+  height: var(--brand-logo-img-h);
+  max-width: none;
+  transform: translate(var(--brand-logo-x), var(--brand-logo-y));
 }
 
-/* ---------- Links + CTA ---------- */
-
-.navbar__actions {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  margin-left: auto;
-}
+/* ---------- Enlaces ---------- */
 
 .navbar__links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  justify-content: center;
+  gap: 30px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -100,16 +136,18 @@
   display: inline-flex;
   align-items: center;
   padding: 9px 0 17px;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.005em;
-  color: var(--yulia-link);
+  color: var(--yumibiotic-link);
   text-decoration: none;
   cursor: pointer;
   transition: color 180ms ease;
 }
 
+/* Subrayado verde: crece desde el centro en hover y queda fijo si es el
+   enlace activo. Sin fondo ni pastilla. */
 .navbar__link::after {
   content: '';
   position: absolute;
@@ -118,7 +156,7 @@
   width: 100%;
   height: 2px;
   border-radius: 2px;
-  background-color: var(--yulia-green);
+  background-color: var(--yumibiotic-green);
   transform: translateX(-50%) scaleX(0.8);
   opacity: 0;
   transition:
@@ -127,7 +165,7 @@
 }
 
 .navbar__link:hover {
-  color: var(--yulia-green-hover);
+  color: var(--yumibiotic-green-hover);
 }
 
 .navbar__link:hover::after {
@@ -137,7 +175,7 @@
 
 .navbar__link--active,
 .navbar__link--active:hover {
-  color: var(--yulia-navy);
+  color: var(--yumibiotic-navy);
   font-weight: 600;
 }
 
@@ -151,30 +189,168 @@
 .navbar__cta:focus-visible,
 .navbar__panel-link:focus-visible,
 .navbar__panel-cta:focus-visible,
+.navbar__panel-logout:focus-visible,
 .navbar__toggle:focus-visible {
-  outline: 2px solid var(--yulia-green);
+  outline: 2px solid var(--yumibiotic-green);
   outline-offset: 3px;
 }
 
-/* ---------- CTA ---------- */
+/* ---------- Cuenta con sesion ---------- */
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+}
+
+.navbar__account {
+  position: relative;
+}
+
+.navbar__account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 14px 0 6px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--yumibiotic-link);
+  background-color: transparent;
+  border: 1px solid var(--yumibiotic-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.navbar__account-trigger:hover {
+  background-color: var(--yumibiotic-surface-soft);
+  border-color: var(--yumibiotic-border-strong);
+}
+
+.navbar__account-trigger:focus-visible {
+  outline: 2px solid var(--yumibiotic-green);
+  outline-offset: 3px;
+}
+
+/* Inicial del nombre en lugar de foto: no hay imagenes de usuario reales. */
+.navbar__account-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--yumibiotic-navy);
+  border-radius: 50%;
+}
+
+.navbar__account-name {
+  white-space: nowrap;
+}
+
+.navbar__account-chevron {
+  color: var(--yumibiotic-muted);
+  transition: transform 180ms ease;
+}
+
+.navbar__account-chevron--open {
+  transform: rotate(180deg);
+}
+
+.navbar__account-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  min-width: 218px;
+  padding: 6px;
+  background-color: var(--yumibiotic-surface);
+  border: 1px solid var(--yumibiotic-border);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(20, 50, 80, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+.navbar__account-menu--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.navbar__account-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--yumibiotic-link);
+  text-align: left;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.navbar__account-item svg {
+  flex-shrink: 0;
+}
+
+.navbar__account-item:hover {
+  background-color: var(--yumibiotic-surface-soft);
+}
+
+.navbar__account-item:focus-visible {
+  outline: 2px solid var(--yumibiotic-green);
+  outline-offset: -2px;
+}
+
+.navbar__account-item--danger {
+  color: var(--yumibiotic-danger);
+}
+
+.navbar__account-separator {
+  display: block;
+  height: 1px;
+  margin: 6px 4px;
+  background-color: var(--yumibiotic-border);
+}
+
+/* ---------- CTA "Comenzar" ---------- */
 
 .navbar__cta,
 .navbar__panel-cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  height: 46px;
+  height: 44px;
   padding: 0 22px;
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.005em;
   color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
-  background-color: var(--yulia-green);
+  background-color: var(--yumibiotic-green);
   border: none;
-  border-radius: 11px;
+  border-radius: 10px;
   cursor: pointer;
   transition:
     background-color 180ms ease,
@@ -189,22 +365,23 @@
 
 .navbar__cta:hover,
 .navbar__panel-cta:hover {
-  background-color: var(--yulia-green-hover);
+  background-color: var(--yumibiotic-green-hover);
   transform: translateY(-1px);
 }
 
+/* La flecha acompaña al hover: refuerza que el boton lleva a otro sitio. */
 .navbar__cta:hover svg,
 .navbar__panel-cta:hover svg {
-  transform: translateX(2px);
+  transform: translateX(3px);
 }
 
 .navbar__cta:active,
 .navbar__panel-cta:active {
-  background-color: #4f8f39;
+  background-color: var(--yumibiotic-green-active);
   transform: translateY(0);
 }
 
-/* ---------- Mobile toggle ---------- */
+/* ---------- Boton de menu (movil) ---------- */
 
 .navbar__toggle {
   display: none;
@@ -214,29 +391,31 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  color: var(--yulia-navy);
+  color: var(--yumibiotic-navy);
   background-color: transparent;
-  border: 1px solid var(--yulia-border);
-  border-radius: 11px;
+  border: 1px solid var(--yumibiotic-border);
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 180ms ease;
 }
 
 .navbar__toggle:hover {
-  background-color: var(--yulia-surface-soft);
+  background-color: var(--yumibiotic-surface-soft);
 }
 
-/* ---------- Mobile panel ---------- */
+/* ---------- Panel desplegable (movil) ---------- */
 
 .navbar__panel {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
+  /* width:100% + padding: con border-box global no hay scroll horizontal. */
   width: 100%;
+  max-width: 100%;
   padding: 10px 32px 26px;
-  background-color: var(--yulia-surface);
-  border-bottom: 1px solid var(--yulia-border);
+  background-color: var(--yumibiotic-surface);
+  border-bottom: 1px solid var(--yumibiotic-border);
   box-shadow: 0 8px 24px rgba(20, 50, 80, 0.05);
 }
 
@@ -254,46 +433,101 @@
   padding: 13px 0;
   font-size: 16px;
   font-weight: 500;
-  color: var(--yulia-link);
+  color: var(--yumibiotic-link);
   text-decoration: none;
-  border-bottom: 1px solid var(--yulia-border);
+  border-bottom: 1px solid var(--yumibiotic-border);
   cursor: pointer;
   transition: color 180ms ease;
 }
 
 .navbar__panel-link:hover {
-  color: var(--yulia-green-hover);
+  color: var(--yumibiotic-green-hover);
 }
 
 .navbar__panel-link--active,
 .navbar__panel-link--active:hover {
-  color: var(--yulia-navy);
+  color: var(--yumibiotic-navy);
   font-weight: 600;
 }
 
+/* Accesos de la cuenta dentro del panel: sin doble linea, van tras un separador. */
+.navbar__panel-account {
+  padding-top: 4px;
+  border-top: 1px solid var(--yumibiotic-border);
+}
+
+.navbar__panel-link--account {
+  border-bottom: 0;
+  padding: 11px 0;
+}
+
+.navbar__panel-user {
+  margin: 10px 0 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--yumibiotic-link);
+  background-color: var(--yumibiotic-surface-soft);
+  border-radius: 8px;
+}
+
+.navbar__panel-logout {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 11px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--yumibiotic-danger);
+  text-align: left;
+  background-color: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.navbar__panel-logout:hover {
+  background-color: var(--yumibiotic-surface-soft);
+}
+
 .navbar__panel-cta {
-  justify-content: center;
   width: 100%;
 }
 
 /* ---------- Responsive ---------- */
 
+/* Tablet: menos aire entre enlaces, el logo baja un poco de tamano. */
 @media (max-width: 1180px) {
-  .navbar__links {
-    gap: 24px;
+  .navbar__inner {
+    gap: 16px;
   }
 
-  .navbar__actions {
-    gap: 20px;
+  .navbar__links {
+    gap: 22px;
+  }
+
+  .navbar-logo__frame {
+    width: 161px;
+    height: 27px;
   }
 
   .navbar-logo__img {
-    max-width: 150px;
-    max-height: 48px;
+    width: 231px;
+    height: 154px;
+    transform: translate(-34px, -60px);
   }
 }
 
+/* Por debajo de 1024px los enlaces no caben con el CTA: pasa a menu. */
 @media (max-width: 1024px) {
+  .navbar__inner {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar__links,
   .navbar__actions {
     display: none;
   }
@@ -322,14 +556,24 @@
 }
 
 @media (max-width: 640px) {
+  .navbar {
+    --navbar-height: 72px;
+  }
+
   .navbar__inner {
-    height: 72px;
+    height: var(--navbar-height);
     padding-inline: 20px;
   }
 
+  .navbar-logo__frame {
+    width: 148px;
+    height: 25px;
+  }
+
   .navbar-logo__img {
-    max-width: 132px;
-    max-height: 42px;
+    width: 212px;
+    height: 141px;
+    transform: translate(-31px, -56px);
   }
 
   .navbar__panel {
@@ -347,6 +591,7 @@
   .navbar__panel-cta,
   .navbar__panel-cta svg,
   .navbar__panel-link,
+  .navbar__panel-logout,
   .navbar__toggle,
   .navbar__panel {
     transition: none;

@@ -1,4 +1,5 @@
 import { ArrowRight, ClipboardList, GraduationCap, UserRound } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import './ServicesSection.css'
 
 const SERVICES = [
@@ -55,23 +56,23 @@ export default function ServicesSection() {
               <h3 className="service-block__title">{title}</h3>
               <p className="service-block__text">{description}</p>
 
-              <a
+              <Link
                 className="service-block__link"
-                href={`/servicios/${id}`}
+                to={`/servicios/${id}`}
                 aria-label={`Conocer más sobre ${title}`}
               >
                 Conocer más
                 <ArrowRight size={15} strokeWidth={2.25} aria-hidden="true" />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="services__footer">
-          <a className="services__all" href="/servicios">
+          <Link className="services__all" to="/servicios">
             Ver todos los servicios
             <ArrowRight size={16} strokeWidth={2.25} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

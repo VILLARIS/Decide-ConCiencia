@@ -6,6 +6,7 @@ import {
   HeartHandshake,
   Lightbulb,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import heroBackground from '../../assets/backgroundHero.png'
 import heroAvatar from '../../assets/avatarHero.png'
 import './Hero.css'
@@ -48,16 +49,13 @@ export default function Hero() {
           </p>
 
           <div className="hero__actions">
-            <a className="hero__button hero__button--primary" href="/cursos">
+            <Link className="hero__button hero__button--primary" to="/cursos">
               <span>Ver cursos</span>
               <ArrowRight size={18} strokeWidth={2.25} aria-hidden="true" />
-            </a>
-            <a
-              className="hero__button hero__button--secondary"
-              href="/servicios"
-            >
+            </Link>
+            <Link className="hero__button hero__button--secondary" to="/servicios">
               Conocer servicios
-            </a>
+            </Link>
           </div>
 
           <ul className="hero__features">

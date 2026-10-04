@@ -1,0 +1,670 @@
+/* =========================================================
+   CHECKOUT — una compra = un curso (modo demostracion)
+
+   Reutiliza los tokens de .student (StudentShell.css) para que el flujo se
+   lea como parte de Yulia: mucho blanco, azul institucional y verde como
+   acento. Nada de tarjetas gigantes ni sombreado pesado.
+   ========================================================= */
+
+.checkout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 372px;
+  gap: 40px;
+  align-items: start;
+  padding-top: 4px;
+}
+
+.checkout__main {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+/* ---------- Volver al curso ---------- */
+
+.checkout-back {
+  margin-bottom: 18px;
+}
+
+.checkout-back__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--student-muted);
+  text-decoration: none;
+}
+
+.checkout-back__link:hover {
+  color: var(--student-navy);
+}
+
+.checkout-back__link:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Titulo ---------- */
+
+.checkout__head {
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--student-line);
+}
+
+.checkout__title {
+  margin: 0;
+  font-size: clamp(25px, 2.8vw, 32px);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: var(--student-navy);
+}
+
+.checkout__lead {
+  margin: 10px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--student-muted);
+}
+
+/* ---------- Bloques con divisores, sin cajas ---------- */
+
+.checkout-block__title {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--student-navy);
+}
+
+.checkout-block__note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--student-faint);
+}
+
+/* Datos del estudiante */
+.checkout-student {
+  display: grid;
+  gap: 0;
+  margin: 14px 0 0;
+}
+
+.checkout-student__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--student-line);
+}
+
+.checkout-student__row:last-child {
+  border-bottom: 0;
+}
+
+.checkout-student__row dt {
+  font-size: 13px;
+  color: var(--student-muted);
+}
+
+.checkout-student__row dd {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--student-navy);
+}
+
+/* ---------- Metodo de pago ---------- */
+
+.checkout-methods {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.checkout-method {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 14px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.checkout-method:hover {
+  border-color: #d8e2ea;
+}
+
+.checkout-method--selected {
+  background-color: #f7faf8;
+  border-color: #b9dcab;
+  box-shadow: 0 0 0 1px #b9dcab;
+}
+
+.checkout-method__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.checkout-method__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+  border-radius: 12px;
+}
+
+.checkout-method--selected .checkout-method__icon {
+  color: #ffffff;
+  background-color: var(--student-green);
+}
+
+.checkout-method__copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.checkout-method__label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--student-navy);
+}
+
+.checkout-method__description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--student-muted);
+}
+
+/* Foco visible en la etiqueta entera, no solo en el input escondido. */
+.checkout-method:focus-within {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+}
+
+/* ---------- Controles de demo ---------- */
+
+.checkout-demo {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background-color: var(--student-sand);
+  border: 1px dashed #ecdcc4;
+  border-radius: 14px;
+}
+
+.checkout-demo__summary {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--student-amber);
+  cursor: pointer;
+}
+
+.checkout-demo__summary:focus-visible {
+  outline: 2px solid var(--student-amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.checkout-demo__text {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #6f5f45;
+}
+
+.checkout-demo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* ---------- Confianza ---------- */
+
+.checkout__trust {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--student-faint);
+}
+
+.checkout__trust svg {
+  flex-shrink: 0;
+  color: var(--student-green);
+}
+
+/* =========================================================
+   RESUMEN DEL PEDIDO
+   ========================================================= */
+
+.checkout__summary {
+  position: sticky;
+  top: 104px;
+  padding: 26px 26px 28px;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 20px;
+  box-shadow: var(--student-shadow);
+}
+
+.checkout-summary__title {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--student-navy);
+}
+
+.checkout-summary__course {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--student-line);
+}
+
+/* Miniatura del curso: no es una foto, es una pieza de marca. */
+.checkout__thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 66px;
+  height: 66px;
+  overflow: hidden;
+  color: #ffffff;
+  background: linear-gradient(140deg, #2e5b87 0%, #1d4a76 100%);
+  border-radius: 16px;
+}
+
+.checkout__thumb-label {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  right: 8px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.82);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.checkout-summary__course-title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--student-navy);
+}
+
+.checkout-summary__course-meta {
+  margin: 5px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--student-muted);
+}
+
+.checkout-summary__rows {
+  display: grid;
+  gap: 0;
+  margin: 18px 0 0;
+}
+
+.checkout-summary__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  font-size: 14px;
+  color: var(--student-muted);
+}
+
+.checkout-summary__row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--student-ink);
+}
+
+.checkout-summary__row--discount dd {
+  color: #3f8a2c;
+}
+
+.checkout-summary__row--total {
+  margin-top: 8px;
+  padding-top: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--student-navy);
+  border-top: 1px solid var(--student-line);
+}
+
+.checkout-summary__row--total dd {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.checkout-summary__note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--student-faint);
+}
+
+/* ---------- Botones ---------- */
+
+.checkout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 48px;
+  padding: 0 22px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.checkout-btn--primary {
+  color: #ffffff;
+  background-color: var(--student-blue);
+  border: 1px solid var(--student-blue);
+  box-shadow: 0 8px 18px rgba(46, 91, 135, 0.18);
+}
+
+.checkout-btn--primary:hover:not(:disabled) {
+  background-color: #26496e;
+}
+
+.checkout-btn--ghost {
+  color: var(--student-navy);
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+}
+
+.checkout-btn--ghost:hover:not(:disabled) {
+  background-color: var(--student-soft);
+}
+
+.checkout-btn:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+}
+
+.checkout-btn:disabled {
+  opacity: 0.66;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* El CTA de pago manda visualmente en la columna. */
+.checkout-btn--pay {
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  font-size: 15.5px;
+  box-shadow: 0 10px 22px rgba(46, 91, 135, 0.22);
+}
+
+.checkout-btn__spinner {
+  animation: checkout-spin 900ms linear infinite;
+}
+
+@keyframes checkout-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Microcopy de confianza */
+.checkout__microcopy {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 16px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--student-line);
+}
+
+.checkout__microcopy li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--student-muted);
+}
+
+.checkout__microcopy svg {
+  flex-shrink: 0;
+  color: var(--student-green);
+}
+
+/* =========================================================
+   ESTADOS DE RESULTADO
+   ========================================================= */
+
+/* =========================================================
+   PAGINA DE CONFIRMACION
+
+   Estados finales (aprobado / rechazado / cancelado) y "curso no
+   encontrado". Antes eran un card pegado a la izquierda, con el resto
+   del ancho vacio. Ahora el bloque va centrado y con aire arriba y
+   abajo: se lee como una pagina de confirmacion completa.
+   ========================================================= */
+
+.checkout-centered-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(32px, 7vh, 64px) 0 clamp(28px, 6vh, 56px);
+}
+
+.checkout-result {
+  padding: 0;
+  text-align: center;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.checkout-result__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  color: #ffffff;
+  background: linear-gradient(140deg, #62b747 0%, #3f8a2c 100%);
+  border-radius: 50%;
+  box-shadow: 0 12px 26px rgba(63, 138, 44, 0.22);
+}
+
+.checkout-result--failed .checkout-result__icon {
+  background: linear-gradient(140deg, #c98a6a 0%, #a9553c 100%);
+  box-shadow: 0 12px 26px rgba(169, 85, 60, 0.2);
+}
+
+.checkout-result__title {
+  margin: 22px 0 0;
+  font-size: clamp(23px, 2.6vw, 29px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--student-navy);
+}
+
+.checkout-result__text {
+  margin: 12px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--student-muted);
+}
+
+.checkout-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+/* ---------- Curso inexistente ---------- */
+
+.checkout-empty {
+  max-width: 560px;
+  padding: 46px 40px;
+  text-align: center;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 22px;
+  box-shadow: var(--student-shadow-sm);
+}
+
+.checkout-empty__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+  border-radius: 50%;
+}
+
+.checkout-empty__title {
+  margin: 20px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.checkout-empty__text {
+  margin: 10px 0 24px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--student-muted);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .checkout {
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Una sola columna y el resumen sube: el CTA de pago queda a la vista. */
+  .checkout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .checkout__summary {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 860px) {
+  .checkout {
+    gap: 24px;
+  }
+
+  .checkout__summary {
+    padding: 22px 20px 24px;
+    border-radius: 18px;
+  }
+
+  /* La confirmacion ya no es un card: solo se ajusta el aire. */
+  .checkout-centered-page {
+    padding: 36px 0 32px;
+  }
+
+  .checkout-empty {
+    padding: 36px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .checkout__head {
+    padding-bottom: 18px;
+  }
+
+  .checkout-student__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .checkout-method {
+    padding: 14px;
+  }
+
+  .checkout-demo__actions .checkout-btn,
+  .checkout-result__actions .checkout-btn {
+    flex: 1 1 100%;
+  }
+
+  .checkout-result__actions {
+    flex-direction: column;
+  }
+
+  /* Nada de scroll horizontal en movil */
+  .checkout__summary,
+  .checkout-centered-page,
+  .checkout-empty,
+  .checkout-demo {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout-btn,
+  .checkout-method {
+    transition: none;
+  }
+
+  .checkout-btn__spinner {
+    animation: none;
+  }
+}

@@ -1,4 +1,5 @@
 import { ArrowRight, Leaf } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import './FinalCta.css'
 
 export default function FinalCta() {
@@ -20,10 +21,10 @@ export default function FinalCta() {
             </p>
           </div>
 
-          <a className="final-cta__button" href="/cursos">
+          <Link className="final-cta__button" to="/cursos">
             Explorar cursos
             <ArrowRight size={16} strokeWidth={2.25} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

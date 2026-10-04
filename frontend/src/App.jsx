@@ -1,4 +1,3 @@
-import logo from './assets/logo.jpeg'
 import AboutSection from './components/AboutSection/AboutSection.jsx'
 import FeaturedCourses from './components/FeaturedCourses/FeaturedCourses.jsx'
 import FinalCta from './components/FinalCta/FinalCta.jsx'
@@ -10,7 +9,7 @@ import ServicesSection from './components/ServicesSection/ServicesSection.jsx'
 function App() {
   return (
     <>
-      <Navbar logo={logo} />
+      <Navbar />
       <main>
         <Hero />
         <FeaturedCourses />
@@ -18,7 +17,7 @@ function App() {
         <AboutSection />
         <FinalCta />
       </main>
-      <Footer logo={logo} />
+      <Footer />
     </>
   )
 }

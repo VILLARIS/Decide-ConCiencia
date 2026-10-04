@@ -1,0 +1,266 @@
+/* =========================================================
+   Hero de la pagina Cursos
+   Composicion unica: el asset `backgroundCourses` ya contiene el fondo
+   claro, la vegetacion, el escritorio, los libros, la planta y la laptop.
+   No hay imagen superpuesta: el texto vive en la zona izquierda que el
+   propio asset deja limpia y la escena se resuelve a la derecha.
+   Sistema de color del Home: navy #173f67, azul #2e5b87, verde #62b747.
+   ========================================================= */
+
+.courses-hero {
+  --courses-hero-navy: #173f67;
+  --courses-hero-blue: #2e5b87;
+  --courses-hero-green: #62b747;
+  --courses-hero-text: #24364a;
+  --courses-hero-text-muted: #5c6b7d;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #f4f9f6;
+}
+
+/* El asset es 2.334:1 (1916x821). A 440px de alto y ~1440px de ancho, cover
+   deja la imagen a 617px: sobran ~177px, que se recortan TODOS por arriba
+   con object-position: center bottom. Mesa, base de laptop, libros y planta
+   quedan completos; solo se pierde vegetacion desenfocada. El degradado de
+   la laptop nunca se recorta porque el recorte es unico y vertical. */
+.courses-hero__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+/* Degradado muy sutil desde la izquierda: solo levanta el brillo bajo el
+   texto para sostener el contraste. Se desvanece antes de la laptop para no
+   velar la escena de la derecha. */
+.courses-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.72) 38%,
+    rgba(255, 255, 255, 0.12) 68%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.courses-hero__container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  min-height: 440px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+
+/* ---------- Bloque de texto (solo zona izquierda) ---------- */
+
+.courses-hero__content {
+  max-width: 620px;
+}
+
+/* ---------- Eyebrow ---------- */
+
+.courses-hero__eyebrow {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--courses-hero-blue);
+}
+
+/* ---------- Titulo ---------- */
+
+.courses-hero__title {
+  margin: 0;
+  font-size: clamp(38px, 4vw, 56px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--courses-hero-navy);
+  text-wrap: balance;
+}
+
+/* ---------- Texto ---------- */
+
+.courses-hero__text {
+  max-width: 580px;
+  margin: 16px 0 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--courses-hero-text-muted);
+}
+
+/* ---------- Beneficios ---------- */
+
+.courses-hero__benefits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 0;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.courses-hero__benefit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 20px;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--courses-hero-text);
+}
+
+.courses-hero__benefit:last-child {
+  padding-right: 0;
+}
+
+/* Separador vertical muy sutil entre beneficios. */
+.courses-hero__benefit:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 1px;
+  height: 15px;
+  background-color: rgba(23, 63, 103, 0.14);
+  transform: translateY(-50%);
+}
+
+.courses-hero__benefit-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--courses-hero-green);
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .courses-hero__container {
+    min-height: 400px;
+    padding: 44px 28px;
+  }
+
+  .courses-hero__title {
+    font-size: clamp(34px, 3.8vw, 48px);
+  }
+
+  .courses-hero__text {
+    font-size: 17px;
+  }
+
+  .courses-hero__benefit {
+    padding-right: 16px;
+    font-size: 14px;
+  }
+
+  .courses-hero__benefit:not(:last-child)::after {
+    height: 13px;
+  }
+}
+
+/* =========================================================
+   Mobile: la composicion horizontal del asset no cabe igual, asi que se
+   desplaza hacia la derecha y el overlay se refuerza para priorizar
+   legibilidad por encima de la escena.
+   ========================================================= */
+
+@media (max-width: 860px) {
+  .courses-hero__image {
+    object-position: 65% center;
+  }
+
+  .courses-hero::before {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.9) 55%,
+      rgba(255, 255, 255, 0.55) 100%
+    );
+  }
+
+  .courses-hero__container {
+    min-height: 0;
+    padding: 40px 24px 36px;
+  }
+
+  .courses-hero__content {
+    max-width: 100%;
+  }
+
+  .courses-hero__title {
+    font-size: clamp(30px, 7.2vw, 40px);
+  }
+
+  .courses-hero__text {
+    max-width: 100%;
+    font-size: 16.5px;
+  }
+}
+
+@media (max-width: 640px) {
+  .courses-hero__image {
+    object-position: right center;
+  }
+
+  .courses-hero::before {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 255, 255, 0.92) 60%,
+      rgba(255, 255, 255, 0.6) 100%
+    );
+  }
+
+  .courses-hero__container {
+    padding: 36px 20px 32px;
+  }
+
+  .courses-hero__title {
+    font-size: clamp(28px, 8vw, 34px);
+  }
+
+  .courses-hero__text {
+    font-size: 16px;
+  }
+
+  /* Los beneficios pasan a columna: en wrap se apilarian de forma irregular
+     y el separador vertical perderia sentido. */
+  .courses-hero__benefits {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .courses-hero__benefit {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .courses-hero__benefit:not(:last-child)::after {
+    display: none;
+  }
+}

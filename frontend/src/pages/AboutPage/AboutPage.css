@@ -1,0 +1,58 @@
+/* Encabezado de /quienes-somos. Solo el bloque nuevo: el resto de la pagina
+   reutiliza AboutSection y FinalCta, que ya traen sus propios estilos. */
+
+.about-page__hero {
+  padding: 84px 0 64px;
+  background-color: #f7fafc;
+  border-bottom: 1px solid #e9eef2;
+}
+
+.about-page__container {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding-inline: 32px;
+  text-align: center;
+}
+
+.about-page__eyebrow {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #62b747;
+}
+
+.about-page__title {
+  margin: 0;
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #173f67;
+  text-wrap: balance;
+}
+
+.about-page__lead {
+  max-width: 680px;
+  margin: 20px auto 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #4a5b6d;
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .about-page__hero {
+    padding: 56px 0 44px;
+  }
+
+  .about-page__container {
+    padding-inline: 20px;
+  }
+
+  .about-page__lead {
+    font-size: 16px;
+  }
+}

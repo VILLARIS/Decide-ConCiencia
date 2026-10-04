@@ -253,3 +253,70 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   VERSION COMPACTA (areas autenticadas)
+   Una sola fila: no repite las cuatro columnas del pie publico.
+   ========================================================= */
+
+.footer--compact {
+  background-color: #fbfcfd;
+}
+
+.footer__compact-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 28px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px 32px;
+}
+
+.footer__compact-copy,
+.footer__compact-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--footer-text-soft);
+}
+
+.footer__compact-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__compact-nav .footer__link {
+  font-size: 13.5px;
+  color: var(--footer-text);
+}
+
+/* En area de estudiante la nota de demo tiene su propio tono. */
+.footer--student .footer__compact-note {
+  padding: 5px 12px;
+  color: #6d7f92;
+  background-color: #ffffff;
+  border: 1px solid var(--footer-border);
+  border-radius: 999px;
+}
+
+@media (max-width: 860px) {
+  .footer__compact-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 22px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer__compact-inner {
+    padding: 20px 18px;
+  }
+}
