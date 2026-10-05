@@ -1,58 +1,720 @@
-/* Encabezado de /quienes-somos. Solo el bloque nuevo: el resto de la pagina
-   reutiliza AboutSection y FinalCta, que ya traen sus propios estilos. */
+﻿/*
+  QUIÉNES SOMOS
 
-.about-page__hero {
-  padding: 84px 0 64px;
-  background-color: #f7fafc;
-  border-bottom: 1px solid #e9eef2;
+  Misma dirección de arte que el Home: container de 1320px en el hero y 1240px
+  en el resto, títulos navy #173f67, acento verde #62b747, textos secundarios
+  #5b6b7c, botones pill de 52px y degradados muy suaves. Cuatro secciones:
+  hero, esencia, fundadora y CTA final.
+*/
+
+.about-page {
+  overflow-x: hidden;
 }
 
-.about-page__container {
+/* =========================================================
+   HERO
+   Composición horizontal única. La fotografía es el fondo del bloque y
+   el texto se apoya en su zona clara izquierda; un degradado horizontal
+   muy suave devuelve esa zona a blanco. La imagen no tiene card, ni marco,
+   ni radio, ni sombra: se funde con el fondo.
+   ========================================================= */
+
+.about-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: clamp(560px, 68vh, 640px);
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image: linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #ffffff 40%,
+    #f9fbf7 72%,
+    #f4f9f2 100%
+  );
+}
+
+/* Dos manchas muy tenues, verde arriba y azul abajo. */
+.about-hero::before,
+.about-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.about-hero::before {
+  top: -240px;
+  right: 10%;
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(circle, rgba(98, 183, 71, 0.1), rgba(98, 183, 71, 0) 68%);
+}
+
+.about-hero::after {
+  bottom: -280px;
+  left: -160px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(23, 63, 103, 0.06), rgba(23, 63, 103, 0) 70%);
+}
+
+.about-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Degradado horizontal: legibilidad en el lado izquierdo sin cortar la foto. */
+.about-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.92) 24%,
+    rgba(255, 255, 255, 0.55) 42%,
+    rgba(255, 255, 255, 0) 62%
+  );
+}
+
+.about-hero__image {
+  display: block;
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
-  padding-inline: 32px;
-  text-align: center;
+  height: 100%;
+  object-fit: cover;
+  /* El archivo es panoramico (1916x821) con aire a la izquierda: se ancla a la
+     derecha para mantener a la doctora y los alimentos dentro del marco. */
+  object-position: right center;
 }
 
-.about-page__eyebrow {
-  margin: 0 0 14px;
-  font-size: 13px;
+.about-hero__container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 72px 40px;
+}
+
+.about-hero__content {
+  max-width: 600px;
+}
+
+.about-hero__eyebrow {
+  margin: 0 0 18px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #62b747;
 }
 
-.about-page__title {
+.about-hero__title {
   margin: 0;
-  font-size: clamp(30px, 4.4vw, 46px);
+  font-size: clamp(38px, 3.7vw, 54px);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.06;
+  letter-spacing: -0.028em;
   color: #173f67;
   text-wrap: balance;
 }
 
-.about-page__lead {
-  max-width: 680px;
-  margin: 20px auto 0;
+/* "claro, práctico y basado en ciencia." en el verde de la marca. */
+.about-hero__title-accent {
+  color: #569b3e;
+}
+
+.about-hero__text {
+  max-width: 540px;
+  margin: 22px 0 0;
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.66;
   color: #4a5b6d;
   text-wrap: pretty;
 }
 
+/* ---------- Botones ---------- */
+
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.about-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 52px;
+  padding: 0 28px;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.about-hero__button svg {
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.about-hero__button--primary {
+  color: #ffffff;
+  background-color: #62b747;
+  border: 1px solid #62b747;
+}
+
+.about-hero__button--primary:hover {
+  color: #ffffff;
+  background-color: #569b3e;
+  border-color: #569b3e;
+  transform: translateY(-2px);
+}
+
+.about-hero__button--primary:hover svg {
+  transform: translateX(4px);
+}
+
+.about-hero__button--primary:active {
+  background-color: #4f8f39;
+  border-color: #4f8f39;
+  transform: translateY(0);
+}
+
+.about-hero__button--secondary {
+  color: #173f67;
+  background-color: rgba(255, 255, 255, 0.72);
+  border: 1px solid #d5dfe8;
+}
+
+.about-hero__button--secondary:hover {
+  color: #569b3e;
+  background-color: #ffffff;
+  border-color: #9ccf8a;
+  transform: translateY(-2px);
+}
+
+.about-hero__button--secondary:active {
+  transform: translateY(0);
+}
+
+.about-hero__button:focus-visible {
+  outline: 2px solid #62b747;
+  outline-offset: 3px;
+}
+
+/* ---------- Atributos: fila compacta, sin fichas ---------- */
+
+.about-hero__attributes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-hero__attribute {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2b3f56;
+}
+
+.about-hero__attribute svg {
+  flex-shrink: 0;
+  color: #62b747;
+}
+
+.about-hero__attribute + .about-hero__attribute {
+  padding-left: 20px;
+  border-left: 1px solid #d9e4db;
+}
+
+/* =========================================================
+   NUESTRA ESENCIA
+   Columnas sueltas separadas por líneas verticales suaves. Sin cards.
+   ========================================================= */
+
+.about-essence {
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f9f4;
+  background-image: linear-gradient(180deg, #fbfdfa 0%, #f5f9f4 100%);
+}
+
+.about-essence__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 32px 100px;
+}
+
+.about-essence__head {
+  max-width: 760px;
+}
+
+.about-essence__eyebrow {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #62b747;
+}
+
+.about-essence__title {
+  margin: 14px 0 0;
+  font-size: clamp(30px, 3.1vw, 40px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.026em;
+  color: #173f67;
+  text-wrap: balance;
+}
+
+.about-essence__intro {
+  max-width: 660px;
+  margin: 20px 0 0;
+  font-size: 17px;
+  line-height: 1.68;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+.about-essence__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 52px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-essence__pillar {
+  padding: 0 36px;
+  border-left: 1px solid #dfe8dc;
+}
+
+.about-essence__pillar:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.about-essence__pillar:last-child {
+  padding-right: 0;
+}
+
+.about-essence__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: #569b3e;
+  background-color: rgba(98, 183, 71, 0.12);
+  border-radius: 14px;
+}
+
+.about-essence__pillar-title {
+  margin: 22px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  color: #173f67;
+}
+
+.about-essence__pillar-text {
+  margin: 12px 0 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+/* =========================================================
+   NUESTRA FUNDADORA
+   Foto grande a un lado, texto editorial al otro. Sin card de perfil.
+   ========================================================= */
+
+.about-founder {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.about-founder__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 32px 100px;
+}
+
+.about-founder__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  align-items: center;
+  gap: clamp(44px, 5vw, 76px);
+}
+
+.about-founder__figure {
+  margin: 0;
+}
+
+.about-founder__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 24px;
+}
+
+.about-founder__content {
+  max-width: 540px;
+}
+
+.about-founder__eyebrow {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #62b747;
+}
+
+.about-founder__title {
+  margin: 14px 0 0;
+  font-size: clamp(32px, 3.3vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  color: #173f67;
+}
+
+.about-founder__role {
+  margin: 12px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #569b3e;
+}
+
+.about-founder__text {
+  margin: 22px 0 0;
+  font-size: 17px;
+  line-height: 1.72;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+/* =========================================================
+   CTA FINAL
+   ========================================================= */
+
+.about-closing {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image: radial-gradient(120% 130% at 18% 40%, #f1f8ee 0%, #ffffff 62%, #ffffff 100%);
+}
+
+.about-closing__container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 92px 32px 96px;
+  text-align: center;
+}
+
+.about-closing__title {
+  margin: 0;
+  font-size: clamp(30px, 3.3vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  color: #173f67;
+  text-wrap: balance;
+}
+
+.about-closing__text {
+  max-width: 520px;
+  margin: 20px auto 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+.about-closing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.about-closing__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 52px;
+  padding: 0 28px;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.about-closing__button svg {
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.about-closing__button--primary {
+  color: #ffffff;
+  background-color: #62b747;
+  border: 1px solid #62b747;
+}
+
+.about-closing__button--primary:hover {
+  color: #ffffff;
+  background-color: #569b3e;
+  border-color: #569b3e;
+  transform: translateY(-2px);
+}
+
+.about-closing__button--primary:hover svg {
+  transform: translateX(4px);
+}
+
+.about-closing__button--secondary {
+  color: #173f67;
+  background-color: #ffffff;
+  border: 1px solid #d5dfe8;
+}
+
+.about-closing__button--secondary:hover {
+  color: #569b3e;
+  background-color: #f7fafc;
+  border-color: #9ccf8a;
+  transform: translateY(-2px);
+}
+
+.about-closing__button:focus-visible {
+  outline: 2px solid #62b747;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* Tablet alto: el texto cede unos puntos de ancho para no pisar la foto. */
+@media (max-width: 1180px) {
+  .about-hero__content {
+    max-width: 540px;
+  }
+
+  .about-hero__text {
+    max-width: 500px;
+  }
+
+  .about-essence__pillar {
+    padding: 0 26px;
+  }
+}
+
+@media (max-width: 980px) {
+  .about-hero {
+    display: block;
+    min-height: 0;
+    background-image: linear-gradient(180deg, #ffffff 0%, #f9fbf7 52%, #f4f9f2 100%);
+  }
+
+  .about-hero__container {
+    max-width: 760px;
+    padding: 52px 28px 0;
+  }
+
+  .about-hero__content {
+    max-width: none;
+  }
+
+  /* La foto deja de ser fondo y pasa a franja inferior, sin card. */
+  .about-hero__media {
+    position: relative;
+    inset: auto;
+    height: clamp(280px, 56vw, 400px);
+    margin-top: 40px;
+  }
+
+  .about-hero__media::after {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0.4) 26%,
+      rgba(255, 255, 255, 0) 58%
+    );
+  }
+
+  .about-hero__image {
+    object-position: right center;
+  }
+
+  .about-essence__grid {
+    grid-template-columns: 1fr;
+    margin-top: 44px;
+  }
+
+  .about-essence__pillar {
+    padding: 26px 0;
+    border-left: 0;
+    border-top: 1px solid #dfe8dc;
+  }
+
+  .about-essence__pillar:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .about-essence__pillar:last-child {
+    padding-bottom: 0;
+  }
+
+  .about-essence__pillar-title {
+    margin-top: 18px;
+  }
+
+  .about-founder__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-founder__figure {
+    max-width: 400px;
+  }
+
+  .about-founder__image {
+    aspect-ratio: 16 / 11;
+  }
+
+  .about-founder__content {
+    max-width: none;
+  }
+}
+
 @media (max-width: 640px) {
-  .about-page__hero {
-    padding: 56px 0 44px;
+  .about-hero__container {
+    padding: 40px 20px 0;
   }
 
-  .about-page__container {
-    padding-inline: 20px;
+  .about-hero__title {
+    font-size: clamp(32px, 8.4vw, 40px);
   }
 
-  .about-page__lead {
+  .about-hero__text {
     font-size: 16px;
+  }
+
+  .about-hero__actions {
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .about-hero__button,
+  .about-closing__button {
+    flex: 1 1 auto;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
+  }
+
+  .about-hero__attributes {
+    gap: 8px 14px;
+    margin-top: 26px;
+  }
+
+  .about-hero__attribute {
+    font-size: 13px;
+  }
+
+  .about-hero__attribute + .about-hero__attribute {
+    padding-left: 14px;
+  }
+
+  .about-hero__media {
+    height: clamp(240px, 68vw, 320px);
+    margin-top: 32px;
+  }
+
+  .about-essence__container,
+  .about-founder__container {
+    padding: 68px 20px 72px;
+  }
+
+  .about-essence__intro,
+  .about-founder__text {
+    font-size: 16px;
+  }
+
+  .about-founder__image {
+    aspect-ratio: 5 / 4;
+  }
+
+  .about-closing__container {
+    padding: 64px 20px 68px;
+  }
+
+  .about-closing__text {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero::before,
+  .about-hero::after {
+    display: none;
+  }
+
+  .about-hero__button,
+  .about-hero__button svg,
+  .about-closing__button,
+  .about-closing__button svg {
+    transition: none;
+  }
+
+  .about-hero__button:hover,
+  .about-hero__button:hover svg,
+  .about-closing__button:hover,
+  .about-closing__button:hover svg {
+    transform: none;
   }
 }
