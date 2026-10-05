@@ -24,60 +24,49 @@
    1. HERO
    ========================================================= */
 
+/*
+  HERO — composicion horizontal, sin columnas rigidas.
+
+  El texto ocupa ~46% del container (max 650px) y la foto el 56% del ancho
+  disponible, sangrando por el borde derecho hasta el centro. La transicion no
+  es un corte vertical: la foto entra con mask-image (desvanecido a la
+  izquierda) Y, encima, un overlay blanco del propio hero cierra el degrade
+  hacia el texto. Doble difuminado = cero linea visible y texto siempre legible.
+
+  Sin card, sin borde, sin radio, sin sombra: la imagen es parte del fondo.
+*/
+
 .contact-hero {
-  --contact-hero-image-position: center;
+  --contact-hero-image-position: right center;
 
   position: relative;
   isolation: isolate;
   display: flex;
   align-items: center;
-  min-height: clamp(520px, 66vh, 600px);
+  min-height: clamp(560px, 68vh, 620px);
   overflow: hidden;
   background-color: #ffffff;
   background-image: linear-gradient(
     100deg,
     #ffffff 0%,
-    #ffffff 42%,
-    #f8fbf6 72%,
-    #f2f8f1 100%
+    #ffffff 36%,
+    #fafcf8 62%,
+    #f4f9f1 100%
   );
 }
 
-/* Dos manchas muy tenues: verde arriba y azul abajo. */
-.contact-hero::before,
-.contact-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  border-radius: 50%;
-  pointer-events: none;
-}
+/* ---------- Foto ---------- */
 
-.contact-hero::before {
-  top: -250px;
-  right: 18%;
-  width: 480px;
-  height: 480px;
-  background: radial-gradient(circle, rgba(98, 183, 71, 0.1), rgba(98, 183, 71, 0) 68%);
-}
-
-.contact-hero::after {
-  bottom: -280px;
-  left: -150px;
-  width: 440px;
-  height: 440px;
-  background: radial-gradient(circle, rgba(23, 63, 103, 0.055), rgba(23, 63, 103, 0) 70%);
-}
-
-/* La foto sangra por la derecha y se difumina hacia el texto: sin card, sin
-   marco, sin radio y sin sombra, igual que en las demas paginas. */
+/* El ancho es del viewport, no del container: asi la foto llega al borde
+   derecho de la pantalla y el texto queda anclado al container global. */
 .contact-hero__media {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 44%;
+  width: 56%;
   z-index: 1;
+  pointer-events: none;
 }
 
 .contact-hero__image {
@@ -86,25 +75,57 @@
   height: 100%;
   object-fit: cover;
   object-position: var(--contact-hero-image-position);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.36) 12%, #000 28%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.36) 12%, #000 28%);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.22) 9%,
+    rgba(0, 0, 0, 0.62) 20%,
+    #000 34%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.22) 9%,
+    rgba(0, 0, 0, 0.62) 20%,
+    #000 34%
+  );
 }
+
+/* Segundo pase del difuminado, en blanco sobre el lado izquierdo. Cierra el
+   degrade de la foto contra el fondo y protege la legibilidad del texto. */
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.92) 30%,
+    rgba(255, 255, 255, 0.66) 44%,
+    rgba(255, 255, 255, 0.2) 56%,
+    rgba(255, 255, 255, 0) 68%
+  );
+}
+
+/* ---------- Contenedor y texto ---------- */
 
 .contact-hero__container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 72px 40px;
+  padding: 76px 40px;
 }
 
 .contact-hero__content {
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .contact-hero__eyebrow {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -114,18 +135,18 @@
 
 .contact-hero__title {
   margin: 0;
-  font-size: clamp(30px, 3.1vw, 44px);
+  font-size: clamp(40px, 4vw, 58px);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.032em;
   color: var(--contact-navy);
   text-wrap: balance;
 }
 
 .contact-hero__lead {
-  max-width: 540px;
-  margin: 22px 0 0;
-  font-size: 16px;
+  max-width: 600px;
+  margin: 24px 0 0;
+  font-size: 17.5px;
   line-height: 1.68;
   color: var(--contact-muted);
   text-wrap: pretty;
@@ -137,26 +158,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 34px;
 }
 
-/* ---------- Mini beneficios ---------- */
+/* ---------- Highlights ---------- */
 
-/* Fila horizontal en vez de columna: ahorra altura y sigue alineado con los
-   heroes de Inicio, Quienes somos y Servicios. */
+/* Fila horizontal en desktop, iconos pequenos y microtexto debajo: compacto,
+   sin cards. */
 .contact-hero__benefits {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 26px;
-  margin: 32px 0 0;
+  gap: 14px 34px;
+  margin: 40px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .contact-benefit {
   display: inline-flex;
-  align-items: center;
-  gap: 9px;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 200px;
 }
 
 .contact-benefit__icon {
@@ -174,6 +196,7 @@
 .contact-benefit__body {
   display: flex;
   flex-direction: column;
+  gap: 1px;
   min-width: 0;
 }
 
@@ -181,13 +204,13 @@
   font-size: 13.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 1.3;
+  line-height: 1.32;
   color: var(--contact-navy);
 }
 
 .contact-benefit__text {
   font-size: 12.5px;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--contact-muted);
 }
 
@@ -917,13 +940,40 @@ a.contact-channel__value:focus-visible {
    RESPONSIVE
    ========================================================= */
 
+/* Tablet: la foto cede terreno al texto de forma progresiva y el titulo baja
+   un escalon para no quedar pegado a la foto. */
 @media (max-width: 1180px) {
+  .contact-hero {
+    min-height: clamp(520px, 64vh, 580px);
+  }
+
+  .contact-hero__media {
+    width: 50%;
+  }
+
   .contact-hero__content {
     max-width: 560px;
   }
 
+  .contact-hero__title {
+    font-size: clamp(36px, 3.7vw, 48px);
+  }
+
   .contact-hero__lead {
     max-width: 520px;
+    font-size: 17px;
+  }
+
+  /* El overlay blanco sube un poco: el texto queda mas cerca de la foto. */
+  .contact-hero::before {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.94) 34%,
+      rgba(255, 255, 255, 0.7) 48%,
+      rgba(255, 255, 255, 0.22) 60%,
+      rgba(255, 255, 255, 0) 72%
+    );
   }
 }
 
@@ -943,21 +993,25 @@ a.contact-channel__value:focus-visible {
 }
 
 @media (max-width: 900px) {
-  /* El hero deja de ser horizontal: la foto pasa debajo del texto, a todo el
-     ancho y sin card. */
+  /* El hero deja de ser horizontal: la foto pasa DEBAJO del texto, a todo el
+     ancho y sin card. El texto nunca queda encima de la foto. */
   .contact-hero {
     display: block;
     min-height: 0;
-    background-image: linear-gradient(180deg, #ffffff 0%, #f8fbf6 50%, #f2f8f1 100%);
+    background-image: linear-gradient(180deg, #ffffff 0%, #f9fcf7 55%, #f3f9f0 100%);
   }
 
   .contact-hero__container {
     max-width: 760px;
-    padding: 52px 28px 0;
+    padding: 56px 28px 0;
   }
 
   .contact-hero__content {
     max-width: none;
+  }
+
+  .contact-hero__title {
+    font-size: clamp(32px, 5.4vw, 44px);
   }
 
   .contact-hero__media {
@@ -966,13 +1020,19 @@ a.contact-channel__value:focus-visible {
     right: auto;
     bottom: auto;
     width: 100%;
-    height: clamp(240px, 52vw, 340px);
+    height: clamp(250px, 52vw, 340px);
     margin-top: 44px;
   }
 
   .contact-hero__image {
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 13%);
-    mask-image: linear-gradient(180deg, transparent 0%, #000 13%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 14%);
+  }
+
+  /* En vertical el overlay lateral sobra: solo un velo suave arriba, donde la
+     foto entra desde el degradado del fondo. */
+  .contact-hero::before {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 22%);
   }
 
   .contact-main__container {
@@ -1004,26 +1064,35 @@ a.contact-channel__value:focus-visible {
 
 @media (max-width: 560px) {
   .contact-hero__container {
-    padding: 42px 20px 0;
+    padding: 44px 20px 0;
+  }
+
+  .contact-hero__eyebrow {
+    margin-bottom: 16px;
   }
 
   .contact-hero__title {
-    font-size: clamp(28px, 8vw, 34px);
+    font-size: clamp(28px, 7.6vw, 34px);
   }
 
   .contact-hero__lead {
-    font-size: 15.5px;
+    margin-top: 20px;
+    font-size: 16px;
   }
 
   .contact-hero__actions {
     gap: 10px;
-    margin-top: 26px;
+    margin-top: 28px;
   }
 
   .contact-hero__benefits {
     flex-direction: column;
     gap: 12px;
-    margin-top: 28px;
+    margin-top: 32px;
+  }
+
+  .contact-benefit {
+    max-width: none;
   }
 
   .contact-hero__media {
@@ -1106,11 +1175,8 @@ a.contact-channel__value:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-hero::before,
-  .contact-hero::after {
-    display: none;
-  }
-
+  /* El overlay del hero (::before) ya no se oculta: es estatico y sostiene la
+     legibilidad del texto sobre la foto, no es decoracion animada. */
   .contact-field__control,
   .contact-field__input,
   .contact-consent__checkbox,
