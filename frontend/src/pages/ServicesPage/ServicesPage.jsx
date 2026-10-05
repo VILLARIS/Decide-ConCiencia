@@ -13,6 +13,7 @@ import {
   UsersRound,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import heroImagen from '../../assets/Services/imageHero.png'
 import Navbar from '../../components/Navbar/Navbar.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import './ServicesPage.css'
@@ -122,94 +123,22 @@ const AUDIENCES = [
   },
 ]
 
-/* Escena botanica del hero: SVG decorativo en vez de fotografia stock.
-   Se mantiene aria-hidden porque no aporta informacion que el texto no tenga. */
-function HeroBotanical() {
+/* Hero: la fotografia entra por la derecha hasta el borde del viewport y su
+   lado izquierdo se disuelve con una mascara, igual que en Home y About. No hay
+   card, ni marco, ni radio, ni sombra. */
+function HeroFigure() {
   return (
-    <svg
-      className="servicios-hero__scene"
-      viewBox="0 0 420 340"
-      role="presentation"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <defs>
-        <linearGradient id="svcLeaf" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#8fc46f" />
-          <stop offset="100%" stopColor="#62b747" />
-        </linearGradient>
-        <linearGradient id="svcLeafSoft" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#c9e6bb" />
-          <stop offset="100%" stopColor="#a5d491" />
-        </linearGradient>
-        <linearGradient id="svcPaper" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="100%" stopColor="#fbfdfb" />
-        </linearGradient>
-      </defs>
-
-      {/* Halo suave de fondo */}
-      <ellipse cx="212" cy="176" rx="188" ry="136" fill="#f1f8ee" />
-      <ellipse cx="330" cy="96" rx="72" ry="58" fill="#eaf3f7" />
-
-      {/* Hojas traseras */}
-      <path
-        d="M62 250c-6-52 18-104 66-124 8 46-10 96-52 116-5 3-13 6-14 8z"
-        fill="url(#svcLeafSoft)"
+    <figure className="servicios-hero__figure">
+      <img
+        className="servicios-hero__image"
+        src={heroImagen}
+        alt="Acompañamiento nutricional: alimentación saludable y herramientas prácticas de consulta"
+        width="2172"
+        height="724"
+        fetchPriority="high"
+        decoding="async"
       />
-      <path
-        d="M352 268c14-40 8-84-18-112-24 32-26 78-2 108 4 3 16 4 20 4z"
-        fill="url(#svcLeafSoft)"
-      />
-
-      {/* Libreta */}
-      <g>
-        <rect
-          x="126"
-          y="104"
-          width="176"
-          height="164"
-          rx="16"
-          fill="url(#svcPaper)"
-          stroke="#e4ede6"
-          strokeWidth="1.5"
-        />
-        <path d="M156 104v164" stroke="#e4ede6" strokeWidth="1.5" />
-        <g fill="#e4ede6">
-          <rect x="174" y="132" width="102" height="7" rx="3.5" />
-          <rect x="174" y="152" width="86" height="7" rx="3.5" />
-          <rect x="174" y="172" width="94" height="7" rx="3.5" />
-        </g>
-        <rect x="174" y="198" width="64" height="7" rx="3.5" fill="#8fc46f" />
-        <rect x="174" y="218" width="44" height="7" rx="3.5" fill="#e4ede6" />
-
-        {/* Brote sobre la libreta */}
-        <path
-          d="M206 244c-2-14 6-26 20-30 3 14-5 26-18 30h-2z"
-          fill="url(#svcLeaf)"
-        />
-        <path
-          d="M204 244c-8-8-10-20-4-30 10 6 13 19 6 30h-2z"
-          fill="#8fc46f"
-        />
-        <path d="M204 244v10" stroke="#4e8c39" strokeWidth="2.4" strokeLinecap="round" />
-      </g>
-
-      {/* Frutos */}
-      <g>
-        <circle cx="92" cy="112" r="24" fill="#f0b183" />
-        <path d="M92 88c6-4 12-4 16 0-6 3-12 3-16 0z" fill="#4e8c39" />
-        <circle cx="86" cy="104" r="7" fill="#f7c79f" />
-      </g>
-      <g>
-        <circle cx="330" cy="222" r="27" fill="#8fc46f" />
-        <path d="M330 195c7-5 14-5 18 0-7 4-14 4-18 0z" fill="#4e8c39" />
-        <circle cx="322" cy="212" r="8" fill="#a9d791" />
-      </g>
-      <circle cx="66" cy="186" r="7" fill="#d3e8c8" />
-      <circle cx="366" cy="150" r="9" fill="#d3e8c8" />
-      <circle cx="140" cy="60" r="6" fill="#cfe4dd" />
-    </svg>
+    </figure>
   )
 }
 
@@ -235,12 +164,15 @@ export default function ServicesPage() {
               </p>
 
               <div className="servicios-hero__actions">
-                <a className="servicios-hero__cta" href="#servicios">
-                  Conocer servicios
-                  <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
+                <a className="servicios-hero__button servicios-hero__button--primary" href="#servicios">
+                  <span>Conocer servicios</span>
+                  <ArrowRight size={18} strokeWidth={2.25} aria-hidden="true" />
                 </a>
 
-                <a className="servicios-hero__cta servicios-hero__cta--ghost" href={mailto('Contacto desde la página de servicios')}>
+                <a
+                  className="servicios-hero__button servicios-hero__button--secondary"
+                  href={mailto('Contacto desde la página de servicios')}
+                >
                   Contactar
                 </a>
               </div>
@@ -248,17 +180,15 @@ export default function ServicesPage() {
               <ul className="servicios-hero__attributes">
                 {HERO_ATTRIBUTES.map(({ id, label, icon: Icon }) => (
                   <li className="servicios-hero__attribute" key={id}>
-                    <Icon size={15} strokeWidth={1.9} aria-hidden="true" />
-                    {label}
+                    <Icon size={15} strokeWidth={2} aria-hidden="true" />
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>
             </div>
-
-            <div className="servicios-hero__visual">
-              <HeroBotanical />
-            </div>
           </div>
+
+          <HeroFigure />
         </section>
 
         {/* ---------- 2. Servicios principales ---------- */}

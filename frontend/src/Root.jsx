@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import App from './App.jsx'
+import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx'
 import AboutPage from './pages/AboutPage/AboutPage.jsx'
 import ContactPage from './pages/ContactPage/ContactPage.jsx'
 import CoursesPage from './pages/CoursesPage/CoursesPage.jsx'
@@ -25,6 +26,10 @@ import { DemoCourseContentProvider } from './demo/DemoCourseContentProvider.jsx'
 export default function Root() {
   return (
     <BrowserRouter>
+      {/* Reset global de scroll: dentro del router (necesita useLocation) y por
+          encima de las rutas, para que aplique a toda la aplicacion sin repetir
+          el efecto en cada pagina. */}
+      <ScrollToTop />
       {/* La sesion demo vive en memoria: al recargar se pierde. Sin backend. */}
       <DemoAuthProvider>
         {/* Compras e inscripciones tambien en memoria. Va dentro de la sesion
