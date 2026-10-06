@@ -1,0 +1,443 @@
+/* =========================================================
+   Login — formulario de acceso.
+
+   Ritmo vertical deliberado, sin huecos giganticos:
+     titulo -> descripcion 8 · descripcion -> campo 28 · label -> input 8
+     campo -> campo 20 · password -> opciones 14 · opciones -> boton 22
+     boton -> demo 24 · demo -> registro 20
+
+   Se usa margin explicito en vez de flex gap porque cada salto es distinto y
+   un unico gap no puede expresarlos.
+   ========================================================= */
+
+.acceso {
+  --acceso-navy: #173f67;
+  --acceso-green: #62b747;
+  --acceso-muted: #6a7d90;
+  --acceso-border: #dbe5eb;
+  --acceso-focus: #2f8f5b;
+}
+
+/* ---------- Titulo ---------- */
+
+/* ---------- Contenedor del bloque ---------- */
+
+.acceso {
+  width: 100%;
+  max-width: 520px;
+  /* Un pelin de aire interno. Sin borde ni sombra: la estructura la dan la
+     tipografia, los inputs, el boton y el ritmo vertical. */
+  padding: 0 16px;
+}
+
+.acceso__title {
+  margin: 0;
+  font-size: clamp(32px, 2.4vw, 38px);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.026em;
+  color: var(--acceso-navy);
+}
+
+.acceso__subtitle {
+  margin: 10px 0 0;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--acceso-muted);
+}
+
+/* ---------- Formulario ---------- */
+
+.acceso__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.acceso__error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 11px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #a4373a;
+  background-color: #fdf4f4;
+  border: 1px solid #f5d9d9;
+  border-radius: 12px;
+}
+
+/* ---------- Campos ---------- */
+
+.acceso__field + .acceso__field {
+  margin-top: 20px;
+}
+
+.acceso__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #34485c;
+}
+
+.acceso__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.acceso__control-icon {
+  position: absolute;
+  left: 16px;
+  color: #90a2b3;
+  pointer-events: none;
+}
+
+/* Input visible: borde real, relleno blanco y radio claro. Con #dfe7ed sobre
+   blanco deja de leerse como texto suelto. */
+.acceso__input {
+  width: 100%;
+  height: 53px;
+  padding: 0 16px 0 45px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #22323f;
+  background-color: #ffffff;
+  border: 1px solid var(--acceso-border);
+  border-radius: 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.acceso__input::placeholder {
+  color: #a7b4c1;
+}
+
+.acceso__input:hover {
+  border-color: #c2d1dc;
+}
+
+.acceso__input:focus {
+  outline: none;
+  border-color: var(--acceso-focus);
+  box-shadow: 0 0 0 3px rgba(98, 183, 71, 0.14);
+}
+
+.acceso__input--reveal {
+  padding-right: 48px;
+}
+
+.acceso__reveal {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: #90a2b3;
+  background-color: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.acceso__reveal:hover {
+  color: var(--acceso-navy);
+  background-color: #f2f6f9;
+}
+
+/* ---------- Recordarme / Olvidaste ---------- */
+
+.acceso__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.acceso__remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: #45596d;
+  cursor: pointer;
+}
+
+.acceso__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.acceso__checkbox-mark {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  background-color: #ffffff;
+  border: 1px solid #c4d2dd;
+  border-radius: 5px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.acceso__checkbox-mark::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background-color: #ffffff;
+  clip-path: polygon(14% 44%, 0 62%, 40% 100%, 100% 22%, 84% 6%, 38% 66%);
+  opacity: 0;
+}
+
+.acceso__checkbox:checked + .acceso__checkbox-mark {
+  background-color: var(--acceso-focus);
+  border-color: var(--acceso-focus);
+}
+
+.acceso__checkbox:checked + .acceso__checkbox-mark::after {
+  opacity: 1;
+}
+
+.acceso__checkbox:focus-visible + .acceso__checkbox-mark {
+  box-shadow: 0 0 0 3px rgba(98, 183, 71, 0.18);
+}
+
+.acceso__forgot {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--acceso-focus);
+  text-decoration: none;
+}
+
+.acceso__forgot:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Boton principal: el elemento de mayor peso ---------- */
+
+.acceso__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 54px;
+  margin-top: 24px;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  background-color: var(--acceso-navy);
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.acceso__submit:hover {
+  background-color: #12395d;
+  box-shadow: 0 8px 22px rgba(23, 63, 103, 0.24);
+}
+
+.acceso__submit:active {
+  transform: translateY(1px);
+}
+
+.acceso__submit:focus-visible {
+  outline: 3px solid rgba(23, 63, 103, 0.32);
+  outline-offset: 2px;
+}
+
+/* ---------- Acceso de demostracion ---------- */
+
+/* Opcion secundaria: el divisor es apenas un pelo y el bloque no_compite con
+   el boton de login (navy, 54px) ni por peso de color ni por altura. */
+.acceso__demo {
+  margin-top: 24px;
+  padding-top: 13px;
+  border-top: 1px solid #f0f4f7;
+}
+
+.acceso__demo-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.acceso__demo-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #55697e;
+}
+
+.acceso__demo-label svg {
+  color: var(--acceso-green);
+}
+
+.acceso__demo-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #8296a7;
+}
+
+.acceso__demo-action svg {
+  transition: transform 0.2s ease;
+}
+
+.acceso__demo-toggle[aria-expanded='true'] .acceso__demo-action svg {
+  transform: rotate(180deg);
+}
+
+.acceso__demo-toggle:hover .acceso__demo-action {
+  color: var(--acceso-navy);
+}
+
+.acceso__demo-panel {
+  margin-top: 8px;
+  padding: 14px;
+  background-color: #f8fafb;
+  border: 1px solid #eef2f5;
+  border-radius: 14px;
+}
+
+.acceso__demo-disclaimer {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--acceso-muted);
+}
+
+.acceso__demo-account {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 11px 12px;
+  background-color: #ffffff;
+  border: 1px solid #eef2f5;
+  border-radius: 11px;
+}
+
+.acceso__demo-account + .acceso__demo-account {
+  margin-top: 8px;
+}
+
+.acceso__demo-role {
+  grid-column: 1;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--acceso-green);
+}
+
+.acceso__demo-email,
+.acceso__demo-password {
+  grid-column: 1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  color: #45596d;
+}
+
+.acceso__demo-password {
+  color: var(--acceso-muted);
+}
+
+.acceso__demo-fill {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  align-self: center;
+  height: 34px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--acceso-navy);
+  border: 0;
+  border-radius: 9px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.acceso__demo-fill:hover {
+  background-color: #14456f;
+}
+
+/* ---------- Registro ---------- */
+
+.acceso__signup {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--acceso-muted);
+  text-align: center;
+}
+
+.acceso__signup-link {
+  font-weight: 600;
+  color: var(--acceso-navy);
+  text-decoration: none;
+}
+
+.acceso__signup-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Detalle movil: sin la foto, el contexto sigue presente ---------- */
+
+.acceso__mobile-eyebrow {
+  display: none;
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--acceso-green);
+}
+
+@media (max-width: 767px) {
+  .acceso__mobile-eyebrow {
+    display: block;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  .acceso__row {
+    gap: 10px;
+  }
+
+  .acceso__demo-account {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .acceso__demo-fill {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    margin-top: 8px;
+  }
+}

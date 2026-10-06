@@ -1,4 +1,5 @@
 import { ArrowRight, ChefHat, Droplets, Sprout } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import './FeaturedCourses.css'
 
 const COURSES = [
@@ -274,10 +275,10 @@ export default function FeaturedCourses() {
             </p>
           </div>
 
-          <a className="courses__link" href="/cursos">
+          <Link className="courses__link" to="/cursos">
             Ver todos los cursos
             <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-          </a>
+          </Link>
         </header>
 
         <ul className="courses__grid">
@@ -303,16 +304,16 @@ export default function FeaturedCourses() {
                       {price}
                     </p>
 
-                    <a
+                    <Link
                       className="courses-card__cta"
-                      href={`/cursos/${id}`}
+                      to={`/cursos/${id}`}
                       aria-label={`Ver curso: ${title}`}
                     >
                       Ver curso
                       <span className="courses-card__cta-icon">
                         <ArrowRight size={13} strokeWidth={2.5} aria-hidden="true" />
                       </span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </li>

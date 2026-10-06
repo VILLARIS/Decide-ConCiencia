@@ -20,8 +20,9 @@
 
 .footer__top {
   display: grid;
-  grid-template-columns: 1.7fr 1fr 1.4fr 0.8fr;
-  gap: 36px;
+  /* 5 columnas: marca, navegacion, servicios, contacto y redes. */
+  grid-template-columns: 1.6fr 0.85fr 1fr 1.15fr 0.6fr;
+  gap: 32px;
   padding-bottom: 28px;
 }
 
@@ -48,14 +49,38 @@
   outline-offset: 3px;
 }
 
-.footer__logo-img {
+/*
+  El logo es el mismo archivo del navbar (assets/Navbar/Logo.png), con mucho
+  margen blanco alrededor del dibujo:lienzo de 1536x1024 y banda central de
+  1073x181. Mostrarlo entero lo deja diminuto, asi que se recorta con un marco
+  de tamano fijo. Escalado uniforme, no deforma. Mismo criterio que en Navbar.css.
+*/
+.footer__logo-frame {
+  position: relative;
   display: block;
-  width: auto;
-  height: auto;
-  max-width: 180px;
-  max-height: 60px;
-  object-fit: contain;
-  object-position: left center;
+  width: 148px;
+  height: 25px;
+  overflow: hidden;
+}
+
+.footer__logo-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 212px;
+  height: 141px;
+  max-width: none;
+  transform: translate(-31px, -56px);
+}
+
+/* Nombre de marca debajo del logo: el archivo no incluye el texto legible. */
+.footer__brand-name {
+  margin: 16px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--footer-navy);
 }
 
 .footer__brand-text {
@@ -228,11 +253,6 @@
     grid-column: auto;
   }
 
-  .footer__logo-img {
-    max-width: 172px;
-    max-height: 58px;
-  }
-
   .footer__title {
     margin-bottom: 14px;
   }
@@ -251,5 +271,72 @@
   .footer__social,
   .footer__contact-item:hover .footer__contact-icon {
     transition: none;
+  }
+}
+
+/* =========================================================
+   VERSION COMPACTA (areas autenticadas)
+   Una sola fila: no repite las cuatro columnas del pie publico.
+   ========================================================= */
+
+.footer--compact {
+  background-color: #fbfcfd;
+}
+
+.footer__compact-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 28px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px 32px;
+}
+
+.footer__compact-copy,
+.footer__compact-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--footer-text-soft);
+}
+
+.footer__compact-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__compact-nav .footer__link {
+  font-size: 13.5px;
+  color: var(--footer-text);
+}
+
+/* En area de estudiante la nota de demo tiene su propio tono. */
+.footer--student .footer__compact-note {
+  padding: 5px 12px;
+  color: #6d7f92;
+  background-color: #ffffff;
+  border: 1px solid var(--footer-border);
+  border-radius: 999px;
+}
+
+@media (max-width: 860px) {
+  .footer__compact-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 22px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer__compact-inner {
+    padding: 20px 18px;
   }
 }

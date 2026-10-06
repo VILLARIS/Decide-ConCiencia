@@ -1,0 +1,1414 @@
+/* =========================================================
+   AREA DE ESTUDIANTE: MI APRENDIZAJE, MI PERFIL, MIS CERTIFICADOS
+
+   Trabaja sobre los tokens que define .student (StudentShell.css):
+   azul institucional, verde Yulia, superficies muy claras y sombras
+   discretas. El ritmo visual es el mismo en las tres pantallas.
+   ========================================================= */
+
+/* =========================================================
+   1. PIEZAS COMPARTIDAS
+   ========================================================= */
+
+.learning,
+.profile,
+.certificates {
+  display: grid;
+  gap: 28px;
+}
+
+/*
+  Mi aprendizaje es una pila vertical: cada seccion ocupa el ancho completo y
+  se leen seguidas. Antes eran dos columnas con un resumen lateral pegado al
+  borde, que dejaba el progreso y la actividad como panels estrechos y
+ --"apretados" en el margen.
+*/
+.learning {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 30px;
+}
+
+.learning__main,
+.learning__demo-note {
+  min-width: 0;
+}
+
+/* Nota de demo: va dentro de "Mis cursos", asi que no necesita margin propio
+   — el gap de la pila ya separa las secciones. */
+.learning__demo-note {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--student-faint);
+}
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.btn--primary {
+  color: #ffffff;
+  background-color: var(--student-blue);
+  border: 1px solid var(--student-blue);
+  box-shadow: 0 8px 18px rgba(46, 91, 135, 0.18);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: #26496e;
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  color: var(--student-navy);
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background-color: var(--student-soft);
+  border-color: #d8e2ea;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+}
+
+/* En la demo estos botones no hacen nada, y se nota. */
+.btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn__hint {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.72;
+}
+
+/* ---------- Barra de progreso ---------- */
+
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  background-color: #e8eef3;
+  border-radius: 999px;
+}
+
+.progress-track--thin {
+  height: 6px;
+}
+
+.progress-track__fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #6cc257 0%, #4f9c38 100%);
+  border-radius: inherit;
+}
+
+/* ---------- Tags ---------- */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+}
+
+.tag--blue {
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+}
+
+.tag--green {
+  color: #3f8a2c;
+  background-color: var(--student-green-soft);
+}
+
+/* ---------- Paneles del resumen lateral ---------- */
+
+.summary {
+  display: grid;
+  gap: 18px;
+  position: sticky;
+  top: 104px;
+}
+
+.panel {
+  padding: 22px 22px 24px;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 18px;
+  box-shadow: var(--student-shadow-sm);
+}
+
+.panel--soft {
+  background-color: var(--student-surface);
+  box-shadow: var(--student-shadow);
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--student-navy);
+}
+
+.panel__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+  border-radius: 999px;
+}
+
+.panel__badge--quiet {
+  color: var(--student-faint);
+  background-color: var(--student-soft);
+  border: 1px solid var(--student-line);
+}
+
+.panel__text {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--student-muted);
+}
+
+/* ---------- Anillo de progreso (un solo indicador, sin gráficos) ---------- */
+
+.ring {
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  margin: 4px auto 16px;
+  background: conic-gradient(
+    var(--student-green) 0deg var(--ring-value),
+    #e8eef3 var(--ring-value) 360deg
+  );
+  border-radius: 50%;
+}
+
+.ring__inner {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+  background-color: var(--student-surface);
+  border-radius: 50%;
+}
+
+.summary__goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0;
+  padding: 11px 13px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--student-muted);
+  background-color: var(--student-soft);
+  border-radius: 12px;
+}
+
+.summary__goal svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--student-green);
+}
+
+.summary__goal strong {
+  color: var(--student-navy);
+}
+
+.summary__cert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary__cert-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  color: #3f8a2c;
+  background-color: var(--student-green-soft);
+  border-radius: 13px;
+}
+
+.summary__cert-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--student-navy);
+}
+
+.summary__cert-sub {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--student-muted);
+}
+
+.summary__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--student-blue);
+  text-decoration: none;
+}
+
+.summary__link:hover {
+  color: var(--student-navy);
+}
+
+.summary__link:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Linea de tiempo de actividad ---------- */
+
+.timeline {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  gap: 12px;
+}
+
+.timeline__item::before {
+  position: absolute;
+  top: 12px;
+  bottom: -16px;
+  left: 4px;
+  width: 1px;
+  content: '';
+  background-color: var(--student-line);
+}
+
+.timeline__item:last-child::before {
+  display: none;
+}
+
+.timeline__dot {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: 5px;
+  background-color: var(--student-surface);
+  border: 2px solid var(--student-green);
+  border-radius: 50%;
+}
+
+.timeline__text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--student-ink);
+}
+
+.timeline__when {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--student-faint);
+}
+
+/* =========================================================
+   2. MI APRENDIZAJE
+   ========================================================= */
+
+/* ---------- Curso principal ---------- */
+
+/*
+  Sin franja superior a todo el ancho: ocupaba una banda completa por un icono y
+  un texto. La identidad paso a un bloque compacto dentro del cuerpo, y el
+  encabezado de la pagina ya da el contexto del area.
+*/
+.hero-course {
+  overflow: hidden;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 20px;
+  box-shadow: var(--student-shadow);
+}
+
+/*
+  Dos columnas en vez de un bloque apilado:
+  izquierda = identidad + progreso (la parte que explica el estado),
+  derecha = datos y acciones (lo que se puede hacer).
+  A ancho completo el contenido se estiraba y la card quedaba mas alta que el
+  resto del area; asi el alto lo marca la fila mas alta de cada lado.
+*/
+.hero-course__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 26px 32px;
+  align-items: start;
+  padding: 24px 26px 26px;
+}
+
+/* Columna izquierda: identidad arriba, progreso debajo. */
+.hero-course__lead {
+  min-width: 0;
+}
+
+/* Identidad del curso: icono en vez de franja superior a todo el ancho. */
+.hero-course__identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.hero-course__glyph {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2e5b87 0%, #62b747 100%);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(46, 91, 135, 0.16);
+}
+
+.hero-course__kicker {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--student-faint);
+}
+
+.hero-course__title {
+  margin: 5px 0 0;
+  font-size: clamp(19px, 1.8vw, 23px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.hero-course__instructor {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  color: var(--student-muted);
+}
+
+.hero-course__status {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 11px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3f8a2c;
+  background-color: var(--student-green-soft);
+  border-radius: 999px;
+}
+
+/* Progreso del curso principal: bajo la identidad, en la columna izquierda. */
+.hero-course__progress {
+  margin-top: 20px;
+}
+
+.hero-course__progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.hero-course__progress-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--student-muted);
+}
+
+/* Porcentaje grande: es el dato que resume el bloque. */
+.hero-course__progress-value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--student-navy);
+}
+
+/* Columna derecha: datos y acciones, sobre una superficie suave para que se
+   lean como un bloque propio y no como mas texto de la izquierda. */
+.hero-course__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 18px;
+  background-color: var(--student-soft);
+  border: 1px solid var(--student-line);
+  border-radius: 15px;
+}
+
+/*
+  Los tres datos van en columna dentro de la caja derecha: en horizontal
+  quedaba un bloque estrecho de tres cifras sin contexto, y el ancho de la
+  columna no daba para tres columnas legibles.
+*/
+.hero-course__stats {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.hero-course__stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hero-course__stat dt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--student-faint);
+}
+
+.hero-course__stat dt svg {
+  flex-shrink: 0;
+  color: var(--student-blue);
+}
+
+.hero-course__stat dd {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--student-navy);
+}
+
+/* Acciones al pie de la columna derecha, a ancho completo. */
+.hero-course__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.hero-course__actions .btn {
+  flex: 1 1 auto;
+}
+
+/* ---------- Lista de cursos ---------- */
+
+/* El gap de la pila ya separa las secciones: sin margin propio. */
+.courses {
+  margin-top: 0;
+}
+
+.courses__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.courses__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.courses__count {
+  font-size: 12.5px;
+  color: var(--student-faint);
+}
+
+.courses__list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.course-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 16px;
+  box-shadow: var(--student-shadow-sm);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.course-row:hover {
+  border-color: #dbe5ee;
+  box-shadow: var(--student-shadow);
+  transform: translateY(-2px);
+}
+
+/*
+  La fila de un curso inscrito es un enlace: ocupa las dos primeras columnas
+  (icono + contenido) y mantiene el estado y la flecha a la derecha, igual que
+  antes. Solo aporta el area clicable, no cambia el diseno de la fila.
+*/
+.course-row__link {
+  display: grid;
+  grid-column: 1 / 3;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.course-row__link:hover {
+  text-decoration: none;
+}
+
+.course-row__link:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 4px;
+}
+
+.course-row__link .course-row__body {
+  min-width: 0;
+}
+
+.course-row__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+}
+
+.course-row__icon--sage {
+  color: #3f8a2c;
+  background-color: var(--student-green-soft);
+}
+
+.course-row__icon--sky {
+  color: var(--student-blue);
+  background-color: var(--student-blue-soft);
+}
+
+.course-row__icon--mist {
+  color: #7a6f8c;
+  background-color: #f1eef7;
+}
+
+.course-row__body {
+  min-width: 0;
+}
+
+.course-row__title {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--student-navy);
+}
+
+.course-row__meta {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--student-muted);
+}
+
+.course-row__progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.course-row__progress .progress-track {
+  max-width: 220px;
+}
+
+.course-row__percent {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--student-muted);
+}
+
+.course-row__status {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3f8a2c;
+  white-space: nowrap;
+  background-color: var(--student-green-soft);
+  border-radius: 999px;
+}
+
+.course-row__status--idle {
+  color: var(--student-muted);
+  background-color: var(--student-soft);
+}
+
+/* Curso comprado en el checkout: se distingue de los que ya venian en la demo. */
+.course-row__status--enrolled {
+  color: #2f7a1f;
+  background-color: #e8f5df;
+  border: 1px solid #cbe5bb;
+}
+
+.course-row__go {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--student-faint);
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 11px;
+  cursor: not-allowed;
+}
+
+.course-row__go:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Fila con curso del catalogo: el chevron abre la ficha real. */
+.course-row__go--link {
+  color: var(--student-blue);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.course-row__go--link:hover {
+  color: #ffffff;
+  background-color: var(--student-blue);
+  border-color: var(--student-blue);
+}
+
+.course-row__go--link:focus-visible {
+  outline: 2px solid var(--student-green);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   3. MI PERFIL
+   ========================================================= */
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+  padding: 26px 28px;
+  background: linear-gradient(115deg, #ffffff 0%, #f5f9f7 100%);
+  border: 1px solid var(--student-border);
+  border-radius: 20px;
+  box-shadow: var(--student-shadow);
+}
+
+/* Sin foto de usuario: monograma con las iniciales. */
+.identity__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 78px;
+  height: 78px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: linear-gradient(140deg, #2e5b87 0%, #62b747 100%);
+  border-radius: 24px;
+  box-shadow: 0 10px 24px rgba(46, 91, 135, 0.22);
+}
+
+.identity__text {
+  min-width: 0;
+}
+
+.identity__name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.identity__mail {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: var(--student-muted);
+}
+
+.identity__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.identity__action {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.profile__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.profile__main {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* Datos personales en tarjetas cortas, no en tabla */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.data-grid__item {
+  padding: 14px 16px;
+  background-color: var(--student-soft);
+  border: 1px solid var(--student-line);
+  border-radius: 14px;
+}
+
+.data-grid__item--wide {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  background-color: #ffffff;
+  border-style: dashed;
+}
+
+.data-grid__label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--student-faint);
+}
+
+.data-grid__label svg {
+  color: var(--student-blue);
+}
+
+.data-grid__value {
+  margin: 7px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--student-navy);
+}
+
+.data-grid__item--wide .data-grid__value {
+  font-weight: 400;
+  color: var(--student-ink);
+}
+
+/* Seguridad */
+.security {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--student-soft);
+  border-radius: 14px;
+}
+
+.security__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  color: var(--student-blue);
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-line);
+  border-radius: 13px;
+}
+
+.security__text {
+  min-width: 0;
+}
+
+.security__title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--student-navy);
+}
+
+.security__note {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--student-muted);
+}
+
+.security .btn {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Nota informativa con tono cálido */
+.panel--notice {
+  background-color: var(--student-sand);
+  border-color: #f0e6d6;
+}
+
+.panel--notice .panel__title {
+  margin-top: 14px;
+}
+
+.panel__notice-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: var(--student-amber);
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #f0e6d6;
+  border-radius: 13px;
+}
+
+.notice-list {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notice-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #6f5f45;
+}
+
+.notice-list li::before {
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  content: '';
+  background-color: var(--student-green);
+  border-radius: 50%;
+}
+
+/* =========================================================
+   4. MIS CERTIFICADOS
+   ========================================================= */
+
+.certificates {
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+}
+
+.certificates__main {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.certificate {
+  overflow: hidden;
+  background-color: var(--student-surface);
+  border: 1px solid var(--student-border);
+  border-radius: 20px;
+  box-shadow: var(--student-shadow);
+}
+
+/* Vista previa: el certificado se siente valioso sin ser enorme. */
+.certificate__preview {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 32px 34px;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(165deg, #f6faf6 0%, #ffffff 46%, #f2f7fb 100%);
+  border-bottom: 1px solid var(--student-line);
+}
+
+/* Filete interior: da aire de documento. */
+.certificate__frame {
+  position: absolute;
+  z-index: -1;
+  inset: 14px;
+  border: 1px solid #dfe8ef;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.certificate__seal {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  color: #ffffff;
+  background: linear-gradient(140deg, #62b747 0%, #3f8a2c 100%);
+  border-radius: 50%;
+  box-shadow: 0 12px 26px rgba(63, 138, 44, 0.24);
+}
+
+.certificate__kicker {
+  margin: 18px 0 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--student-faint);
+}
+
+.certificate__title {
+  margin: 10px 0 0;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--student-navy);
+}
+
+.certificate__byline {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--student-muted);
+}
+
+.certificate__facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 34px;
+  margin: 26px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid #e8eef3;
+}
+
+.certificate__facts dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--student-faint);
+}
+
+.certificate__facts dd {
+  margin: 5px 0 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--student-navy);
+}
+
+.certificate__watermark {
+  position: absolute;
+  right: 26px;
+  bottom: 14px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(23, 63, 103, 0.06);
+  user-select: none;
+}
+
+.certificate__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 26px;
+}
+
+.certificate__status {
+  min-width: 0;
+}
+
+.certificate__status-note {
+  margin: 9px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--student-muted);
+}
+
+.certificate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Hito de avance hacia el certificado */
+.milestone {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.milestone strong {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--student-navy);
+}
+
+.milestone span {
+  font-size: 13.5px;
+  color: var(--student-muted);
+}
+
+/* ---------- Progress general: bloque centrado a ancho completo ---------- */
+
+.learning-progress {
+  padding: 26px 22px 30px;
+}
+
+.learning-progress__figure {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.learning-progress__text {
+  max-width: 48ch;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--student-muted);
+}
+
+.learning-progress__text strong {
+  color: var(--student-navy);
+}
+
+/* ---------- Certificados: contenido a la izquierda, acceso a la derecha ---------- */
+
+.learning-certificates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
+/* La clase .summary__link trae margin-top para el resumen lateral; aqui el
+   enlace va en linea con el certificado. */
+.learning-certificates .summary__link {
+  margin-top: 0;
+}
+
+/* ---------- Timeline en pasos: tres columnas en pantallas anchas ---------- */
+
+.timeline--steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px 28px;
+}
+
+/* En horizontal la linea que unia los hitos verticalmente estorba. */
+.timeline--steps .timeline__item::before {
+  display: none;
+}
+
+/* =========================================================
+   5. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .certificates {
+    grid-template-columns: minmax(0, 1fr) 288px;
+  }
+
+  .profile__grid {
+    grid-template-columns: minmax(0, 1fr) 268px;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Una sola columna: el resumen baja con orden propio, no apilado a medias. */
+  .learning,
+  .certificates,
+  .profile__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .summary {
+    position: static;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
+  }
+
+  .profile__grid .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .learning,
+  .profile,
+  .certificates {
+    gap: 22px;
+  }
+
+  /* El curso en curso deja de caber en dos columnas: se apila entero. */
+  .hero-course__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 22px 22px 24px;
+  }
+
+  /* Apilado, los tres datos vuelven a exploitarse en horizontal. */
+  .hero-course__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .hero-course__stat {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 12px 13px;
+    background-color: var(--student-surface);
+    border: 1px solid var(--student-line);
+    border-radius: 12px;
+  }
+
+  .hero-course__stat dd {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .identity {
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 24px 22px;
+  }
+
+  .identity__action {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .data-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .data-grid__item--wide {
+    margin-top: 0;
+  }
+
+  .security {
+    flex-wrap: wrap;
+  }
+
+  .security .btn {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .certificate__foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .certificate__actions {
+    width: 100%;
+  }
+
+  .certificate__actions .btn {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 720px) {
+  /* Cada curso en dos filas: contenido arriba, estado y acción abajo. */
+  .course-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    row-gap: 14px;
+  }
+
+  .course-row__link {
+    grid-column: 1 / -1;
+  }
+
+  .course-row__status {
+    grid-column: 1 / 2;
+    justify-self: start;
+  }
+
+  .course-row__go {
+    grid-column: 2 / 3;
+    justify-self: end;
+  }
+
+  .hero-course__progress-value {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-course__body {
+    padding: 20px 18px 22px;
+  }
+
+  /* El porcentaje baja un poco para no competir con el titulo en angosto. */
+  .hero-course__progress-value {
+    font-size: 26px;
+  }
+
+  /* Las tres fichas no caben en una fila: bajan apiladas. */
+  .hero-course__stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .hero-course__stat {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 13px;
+  }
+
+  .hero-course__actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .identity {
+    padding: 20px 18px;
+  }
+
+  .identity__avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 22px;
+    border-radius: 20px;
+  }
+
+  .identity__name {
+    font-size: 19px;
+  }
+
+  .certificate__preview {
+    padding: 30px 22px 26px;
+  }
+
+  .certificate__facts {
+    gap: 12px 22px;
+  }
+
+  .certificate__foot {
+    padding: 18px;
+  }
+
+  .certificate__actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .ring {
+    width: 108px;
+    height: 108px;
+  }
+
+  .ring__inner {
+    width: 84px;
+    height: 84px;
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .course-row,
+  .summary__link {
+    transition: none;
+  }
+}

@@ -1,0 +1,36 @@
+/* =========================================================
+   AVISO DE DEMOSTRACION
+
+   pequeno y de bajo contraste a proposito: informa del limite de la demo
+   sin competir con el contenido principal. Sin borde grueso ni icono
+   que parezca una alerta de error.
+   ========================================================= */
+
+.demo-notice {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  max-width: 620px;
+  margin: 28px auto 0;
+  padding: 12px 18px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #6f5f45;
+  text-align: left;
+  background-color: var(--student-sand, #fdf8f1);
+  border-radius: 12px;
+}
+
+.demo-notice__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--student-amber, #a9782c);
+}
+
+@media (max-width: 560px) {
+  .demo-notice {
+    margin-top: 22px;
+    padding: 11px 14px;
+  }
+}

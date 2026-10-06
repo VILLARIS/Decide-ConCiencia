@@ -1,13 +1,47 @@
 import { Mail, MapPin, Phone } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import logo from '../../assets/Navbar/Logo.png'
 import './Footer.css'
 
+/*
+  Enlaces de navegacion del pie: usan Link y no <a href> a proposito.
+
+  Un enlace con href="/cursos" hace que el navegador pida la URL de nuevo: se
+  recarga toda la aplicacion y, como la sesion demo vive en memoria, la
+  persona aparece desconectada al volver. Con Link se navega dentro de la app
+  y la sesion se conserva.
+*/
+
+/* Marca + descripcion breve. */
+const BRAND = {
+  name: 'Yumibiotic',
+  description:
+    'Soluciones en nutrición, educación y bienestar para personas, profesionales y organizaciones.',
+}
+
+/* Espejo del navbar. */
 const NAV_LINKS = [
   { id: 'inicio', label: 'Inicio', href: '/' },
-  { id: 'cursos', label: 'Cursos', href: '/cursos' },
+  { id: 'quienes-somos', label: 'Quiénes somos', href: '/quienes-somos' },
   { id: 'servicios', label: 'Servicios', href: '/servicios' },
-  { id: 'acceso', label: 'Acceso', href: '/acceso' },
+  { id: 'cursos', label: 'Cursos', href: '/cursos' },
+  { id: 'contacto', label: 'Contacto', href: '/contacto' },
 ]
 
+/* Las cuatro lineas del negocio, en el mismo orden que la seccion de servicios
+   del home. courses primero. */
+const SERVICE_LINKS = [
+  { id: 'asesoria', label: 'Asesoría nutricional', href: '/servicios' },
+  { id: 'capacitaciones', label: 'Capacitaciones', href: '/servicios' },
+  { id: 'programas', label: 'Programas de bienestar', href: '/servicios' },
+  { id: 'cursos-recursos', label: 'Cursos y recursos', href: '/cursos' },
+]
+
+/*
+  Datos de contacto: los que ya tenia el pie de pagina. NO se inventan
+  telefonos, correos ni direcciones. WhatsApp sigue sin numero real, asi que se
+  muestra como texto y no como enlace.
+*/
 const CONTACT = [
   {
     id: 'email',
@@ -89,22 +123,47 @@ function SocialIcon({ network }) {
   )
 }
 
-export default function Footer({ logo }) {
+export default function Footer({ compact = false, studentArea = false }) {
+  /* Version reducida para areas autenticadas: una sola fila, sin columnas. */
+  if (compact) {
+    return (
+      <footer className={`footer footer--compact${studentArea ? ' footer--student' : ''}`}>
+        <div className="footer__compact-inner">
+          <p className="footer__compact-copy">
+            © 2026 {BRAND.name}. Todos los derechos reservados.
+          </p>
+
+          <ul className="footer__compact-nav">
+            {NAV_LINKS.map(({ id, label, href }) => (
+              <li key={id}>
+                <Link className="footer__link" to={href}>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {studentArea ? (
+            <p className="footer__compact-note">
+              Área de estudiante en modo demostración: datos ficticios, sin servidor.
+            </p>
+          ) : null}
+        </div>
+      </footer>
+    )
+  }
+
   return (
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__top">
           <div className="footer__brand">
-            {logo ? (
-              <a className="footer__logo" href="/" aria-label="Yulia, ir al inicio">
-                <img className="footer__logo-img" src={logo} alt="Yulia" />
-              </a>
-            ) : null}
+            <Link className="footer__logo" to="/" aria-label="Yumibiotic, ir al inicio">
+              <img className="footer__logo-img" src={logo} alt={BRAND.name} />
+            </Link>
 
-            <p className="footer__brand-text">
-              Educación y acompañamiento en nutrición para tomar decisiones con
-              conciencia.
-            </p>
+            <p className="footer__brand-name">{BRAND.name}</p>
+            <p className="footer__brand-text">{BRAND.description}</p>
           </div>
 
           <nav className="footer__col" aria-label="Navegación del pie de página">
@@ -112,9 +171,22 @@ export default function Footer({ logo }) {
             <ul className="footer__list">
               {NAV_LINKS.map(({ id, label, href }) => (
                 <li key={id}>
-                  <a className="footer__link" href={href}>
+                  <Link className="footer__link" to={href}>
                     {label}
-                  </a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="footer__col" aria-label="Servicios">
+            <h2 className="footer__title">Servicios</h2>
+            <ul className="footer__list">
+              {SERVICE_LINKS.map(({ id, label, href }) => (
+                <li key={id}>
+                  <Link className="footer__link" to={href}>
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -167,18 +239,20 @@ export default function Footer({ logo }) {
         </div>
 
         <div className="footer__bottom">
-          <p className="footer__copy">© 2026 Yulia. Todos los derechos reservados.</p>
+          <p className="footer__copy">
+            © 2026 {BRAND.name}. Todos los derechos reservados.
+          </p>
 
           <ul className="footer__legal">
             <li>
-              <a className="footer__link" href="/terminos-y-condiciones">
+              <Link className="footer__link" to="/terminos-y-condiciones">
                 Términos y condiciones
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="footer__link" href="/politica-de-privacidad">
+              <Link className="footer__link" to="/politica-de-privacidad">
                 Política de privacidad
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

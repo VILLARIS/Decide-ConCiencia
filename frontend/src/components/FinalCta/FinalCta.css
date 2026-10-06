@@ -1,174 +1,200 @@
+/*
+  CTA FINAL
+
+  Franja grande y clara. Un verde muy tenue en el degradado, con un halo
+  lateral. El detalle a la derecha usa una textura de proyecto al 14% para dar
+  profundidad sin descargar imagenes externas.
+*/
+
 .final-cta {
-  --cta-navy: #173f67;
-  --cta-text-muted: #5c6c7e;
-  --cta-green: #62b747;
-  --cta-green-hover: #569b3e;
-
   position: relative;
-  background-color: #ffffff;
-}
-
-/* Ritmo de cierre: separacion comoda respecto a "Sobre Yulia" y, por
-   debajo, un margen mas generoso que marca la transicion hacia el footer. */
-.final-cta__container {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 48px 32px 72px;
-}
-
-.final-cta__panel {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 28px;
   overflow: hidden;
-  padding: 26px 32px;
-  background-color: #f2f8f3;
-  border: 1px solid rgba(98, 183, 71, 0.18);
-  border-radius: 18px;
+  background-image: radial-gradient(120% 120% at 18% 50%, #f6fbf5 0%, #ffffff 60%, #ffffff 100%);
 }
 
-/* Manchas suaves en las esquinas: dan depth sin parecer un banner. */
-.final-cta__panel::before {
-  content: '';
+.final-cta__container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 40px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 32px 102px;
+}
+
+/* Halo tenue. */
+.final-cta__glow {
   position: absolute;
-  top: -70px;
-  right: -50px;
-  width: 240px;
-  height: 200px;
+  z-index: 0;
+  top: -180px;
+  left: -200px;
+  width: 540px;
+  height: 540px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(98, 183, 71, 0.1) 0%,
-    rgba(98, 183, 71, 0) 70%
-  );
+  background: radial-gradient(circle, rgba(98, 183, 71, 0.1), rgba(98, 183, 71, 0) 68%);
   pointer-events: none;
 }
 
-.final-cta__leaf {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  color: var(--cta-green);
-  background-color: #ffffff;
-  border: 1px solid rgba(98, 183, 71, 0.22);
-  border-radius: 12px;
-}
-
-.final-cta__copy {
-  position: relative;
-  flex: 1;
-  min-width: 0;
+.final-cta__content {
+  max-width: 580px;
 }
 
 .final-cta__title {
   margin: 0;
-  font-size: clamp(20px, 2vw, 25px);
+  font-size: clamp(34px, 3.4vw, 44px);
   font-weight: 700;
-  line-height: 1.24;
-  letter-spacing: -0.024em;
-  color: var(--cta-navy);
+  line-height: 1.12;
+  letter-spacing: -0.026em;
+  color: #173f67;
   text-wrap: balance;
 }
 
 .final-cta__text {
-  margin: 7px 0 0;
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: var(--cta-text-muted);
+  margin: 20px 0 0;
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+/* ---------- Botones ---------- */
+
+.final-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
 }
 
 .final-cta__button {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  flex-shrink: 0;
-  height: 46px;
-  padding: 0 22px;
+  height: 52px;
+  padding: 0 28px;
   font-size: 15.5px;
   font-weight: 600;
-  line-height: 1;
-  color: #ffffff;
+  letter-spacing: -0.005em;
   text-decoration: none;
   white-space: nowrap;
-  background-color: var(--cta-green);
-  border: 1px solid var(--cta-green);
-  border-radius: 11px;
+  border-radius: 999px;
   cursor: pointer;
   transition:
     background-color 180ms ease,
     border-color 180ms ease,
+    color 180ms ease,
     transform 180ms ease;
 }
 
-.final-cta__button:hover {
-  background-color: var(--cta-green-hover);
-  border-color: var(--cta-green-hover);
-  transform: translateY(-1px);
-}
-
 .final-cta__button svg {
-  transition: transform 180ms ease;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
 }
 
-.final-cta__button:hover svg {
-  transform: translateX(2px);
+.final-cta__button--primary {
+  color: #ffffff;
+  background-color: #62b747;
+  border: 1px solid #62b747;
 }
 
-.final-cta__button:active {
+.final-cta__button--primary:hover {
+  background-color: #569b3e;
+  border-color: #569b3e;
+  transform: translateY(-2px);
+}
+
+.final-cta__button--primary:hover svg {
+  transform: translateX(4px);
+}
+
+.final-cta__button--primary:active {
+  background-color: #4f8f39;
+  border-color: #4f8f39;
+  transform: translateY(0);
+}
+
+.final-cta__button--secondary {
+  color: #173f67;
+  background-color: #ffffff;
+  border: 1px solid #d5dfe8;
+}
+
+.final-cta__button--secondary:hover {
+  color: #569b3e;
+  background-color: #f7fafc;
+  border-color: #9ccf8a;
+  transform: translateY(-2px);
+}
+
+.final-cta__button--secondary:active {
   transform: translateY(0);
 }
 
 .final-cta__button:focus-visible {
-  outline: 2px solid var(--cta-green);
+  outline: 2px solid #62b747;
   outline-offset: 3px;
 }
 
-/* ---------- Tablet ---------- */
+/* ---------- Visual ---------- */
+
+.final-cta__visual {
+  position: relative;
+  height: 220px;
+}
+
+.final-cta__foliage {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(70% 90% at 70% 30%, rgba(255, 255, 255, 0.14) 0%, rgba(98, 183, 71, 0) 70%),
+    var(--cta-texture);
+  background-size: cover;
+  background-position: center;
+  border-radius: 24px;
+  opacity: 0.16;
+  filter: saturate(0.9);
+}
+
+/* ---------- Responsive ---------- */
 
 @media (max-width: 1024px) {
   .final-cta__container {
-    padding: 40px 28px 60px;
-  }
-
-  .final-cta__panel {
-    gap: 22px;
-    padding: 24px 26px;
+    padding: 82px 28px 86px;
   }
 }
 
-/* ---------- Mobile ---------- */
-
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .final-cta__container {
-    padding: 32px 20px 48px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 72px 28px 74px;
   }
 
-  .final-cta__panel {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
-    padding: 24px 22px;
+  .final-cta__visual {
+    display: none;
   }
 
-  .final-cta__leaf {
-    width: 36px;
-    height: 36px;
+  .final-cta__content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .final-cta__container {
+    padding: 60px 20px 64px;
   }
 
   .final-cta__text {
-    font-size: 15px;
+    font-size: 16.5px;
   }
 
   .final-cta__button {
-    width: 100%;
+    flex: 1 1 auto;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
   }
 }
 
@@ -176,5 +202,10 @@
   .final-cta__button,
   .final-cta__button svg {
     transition: none;
+  }
+
+  .final-cta__button:hover,
+  .final-cta__button:hover svg {
+    transform: none;
   }
 }

@@ -1,320 +1,364 @@
-.services {
-  --services-navy: #173f67;
-  --services-blue: #2e5b87;
-  --services-green: #62b747;
-  --services-green-hover: #569b3e;
-  --services-text-muted: #627184;
-  --services-border: #e9eef2;
-  --services-border-hover: #dde5ec;
+﻿/*
+  SERVICIOS
 
-  position: relative;
-  overflow: hidden;
+  Bloque editorial: una tarjeta alta con foto a la izquierda, dos tarjetas
+  apiladas a la derecha y una tarjeta ancha de cierre. Rompe la grilla de cuatro
+  cuadrados iguales y da ritmo al bloque.
+
+  Las tarjetas secundarias sin fotografia propia usan un fondo de proyecto como
+  textura muy tenue (--card-texture), con una capa de color encima para que se
+  lea como material de marca y no como una foto suelta.
+
+  Fondo blanco: este bloque respira entre el hero y la seccion de valores.
+*/
+
+.services {
   background-color: #ffffff;
 }
 
-.services::before {
-  content: '';
-  position: absolute;
-  bottom: -220px;
-  left: -170px;
-  width: 520px;
-  height: 480px;
-  border-radius: 48% 52% 56% 44% / 52% 46% 54% 48%;
-  background: radial-gradient(
-    ellipse at 55% 45%,
-    rgba(46, 91, 135, 0.07) 0%,
-    rgba(46, 91, 135, 0.025) 46%,
-    rgba(46, 91, 135, 0) 72%
-  );
-  pointer-events: none;
-}
-
 .services__container {
-  position: relative;
-  width: 100%;
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 40px 32px;
+  padding: 104px 32px 112px;
 }
 
-/* ---------- Encabezado ---------- */
+/* ---------- Cabecera ---------- */
 
-.services__header {
-  max-width: 760px;
-  margin-bottom: 34px;
-}
-
-.services__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 14px;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--services-green-hover);
-}
-
-.services__eyebrow::after {
-  content: '';
-  display: block;
-  width: 34px;
-  height: 1px;
-  background-color: rgba(98, 183, 71, 0.4);
+.services__head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 52px;
 }
 
 .services__title {
   margin: 0;
-  font-size: clamp(30px, 3.4vw, 46px);
+  font-size: clamp(32px, 3.2vw, 42px);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-  color: var(--services-navy);
+  line-height: 1.14;
+  letter-spacing: -0.024em;
+  color: #173f67;
 }
 
 .services__intro {
-  max-width: 620px;
-  margin: 14px 0 0;
-  font-size: 16.5px;
+  max-width: 460px;
+  margin: 0;
+  font-size: 17.5px;
   line-height: 1.6;
-  color: var(--services-text-muted);
+  color: #5b6b7c;
+  text-wrap: pretty;
 }
 
-/* ---------- Grid ---------- */
+/* ---------- Rejilla asimetrica ---------- */
 
 .services__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: 1.06fr 0.94fr;
+  gap: 22px;
 }
 
-/* ---------- Bloque ---------- */
-
-.service-block {
+.services__card {
   display: flex;
   flex-direction: column;
-  padding: 24px 24px 22px;
+  border-radius: 20px;
+  border: 1px solid #ecf1ec;
   background-color: #ffffff;
-  border: 1px solid var(--services-border);
-  border-radius: 18px;
+  overflow: hidden;
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
 }
 
-.service-block--sage {
-  background-color: #f7fbf4;
+.services__card:hover {
+  transform: translateY(-3px);
+  border-color: #dce8da;
+  box-shadow: 0 16px 34px rgba(23, 63, 103, 0.08);
 }
 
-.service-block--sky {
-  background-color: #f6fafe;
-}
-
-.service-block:hover {
-  transform: translateY(-2px);
-  border-color: var(--services-border-hover);
-  box-shadow: 0 8px 24px rgba(20, 50, 80, 0.05);
-}
-
-.service-block__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 18px;
-  border-radius: 14px;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-
-.service-block--sage .service-block__icon {
-  color: #4e8c39;
-  background-color: #e4f2dd;
-}
-
-.service-block--sky .service-block__icon {
-  color: var(--services-blue);
-  background-color: #e2edf7;
-}
-
-.service-block--plain .service-block__icon {
-  color: #3f8474;
-  background-color: #e6f0ec;
-}
-
-.service-block--sage:hover .service-block__icon {
-  color: #3f7a2c;
-  background-color: #dcefd3;
-}
-
-.service-block--sky:hover .service-block__icon {
-  color: #1f4670;
-  background-color: #d6e6f4;
-}
-
-.service-block--plain:hover .service-block__icon {
-  color: #2f6c5e;
-  background-color: #dcebe5;
-}
-
-.service-block__title {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.016em;
-  color: var(--services-navy);
-}
-
-.service-block__text {
-  flex: 1;
-  margin: 9px 0 0;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--services-text-muted);
-}
-
-.service-block__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  align-self: flex-start;
-  margin-top: 16px;
-  padding: 4px 0;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--services-green-hover);
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: color 180ms ease;
-}
-
-.service-block__link svg {
-  transition: transform 180ms ease;
-}
-
-.service-block__link:hover {
-  color: #4f8f39;
-}
-
-.service-block__link:hover svg {
-  transform: translateX(3px);
-}
-
-.service-block__link:focus-visible,
-.services__all:focus-visible {
-  outline: 2px solid var(--services-green);
-  outline-offset: 3px;
-}
-
-/* ---------- Pie ---------- */
-
-.services__footer {
+.services__body {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 26px;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 26px 28px 28px;
 }
 
-.services__all {
+/* ---------- Tarjeta grande ---------- */
+
+.services__card--lead {
+  grid-column: 1;
+  grid-row: span 2;
+}
+
+.services__media {
+  flex: 1 1 auto;
+  min-height: 300px;
+  margin: 0;
+  overflow: hidden;
+  background-color: #f2f8f1;
+}
+
+.services__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La foto es vertical (1122x1402) y el marco tambien: recorta, no estira. */
+  object-position: center 22%;
+  transition: transform 500ms ease;
+}
+
+.services__card--lead:hover .services__image {
+  transform: scale(1.035);
+}
+
+/* ---------- Tarjetas apiladas ---------- */
+
+.services__card--stack {
+  position: relative;
+  min-height: 190px;
+  background-color: #f7faf6;
+}
+
+.services__card--stack::before,
+.services__card--wide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(150deg, rgba(247, 250, 246, 0.9), rgba(233, 243, 231, 0.82)),
+    none;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+.services__card--stack:hover::before,
+.services__card--wide:hover::before {
+  opacity: 1;
+}
+
+.services__card--stack > *,
+.services__card--wide > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Tarjeta ancha ---------- */
+
+.services__card--wide {
+  grid-column: 1 / -1;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: 36px;
+  min-height: 148px;
+  padding-right: 34px;
+  background-color: #f4f8f3;
+}
+
+.services__card--wide .services__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 40px;
+  width: 100%;
+  padding: 30px 0 30px 32px;
+}
+
+.services__card--wide .services__category {
+  grid-column: 1;
+}
+
+.services__card--wide .services__card-title {
+  grid-column: 1;
+  margin-bottom: 4px;
+}
+
+.services__card--wide .services__description {
+  grid-column: 1;
+  max-width: 620px;
+}
+
+.services__card--wide .services__link {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  align-self: center;
+}
+
+/* ---------- Textos ---------- */
+
+.services__category {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #62b747;
+}
+
+.services__card-title {
+  margin: 0;
+  font-size: clamp(21px, 1.7vw, 25px);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.018em;
+  color: #173f67;
+}
+
+.services__description {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.58;
+  color: #5b6b7c;
+  text-wrap: pretty;
+}
+
+/* ---------- Link ---------- */
+
+.services__link {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 0;
-  font-size: 15px;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 22px;
+  font-size: 14.5px;
   font-weight: 600;
-  line-height: 1.4;
-  color: var(--services-navy);
   text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  border-radius: 6px;
+  color: #4f8f39;
+  align-self: flex-start;
   transition: color 180ms ease;
 }
 
-.services__all svg {
-  color: var(--services-green);
-  transition: transform 180ms ease;
+.services__card--wide .services__link {
+  margin-top: 0;
+  padding-top: 0;
+  align-self: center;
 }
 
-.services__all:hover {
-  color: var(--services-green-hover);
+.services__link svg {
+  transition: transform 200ms ease;
 }
 
-.services__all:hover svg {
+.services__link:hover {
+  color: #173f67;
+}
+
+.services__link:hover svg {
   transform: translateX(4px);
 }
 
-/* ---------- Tablet ---------- */
+.services__link:focus-visible {
+  outline: 2px solid #62b747;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
+/* ---------- Responsive ---------- */
+
+/* Tablet: el bloque se simplifica a una sola columna sin perder la jerarquia. */
 @media (max-width: 1024px) {
   .services__container {
-    padding: 36px 28px;
+    padding: 88px 28px 92px;
   }
 
-  .services__header {
-    margin-bottom: 30px;
+  .services__head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
   }
 
   .services__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .services__card--lead {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .services__media {
+    min-height: 260px;
+    max-height: 320px;
+  }
+
+  .services__card--wide {
+    grid-column: 1 / -1;
   }
 }
 
-/* ---------- Mobile ---------- */
-
-@media (max-width: 720px) {
-  .services__container {
-    padding: 32px 20px;
+/* Tablet vertical: la tarjeta ancha se apila. */
+@media (max-width: 860px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
-  .services__header {
-    margin-bottom: 26px;
+  .services__card--stack {
+    min-height: 0;
+  }
+
+  .services__card--wide {
+    padding-right: 0;
+  }
+
+  .services__card--wide .services__body {
+    grid-template-columns: 1fr;
+    padding: 26px 28px 28px;
+  }
+
+  .services__card--wide .services__category,
+  .services__card--wide .services__card-title,
+  .services__card--wide .services__description,
+  .services__card--wide .services__link {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .services__card--wide .services__link {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .services__container {
+    padding: 68px 20px 74px;
+  }
+
+  .services__head {
+    margin-bottom: 32px;
   }
 
   .services__intro {
     font-size: 16px;
   }
 
-  .services__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+  .services__body {
+    padding: 22px 22px 24px;
   }
 
-  .service-block {
-    padding: 26px 24px 24px;
+  .services__media {
+    min-height: 220px;
   }
 
-  .service-block__icon {
-    width: 42px;
-    height: 42px;
-    margin-bottom: 18px;
-  }
-
-  .service-block__title {
-    font-size: 19px;
-  }
-
-  .services__footer {
-    justify-content: flex-start;
-    margin-top: 30px;
+  .services__link {
+    font-size: 14px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-block,
-  .service-block__icon,
-  .service-block__link,
-  .service-block__link svg,
-  .services__all,
-  .services__all svg {
+  .services__card,
+  .services__image,
+  .services__card--stack::before,
+  .services__card--wide::before,
+  .services__link svg {
     transition: none;
+  }
+
+  .services__card:hover,
+  .services__card--lead:hover .services__image {
+    transform: none;
   }
 }

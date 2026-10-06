@@ -1,0 +1,215 @@
+/* =========================================================
+   AuthLayout — cascara compartida de Login y Registro.
+
+   Split 52/48: el formulario manda a la izquierda, la ilustracion acompana a
+   la derecha. El texto sobre la imagen es un bloque editorial pequeno en glass,
+   abajo a la izquierda. Tokens alineados con los heroes del sitio:
+   navy #173f67, verde #62b747.
+   ========================================================= */
+
+.auth {
+  /* Altura real del navbar publico (--navbar-height en Navbar.css). Ese token
+     vive dentro de .navbar y no se hereda, asi que se replica aqui. */
+  --auth-navbar-height: 80px;
+  --auth-navy: #173f67;
+  --auth-green: #62b747;
+
+  background-color: #ffffff;
+  color: #2b3a4b;
+}
+
+/* El proyecto no define border-box global; sin esto el padding sumaria al
+   ancho y la columna de la derecha desbordaria la pantalla. */
+.auth,
+.auth *,
+.auth *::before,
+.auth *::after {
+  box-sizing: border-box;
+}
+
+.auth__section {
+  display: grid;
+  /* 50/50. La mitad se reparte a partes iguales: la diferencia de peso visual
+     se corrige en el tamano del bloque de login, no robando columna a la
+     imagen. */
+  grid-template-columns: minmax(0, 50fr) minmax(0, 50fr);
+  /* Solo el espacio que deja el navbar: nunca se piden 100vh extra, asi que en
+     1440x900 y 1920x1080 el login completo se ve sin scroll. */
+  min-height: calc(100vh - var(--auth-navbar-height));
+}
+
+/* =========================================================
+   COLUMNA DERECHA — la imagen ES la columna
+   ========================================================= */
+
+.auth__visual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #eef4ef;
+}
+
+.auth__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Cover puro, sin scale(): la ilustracion se recorta lo justo y conserva
+     rostro, hombros y escritorio. */
+  object-fit: cover;
+  object-position: var(--auth-image-position, center top);
+}
+
+/* Unico overlay de la pantalla. Transparente hasta el 58% alto — donde esta la
+   cara y las manos — para no lavar color ni detalle. */
+.auth__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 58%,
+    rgba(255, 255, 255, 0.16) 78%,
+    rgba(255, 255, 255, 0.42) 100%
+  );
+}
+
+/* Transicion entre columnas: banda blanca difuminada sobre el borde izquierdo
+   de la foto. Sin linea, sin borde: el blanco del formulario se derrama hacia
+   la imagen y el conjunto se lee como una sola pantalla. */
+.auth__visual::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  width: clamp(56px, 5vw, 88px);
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.32) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Bloque editorial: esquina inferior derecha de la imagen. Va a la derecha
+   porque el personaje esta compuesto hacia la izquierda de la escena, asi el
+   panel no le pisa rostro ni manos. Complemento, no protagonista. */
+.auth__copy {
+  position: absolute;
+  z-index: 2;
+  right: clamp(20px, 2.4vw, 34px);
+  bottom: clamp(20px, 3vh, 36px);
+  max-width: 370px;
+  padding: 18px 20px;
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(23, 63, 103, 0.06);
+}
+
+.auth__eyebrow {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--auth-green);
+}
+
+.auth__title {
+  margin: 8px 0 0;
+  font-size: clamp(27px, 2vw, 31px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.028em;
+  color: var(--auth-navy);
+  text-wrap: balance;
+}
+
+.auth__description {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #55697e;
+}
+
+/* =========================================================
+   COLUMNA IZQUIERDA — sin card: solo el formulario, centrado
+   ========================================================= */
+
+.auth__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Padding inferior mayor que el superior: el bloque se centra pero sube unos
+     pixeles respecto al centro geometrico. Es lo que lo equilibra contra el
+     rostro de la imagen, que esta mas arriba que el centro del panel. Sin
+     transform: no toca el layout ni el scroll. */
+  padding: clamp(24px, 3.2vh, 38px) clamp(28px, 3.4vw, 52px)
+    clamp(34px, 4.6vh, 56px);
+  background-color: #ffffff;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* ---------- Tablet: se mantienen 2 columnas, formulario 56% / imagen 44%.
+   El formulario sigue siendo la columna protagonista, solo con menos aire
+   alrededor porque el ancho total ya no da para 460px + imagen digna. ---------- */
+
+@media (max-width: 1023px) {
+  .auth__section {
+    grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
+  }
+
+  /* max-width con right acotado: en columnas estrechas el bloque se angosta
+     solo en vez de desbordar la imagen. */
+  .auth__copy {
+    right: 20px;
+    max-width: 300px;
+    padding: 16px 18px;
+  }
+
+  .auth__title {
+    font-size: 25px;
+  }
+
+  .auth__description {
+    margin-top: 7px;
+    font-size: 14px;
+  }
+
+  .auth__panel {
+    padding-inline: 28px;
+  }
+}
+
+/* ---------- Mobile: el panel de imagen desaparece ---------- */
+
+@media (max-width: 767px) {
+  .auth__section {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .auth__visual {
+    display: none;
+  }
+
+  .auth__panel {
+    align-items: flex-start;
+    padding: 28px 20px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth__panel {
+    padding: 24px 16px 28px;
+  }
+}
