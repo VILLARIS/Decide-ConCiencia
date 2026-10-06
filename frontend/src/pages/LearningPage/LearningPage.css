@@ -17,9 +17,15 @@
   gap: 28px;
 }
 
+/*
+  Mi aprendizaje es una pila vertical: cada seccion ocupa el ancho completo y
+  se leen seguidas. Antes eran dos columnas con un resumen lateral pegado al
+  borde, que dejaba el progreso y la actividad como panels estrechos y
+ --"apretados" en el margen.
+*/
 .learning {
-  grid-template-columns: minmax(0, 1fr) 336px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 30px;
 }
 
 .learning__main,
@@ -27,8 +33,10 @@
   min-width: 0;
 }
 
+/* Nota de demo: va dentro de "Mis cursos", asi que no necesita margin propio
+   — el gap de la pila ya separa las secciones. */
 .learning__demo-note {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   font-size: 12.5px;
   line-height: 1.6;
   color: var(--student-faint);
@@ -371,6 +379,11 @@
 
 /* ---------- Curso principal ---------- */
 
+/*
+  Sin franja superior a todo el ancho: ocupaba una banda completa por un icono y
+  un texto. La identidad paso a un bloque compacto dentro del cuerpo, y el
+  encabezado de la pagina ya da el contexto del area.
+*/
 .hero-course {
   overflow: hidden;
   background-color: var(--student-surface);
@@ -379,62 +392,56 @@
   box-shadow: var(--student-shadow);
 }
 
-/* Franja visual superior: mini portada, sin imagen pesada. */
-.hero-course__cover {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 18px 26px;
-  background: linear-gradient(120deg, #1d4a76 0%, #2e5b87 62%, #3d7ba5 100%);
-}
-
-.hero-course__cover::after {
-  position: absolute;
-  right: -30px;
-  bottom: -46px;
-  width: 200px;
-  height: 200px;
-  content: '';
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(98, 183, 71, 0.34) 0%,
-    rgba(98, 183, 71, 0) 70%
-  );
-}
-
-.hero-course__cover-icon {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 15px;
-}
-
-.hero-course__cover-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.82);
-}
-
+/*
+  Dos columnas en vez de un bloque apilado:
+  izquierda = identidad + progreso (la parte que explica el estado),
+  derecha = datos y acciones (lo que se puede hacer).
+  A ancho completo el contenido se estiraba y la card quedaba mas alta que el
+  resto del area; asi el alto lo marca la fila mas alta de cada lado.
+*/
 .hero-course__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 26px 32px;
+  align-items: start;
   padding: 24px 26px 26px;
 }
 
-.hero-course__head {
+/* Columna izquierda: identidad arriba, progreso debajo. */
+.hero-course__lead {
+  min-width: 0;
+}
+
+/* Identidad del curso: icono en vez de franja superior a todo el ancho. */
+.hero-course__identity {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 15px;
+}
+
+.hero-course__glyph {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2e5b87 0%, #62b747 100%);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(46, 91, 135, 0.16);
+}
+
+.hero-course__kicker {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--student-faint);
 }
 
 .hero-course__title {
-  margin: 0;
+  margin: 5px 0 0;
   font-size: clamp(19px, 1.8vw, 23px);
   font-weight: 700;
   line-height: 1.25;
@@ -449,8 +456,10 @@
 }
 
 .hero-course__status {
-  flex-shrink: 0;
-  padding: 6px 13px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 11px;
+  padding: 5px 12px;
   font-size: 12px;
   font-weight: 600;
   color: #3f8a2c;
@@ -458,9 +467,9 @@
   border-radius: 999px;
 }
 
-/* Progreso del curso principal */
+/* Progreso del curso principal: bajo la identidad, en la columna izquierda. */
 .hero-course__progress {
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
 .hero-course__progress-head {
@@ -477,32 +486,43 @@
   color: var(--student-muted);
 }
 
+/* Porcentaje grande: es el dato que resume el bloque. */
 .hero-course__progress-value {
-  font-size: 19px;
+  font-size: 30px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--student-navy);
 }
 
-/* Datos separados con divisores: progreso, módulo, clases, siguiente paso */
+/* Columna derecha: datos y acciones, sobre una superficie suave para que se
+   lean como un bloque propio y no como mas texto de la izquierda. */
+.hero-course__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 18px;
+  background-color: var(--student-soft);
+  border: 1px solid var(--student-line);
+  border-radius: 15px;
+}
+
+/*
+  Los tres datos van en columna dentro de la caja derecha: en horizontal
+  quedaba un bloque estrecho de tres cifras sin contexto, y el ancho de la
+  columna no daba para tres columnas legibles.
+*/
 .hero-course__stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  margin: 22px 0 0;
-  padding: 16px 0;
-  border-top: 1px solid var(--student-line);
-  border-bottom: 1px solid var(--student-line);
+  gap: 14px;
+  margin: 0;
 }
 
 .hero-course__stat {
-  padding: 0 18px;
-  border-left: 1px solid var(--student-line);
-}
-
-.hero-course__stat:first-child {
-  padding-left: 0;
-  border-left: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .hero-course__stat dt {
@@ -514,27 +534,35 @@
 }
 
 .hero-course__stat dt svg {
+  flex-shrink: 0;
   color: var(--student-blue);
 }
 
 .hero-course__stat dd {
-  margin: 6px 0 0;
-  font-size: 15px;
+  margin: 0;
+  font-size: 14.5px;
   font-weight: 600;
+  text-align: right;
   color: var(--student-navy);
 }
 
+/* Acciones al pie de la columna derecha, a ancho completo. */
 .hero-course__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 2px;
+}
+
+.hero-course__actions .btn {
+  flex: 1 1 auto;
 }
 
 /* ---------- Lista de cursos ---------- */
 
+/* El gap de la pila ya separa las secciones: sin margin propio. */
 .courses {
-  margin-top: 34px;
+  margin-top: 0;
 }
 
 .courses__head {
@@ -1117,15 +1145,64 @@
   color: var(--student-muted);
 }
 
+/* ---------- Progress general: bloque centrado a ancho completo ---------- */
+
+.learning-progress {
+  padding: 26px 22px 30px;
+}
+
+.learning-progress__figure {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.learning-progress__text {
+  max-width: 48ch;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--student-muted);
+}
+
+.learning-progress__text strong {
+  color: var(--student-navy);
+}
+
+/* ---------- Certificados: contenido a la izquierda, acceso a la derecha ---------- */
+
+.learning-certificates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
+/* La clase .summary__link trae margin-top para el resumen lateral; aqui el
+   enlace va en linea con el certificado. */
+.learning-certificates .summary__link {
+  margin-top: 0;
+}
+
+/* ---------- Timeline en pasos: tres columnas en pantallas anchas ---------- */
+
+.timeline--steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px 28px;
+}
+
+/* En horizontal la linea que unia los hitos verticalmente estorba. */
+.timeline--steps .timeline__item::before {
+  display: none;
+}
+
 /* =========================================================
    5. RESPONSIVE
    ========================================================= */
 
 @media (max-width: 1180px) {
-  .learning {
-    grid-template-columns: minmax(0, 1fr) 300px;
-  }
-
   .certificates {
     grid-template-columns: minmax(0, 1fr) 288px;
   }
@@ -1162,27 +1239,32 @@
     gap: 22px;
   }
 
-  .hero-course__cover {
-    padding: 16px 22px;
-  }
-
+  /* El curso en curso deja de caber en dos columnas: se apila entero. */
   .hero-course__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
     padding: 22px 22px 24px;
   }
 
-  /* Los tres datos del curso pasan a dos columnas + ancho completo. */
+  /* Apilado, los tres datos vuelven a exploitarse en horizontal. */
   .hero-course__stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .hero-course__stat {
-    padding: 0 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 12px 13px;
+    background-color: var(--student-surface);
+    border: 1px solid var(--student-line);
+    border-radius: 12px;
   }
 
-  .hero-course__stat:nth-child(odd) {
-    padding-left: 0;
-    border-left: 0;
+  .hero-course__stat dd {
+    font-size: 14px;
+    text-align: left;
   }
 
   .identity {
@@ -1254,41 +1336,26 @@
 }
 
 @media (max-width: 560px) {
-  .hero-course__cover {
-    padding: 14px 18px;
-  }
-
-  .hero-course__cover-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 13px;
-  }
-
   .hero-course__body {
     padding: 20px 18px 22px;
   }
 
-  /* En movil el estado baja bajo el titulo. */
-  .hero-course__head {
-    flex-direction: column;
+  /* El porcentaje baja un poco para no competir con el titulo en angosto. */
+  .hero-course__progress-value {
+    font-size: 26px;
+  }
+
+  /* Las tres fichas no caben en una fila: bajan apiladas. */
+  .hero-course__stats {
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
   }
 
-  .hero-course__stats {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 16px;
-  }
-
-  .hero-course__stat,
-  .hero-course__stat:nth-child(odd) {
-    padding: 0 0 14px;
-    border-left: 0;
-    border-bottom: 1px solid var(--student-line);
-  }
-
-  .hero-course__stat:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
+  .hero-course__stat {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 13px;
   }
 
   .hero-course__actions .btn {

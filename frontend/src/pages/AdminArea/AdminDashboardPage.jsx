@@ -1,9 +1,19 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ClipboardList, FileCheck2, Plus, Users } from 'lucide-react'
+import {
+  ArrowRight,
+  BadgeDollarSign,
+  BookOpen,
+  ClipboardList,
+  FileCheck2,
+  GraduationCap,
+  Plus,
+  TrendingUp,
+  Users,
+} from 'lucide-react'
 import AdminShell from './AdminShell'
 import {
   AdminBadge,
-  AdminPageHeader,
+  AdminPerson,
   AdminQuickAction,
   AdminSection,
   AdminStat,
@@ -43,6 +53,18 @@ const RECENT_SALES = DEMO_ADMIN_SALES.slice(0, 5)
 const RECENT_COURSES = DEMO_ADMIN_COURSES.slice(0, 3)
 const RECENT_STUDENTS = DEMO_ADMIN_STUDENTS.slice(0, 4)
 
+/*
+  Cada KPI lleva su icono y su tono pastel. El mapeo va aqui y no en
+  demoAdminData porque es una decision de como se ve la cifra, no de que mide:
+  los datos siguen siendo los mismos y ninguna otra pantalla cambia.
+*/
+const STAT_ICONS = {
+  'sales-month': { icon: BadgeDollarSign, tone: 'green' },
+  'sales-total': { icon: TrendingUp, tone: 'blue' },
+  students: { icon: Users, tone: 'sand' },
+  courses: { icon: BookOpen, tone: 'sage' },
+}
+
 /* El importe se toma del curso: el historico guarda lo que se cobro. */
 function saleAmount(sale) {
   return getCoursePrice(sale.courseId)
@@ -56,15 +78,43 @@ function DashboardView() {
         rapidos. Repetirlo en el encabezado y en el contenido obligaba a elegir
         cual de los dos era el bueno.
       */}
-      <AdminPageHeader
-        title="Buenos días, Dra. Yulia"
-        subtitle="Resumen de la actividad de tu plataforma."
-      />
+      <div className="admin-hero">
+        <div className="admin-hero__copy">
+          <p className="admin-hero__eyebrow">
+            <GraduationCap size={15} strokeWidth={1.9} aria-hidden="true" />
+            Panel de la doctora
+          </p>
+
+          <h1 className="admin-hero__title">Buenos días, Dra. Yulia</h1>
+
+          <p className="admin-hero__sub">
+            Aquí tienes todo lo que pasa en tu plataforma: las ventas del mes, tus
+            cursos y las personas que están aprendiendo contigo.
+          </p>
+        </div>
+
+        <p className="admin-hero__motto">Aprender también se entrena.</p>
+
+        {/* Formas suaves de fondo: dan profundidad sin robar atención al dato. */}
+        <span className="admin-hero__shape admin-hero__shape--one" aria-hidden="true" />
+        <span className="admin-hero__shape admin-hero__shape--two" aria-hidden="true" />
+      </div>
 
       <AdminStatRow>
-        {DEMO_ADMIN_STATS.map((stat) => (
-          <AdminStat key={stat.id} label={stat.label} value={stat.value} hint={stat.hint} />
-        ))}
+        {DEMO_ADMIN_STATS.map((stat) => {
+          const { icon: StatIcon, tone } = STAT_ICONS[stat.id] ?? {}
+
+          return (
+            <AdminStat
+              key={stat.id}
+              label={stat.label}
+              value={stat.value}
+              hint={stat.hint}
+              icon={StatIcon}
+              tone={tone}
+            />
+          )
+        })}
       </AdminStatRow>
 
       <div className="admin-dash">
@@ -84,8 +134,8 @@ function DashboardView() {
             <AdminTable headers={['Estudiante', 'Curso', 'Monto', 'Fecha', 'Estado']}>
               {RECENT_SALES.map((sale) => (
                 <tr key={sale.id}>
-                  <AdminTableCell label="Estudiante" className="admin-table__strong">
-                    {getStudentName(sale.studentId)}
+                  <AdminTableCell label="Estudiante">
+                    <AdminPerson name={getStudentName(sale.studentId)} size="sm" />
                   </AdminTableCell>
 
                   <AdminTableCell label="Curso" className="admin-table__muted">

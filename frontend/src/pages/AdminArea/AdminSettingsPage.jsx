@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, LogOut } from 'lucide-react'
+import { Check, LogOut, Settings } from 'lucide-react'
 import AdminShell from './AdminShell'
 import { AdminPageHeader, AdminSection } from './AdminParts'
 import { RequireAdminSession } from '../../demo/DemoAuthContext'
@@ -46,7 +46,12 @@ function SettingsView() {
 
   return (
     <AdminShell>
-      <AdminPageHeader title="Configuración" subtitle="Datos visibles de tu plataforma." />
+      <AdminPageHeader
+        title="Configuración"
+        subtitle="Administra tu cuenta y las preferencias de tu plataforma."
+        eyebrow="Ajustes"
+        icon={Settings}
+      />
 
       <div className="admin-settings">
         <div className="admin-settings__main">

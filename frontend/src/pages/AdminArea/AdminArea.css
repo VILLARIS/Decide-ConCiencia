@@ -11,22 +11,31 @@
 
 /* ---------- Nota al pie de una vista ---------- */
 
+/*
+  No es texto suelto: es una caja clara con filete verde a la izquierda. Aporta
+  el contexto que la pantalla no puede mostrar (lo que esta demo no hace) sin
+  competir con el contenido ni desaparecer entre parrafos.
+*/
 .admin-note {
-  max-width: 640px;
+  max-width: 720px;
   margin: 20px 0 0;
+  padding: 13px 18px;
   font-size: 12.5px;
   line-height: 1.6;
-  color: var(--admin-faint);
+  color: var(--admin-muted);
+  background-color: var(--admin-green-soft);
+  border-left: 3px solid var(--admin-green);
+  border-radius: 0 12px 12px 0;
 }
 
 /* ---------- Avisos de formulario ---------- */
 
 .admin-alert {
   margin: 0;
-  padding: 10px 12px;
+  padding: 12px 14px;
   font-size: 13px;
   line-height: 1.5;
-  border-radius: 10px;
+  border-radius: 11px;
 }
 
 .admin-alert--error {
@@ -71,43 +80,44 @@
 
 /* =========================================================
    1. FORMULARIO
-   Campos simples y planos: el color lo pone el foco, no la caja.
+   Campos respirados: etiqueta visible, caja clara y aire entre grupos. El
+   color lo pone el foco, no la caja.
    ========================================================= */
 
 .admin-form {
   display: grid;
-  gap: 16px;
-  padding-top: 18px;
+  gap: 20px;
+  padding-top: 6px;
 }
 
 .admin-field {
   display: grid;
-  gap: 7px;
+  gap: 8px;
 }
 
 .admin-field__label {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--admin-muted);
+  color: var(--admin-navy);
 }
 
 .admin-field-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .admin-input {
   width: 100%;
   min-width: 0;
-  height: 42px;
-  padding: 0 13px;
+  height: 46px;
+  padding: 0 15px;
   font-family: inherit;
   font-size: 14px;
   color: var(--admin-ink);
   background-color: #ffffff;
   border: 1px solid var(--admin-border-strong);
-  border-radius: 10px;
+  border-radius: 12px;
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
@@ -130,9 +140,21 @@
 
 .admin-input--area {
   height: auto;
-  padding: 11px 13px;
+  min-height: 110px;
+  padding: 13px 15px;
   line-height: 1.55;
   resize: vertical;
+}
+
+/* Select: la flecha del navegador choca con el padding, asi que se deja el
+   espacio a la derecha y el icono se dibuja aparte. */
+select.admin-input {
+  appearance: none;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238794a3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
 }
 
 /* Campo dentro de una fila: sin borde, solo la linea. */
@@ -190,7 +212,9 @@
 
 .admin-editor__side {
   position: sticky;
-  top: 24px;
+  /* Por debajo del navbar: con top corto, el resumen del curso se esconderia
+     detras de la barra global al bajar. */
+  top: calc(var(--admin-navbar-h) + 24px);
   display: grid;
   gap: 20px;
 }
@@ -1270,15 +1294,19 @@
    ========================================================= */
 
 .admin-plan__name {
-  margin: 18px 0 0;
-  font-size: 20px;
+  margin: 4px 0 0;
+  padding: 7px 14px;
+  display: inline-block;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--admin-navy);
+  letter-spacing: 0.02em;
+  color: var(--admin-green-deep);
+  background-color: var(--admin-green-soft);
+  border-radius: 999px;
 }
 
 .admin-plan__desc {
-  margin: 7px 0 0;
+  margin: 14px 0 0;
   font-size: 13.5px;
   line-height: 1.55;
   color: var(--admin-muted);
@@ -1286,8 +1314,8 @@
 
 .admin-plan__list {
   display: grid;
-  gap: 8px;
-  margin: 18px 0 0;
+  gap: 9px;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1329,6 +1357,102 @@
   grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
   align-items: start;
   gap: 20px;
+}
+
+/* =========================================================
+   HERO DEL PANEL
+   Solo en el inicio. Es la unica pantalla con un saludo propio: en las demas,
+   el encabezado de pagina es suficiente y un bloque decorativo estorba.
+   ========================================================= */
+
+.admin-hero {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 32px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding: 30px 32px;
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 18px;
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-hero__copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  max-width: 60ch;
+}
+
+.admin-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--admin-green-deep);
+}
+
+.admin-hero__title {
+  margin: 0;
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: var(--admin-navy);
+}
+
+.admin-hero__sub {
+  margin: 10px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--admin-muted);
+}
+
+/* La frase de marca se queda a la derecha, nunca encima del texto. */
+.admin-hero__motto {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--admin-green-deep);
+  white-space: nowrap;
+  background-color: var(--admin-green-soft);
+  border-radius: 999px;
+}
+
+/* Dos manchas de color muy claro: dan profundidad sin competir con el dato. */
+.admin-hero__shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.admin-hero__shape--one {
+  top: -70px;
+  right: -50px;
+  width: 240px;
+  height: 240px;
+  background-color: var(--admin-green-soft);
+  opacity: 0.7;
+}
+
+.admin-hero__shape--two {
+  right: 180px;
+  bottom: -110px;
+  width: 190px;
+  height: 190px;
+  background-color: var(--admin-blue-soft);
+  opacity: 0.6;
 }
 
 /* ---------- Acciones rapidas ---------- */
@@ -1417,7 +1541,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px 20px;
-  padding: 16px 22px;
+  padding: 18px 24px;
   border-bottom: 1px solid var(--admin-line);
 }
 
@@ -1429,20 +1553,20 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-width: 220px;
+  min-width: 240px;
 }
 
 .admin-search__icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   color: var(--admin-faint);
   pointer-events: none;
 }
 
 .admin-search__input {
   width: 100%;
-  height: 36px;
-  padding: 0 12px 0 34px;
+  height: 38px;
+  padding: 0 14px 0 36px;
   font-family: inherit;
   font-size: 13.5px;
   color: var(--admin-ink);
@@ -1493,49 +1617,35 @@
 
 /* =========================================================
    7. PERSONA DENTRO DE UNA TABLA
-   El nombre abre la ficha, asi que es un boton disfrazado de enlace: tiene que
-   parecer clicable y por eso el color de enlace.
+   El nombre abre la ficha, asi que el boton tiene que parecer clicable. El
+   avatar y el nombre los pone AdminPerson; aqui solo el estado de enlace.
    ========================================================= */
 
 .admin-personrow {
   display: flex;
   align-items: center;
-  gap: 10px;
   padding: 0;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
   background-color: transparent;
   border: 0;
+  border-radius: 10px;
+  transition: color 160ms ease;
 }
 
-.admin-personrow__name {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--admin-blue);
-}
-
-.admin-personrow:hover .admin-personrow__name {
+.admin-personrow:hover .admin-person__name {
+  color: var(--admin-green-deep);
   text-decoration: underline;
+}
+
+.admin-personrow:hover .admin-person__avatar {
+  background-color: var(--admin-green-soft);
 }
 
 .admin-personrow:focus-visible {
   outline: 2px solid var(--admin-green);
   outline-offset: 3px;
-  border-radius: 6px;
-}
-
-.admin-avatar {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--admin-blue);
-  background-color: var(--admin-blue-soft);
-  border-radius: 9px;
 }
 
 /* =========================================================
@@ -1607,20 +1717,21 @@
 .admin-deflist {
   display: grid;
   gap: 0;
-  margin: 8px 0 0;
+  margin: 4px 0 0;
 }
 
+/* Cada dato va en su propia fila suave, no en una linea con filete: leer un
+   perfil es ir bajando por tarjetas, no una tabla densa. */
 .admin-deflist__row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--admin-line);
-}
-
-.admin-deflist__row:last-child {
-  border-bottom: 0;
+  margin-top: 8px;
+  padding: 13px 16px;
+  background-color: var(--admin-soft);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
 }
 
 .admin-deflist__term {
@@ -1647,20 +1758,20 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 312px;
   align-items: start;
-  gap: 20px;
+  gap: 24px;
 }
 
 .admin-settings__main {
   display: grid;
-  gap: 20px;
+  gap: 24px;
   min-width: 0;
 }
 
 .admin-settings__side {
   position: sticky;
-  top: 24px;
+  top: calc(var(--admin-navbar-h) + 24px);
   display: grid;
-  gap: 20px;
+  gap: 24px;
 }
 
 /* =========================================================
@@ -2020,6 +2131,20 @@
 }
 
 @media (max-width: 720px) {
+  /* El hero se estrecha: la frase de marca baja bajo el texto en vez de
+     empujar el saludo a una sola linea corta. */
+  .admin-hero {
+    padding: 26px 22px;
+  }
+
+  .admin-hero__copy {
+    max-width: none;
+  }
+
+  .admin-hero__motto {
+    white-space: normal;
+  }
+
   /* El temario apila: el recuento de lecciones baja a su propia fila para no
      dejar el nombre del modulo sin ancho. */
   .admin-module__head {

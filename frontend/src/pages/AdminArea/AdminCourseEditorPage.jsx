@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Check, ExternalLink, FileCheck2, Plus, X } from 'lucide-react'
+import { ArrowLeft, BookOpen, Check, ExternalLink, FileCheck2, Plus, X } from 'lucide-react'
 import AdminShell from './AdminShell'
 import {
   AdminBadge,
@@ -293,9 +293,15 @@ function CourseEditorView({ course }) {
 
   return (
     <AdminShell>
-      <AdminPageHeader
-        title={isNew ? 'Crear nuevo curso' : 'Editar curso'}
-        subtitle={isNew ? 'Define la ficha y organiza el contenido del curso.' : course.title}
+<AdminPageHeader
+          title={isNew ? 'Crear nuevo curso' : 'Editar curso'}
+          subtitle={
+            isNew
+              ? 'Define la ficha y organiza el contenido del curso.'
+              : 'Ajusta la ficha, el temario y las lecciones de este curso.'
+          }
+          eyebrow={isNew ? 'Nuevo curso' : 'Contenido'}
+          icon={BookOpen}
         meta={
           <>
             <AdminBadge status={form.status}>{form.status}</AdminBadge>

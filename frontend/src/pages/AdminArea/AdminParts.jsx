@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MoreHorizontal, X } from 'lucide-react'
+import { ChevronRight, MoreHorizontal, X } from 'lucide-react'
 import { useOverlayDismiss } from './useOverlayDismiss'
 import './AdminShell.css'
 import './AdminArea.css'
@@ -34,11 +34,23 @@ import './AdminArea.css'
   El boton de accion va a la derecha y solo una vez. Antes cada pagina repetia
   "Nuevo curso" dentro del contenido ademas de aqui, y la pantalla tenia dos
   entradas a lo mismo a la vista.
+
+  Es la misma pieza que el saludo del inicio, sin las formas de fondo del
+  dashboard: aqui la cabecera es el marco quieto de la pantalla, no un bloque
+  que quiere ser el protagonista. Por eso `eyebrow` e `icon` son opcionales y
+  solo los usa quien tiene algo que decir antes del titulo.
 */
-export function AdminPageHeader({ title, subtitle, actions, meta }) {
+export function AdminPageHeader({ title, subtitle, actions, meta, eyebrow, icon: Icon }) {
   return (
     <header className="admin-pagehead">
       <div className="admin-pagehead__copy">
+        {eyebrow || Icon ? (
+          <p className="admin-pagehead__eyebrow">
+            {Icon ? <Icon size={15} strokeWidth={1.9} aria-hidden="true" /> : null}
+            {eyebrow}
+          </p>
+        ) : null}
+
         <h1 className="admin-pagehead__title">{title}</h1>
         {subtitle ? <p className="admin-pagehead__sub">{subtitle}</p> : null}
         {meta ? <div className="admin-pagehead__meta">{meta}</div> : null}
@@ -135,13 +147,17 @@ const STATUS_TONES = {
   aprobada: 'positive',
   emitido: 'positive',
   emitida: 'positive',
+  completado: 'positive',
+  completada: 'positive',
   activo: 'positive',
   activa: 'positive',
   borrador: 'warning',
   pendiente: 'warning',
-  inactivo: 'warning',
-  inactiva: 'warning',
+  inactivo: 'neutral',
+  inactiva: 'neutral',
   reembolsado: 'neutral',
+  'en revisión': 'review',
+  revision: 'review',
   rechazado: 'negative',
   rechazada: 'negative',
 }
@@ -520,6 +536,9 @@ export function AdminTabPanel({ id, active, children }) {
 /*
   Atajo del panel principal: icono, titulo y una frase. No es una tarjeta: es
   un enlace con tres lineas, para que la columna derecha no se llene de cajas.
+
+  El chevron es decorativo (aria-hidden): la frase ya dice a donde lleva, y
+  repetirlo para el lector de pantalla solo anade ruido.
 */
 export function AdminQuickAction({ to, icon: Icon, title, description }) {
   return (
@@ -532,6 +551,8 @@ export function AdminQuickAction({ to, icon: Icon, title, description }) {
         <span className="admin-quickaction__title">{title}</span>
         <span className="admin-quickaction__desc">{description}</span>
       </span>
+
+      <ChevronRight className="admin-quickaction__chevron" size={16} strokeWidth={2} aria-hidden="true" />
     </Link>
   )
 }
@@ -563,7 +584,44 @@ export function AdminFilters({ options, value, onChange, label = 'Filtrar' }) {
 }
 
 /* ============================================================
-   13. PORTADA DEL CURSO
+   13. PERSONA
+   ============================================================ */
+
+/*
+  Nombre con avatar de iniciales.
+
+  Vive aqui, y no en cada pagina, porque "quien es esta persona" sale en
+  estudiantes, en ventas y en certificados. Si cada pantalla dibuja su propio
+  circulo, esas tres dejan de reconocerse como la misma lista de gente.
+
+  "Ana Quispe" -> "AQ": dos iniciales bastan para reconocer a alguien en una
+  fila, y no hace falta inventar un color por persona.
+*/
+function getPersonInitials(name) {
+  const parts = String(name).trim().split(/\s+/)
+
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
+
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
+}
+
+export function AdminPerson({ name, secondary, size = 'md' }) {
+  return (
+    <span className={`admin-person${size === 'sm' ? ' admin-person--sm' : ''}`}>
+      <span className="admin-person__avatar" aria-hidden="true">
+        {getPersonInitials(name)}
+      </span>
+
+      <span className="admin-person__copy">
+        <span className="admin-person__name">{name}</span>
+        {secondary ? <span className="admin-person__meta">{secondary}</span> : null}
+      </span>
+    </span>
+  )
+}
+
+/* ============================================================
+   14. PORTADA DEL CURSO
    ============================================================ */
 
 /*

@@ -7,6 +7,7 @@ import {
   AdminDrawer,
   AdminEmptyState,
   AdminPageHeader,
+  AdminPerson,
   AdminSection,
   AdminTable,
   AdminTableCell,
@@ -78,7 +79,9 @@ function CertificatesView() {
     <AdminShell>
       <AdminPageHeader
         title="Certificados"
-        subtitle="Certificados emitidos a estudiantes de la plataforma."
+        subtitle="Revisa, emite y consulta los certificados disponibles en la plataforma."
+        eyebrow="Reconocimientos"
+        icon={FileCheck2}
       />
 
       <AdminSection
@@ -92,13 +95,13 @@ function CertificatesView() {
           <AdminTable headers={HEADERS}>
             {DEMO_ADMIN_CERTIFICATES.map((certificate) => (
               <tr key={certificate.id}>
-                <AdminTableCell label="Estudiante" className="admin-table__strong">
-                  {getStudentName(certificate.studentId)}
-                </AdminTableCell>
+<AdminTableCell label="Estudiante">
+                    <AdminPerson name={getStudentName(certificate.studentId)} />
+                  </AdminTableCell>
 
-                <AdminTableCell label="Curso" className="admin-table__muted">
-                  {getCourseTitle(certificate.courseId)}
-                </AdminTableCell>
+                  <AdminTableCell label="Curso" className="admin-table__muted">
+                    {getCourseTitle(certificate.courseId)}
+                  </AdminTableCell>
 
                 <AdminTableCell label="Emitido" className="admin-table__muted">
                   {certificate.issuedAt}

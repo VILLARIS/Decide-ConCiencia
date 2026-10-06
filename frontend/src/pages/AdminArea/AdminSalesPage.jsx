@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { ClipboardList } from 'lucide-react'
+import { BookOpen, ClipboardList, Clock, TrendingUp } from 'lucide-react'
 import AdminShell from './AdminShell'
 import {
   AdminBadge,
   AdminEmptyState,
   AdminFilters,
   AdminPageHeader,
+  AdminPerson,
   AdminSection,
   AdminStat,
   AdminStatRow,
@@ -60,26 +61,54 @@ function SalesView() {
     filter === 'all' ? DEMO_ADMIN_SALES : DEMO_ADMIN_SALES.filter((sale) => sale.status === filter)
 
   const stats = [
-    { id: 'count', label: 'Ventas mostradas', value: visibleSales.length },
-    { id: 'total', label: 'Importe aprobado', value: `S/${approvedTotal(visibleSales)}` },
+    {
+      id: 'count',
+      label: 'Ventas mostradas',
+      value: visibleSales.length,
+      icon: ClipboardList,
+      tone: 'blue',
+    },
+    {
+      id: 'total',
+      label: 'Importe aprobado',
+      value: `S/${approvedTotal(visibleSales)}`,
+      icon: TrendingUp,
+      tone: 'green',
+    },
     {
       id: 'pending',
       label: 'Pendientes',
       value: visibleSales.filter((sale) => sale.status === SALE_STATUS.pending).length,
+      icon: Clock,
+      tone: 'sand',
     },
-    { id: 'courses', label: 'Cursos vendidos', value: new Set(visibleSales.map((sale) => sale.courseId)).size },
+    {
+      id: 'courses',
+      label: 'Cursos vendidos',
+      value: new Set(visibleSales.map((sale) => sale.courseId)).size,
+      icon: BookOpen,
+      tone: 'sage',
+    },
   ]
 
   return (
     <AdminShell>
       <AdminPageHeader
         title="Ventas"
-        subtitle="Historial de compras de los cursos de la plataforma."
+        subtitle="Consulta pagos, movimientos y el estado de cada compra de tus cursos."
+        eyebrow="Finanzas"
+        icon={TrendingUp}
       />
 
       <AdminStatRow>
         {stats.map((stat) => (
-          <AdminStat key={stat.id} label={stat.label} value={stat.value} />
+          <AdminStat
+            key={stat.id}
+            label={stat.label}
+            value={stat.value}
+            icon={stat.icon}
+            tone={stat.tone}
+          />
         ))}
       </AdminStatRow>
 
@@ -103,9 +132,9 @@ function SalesView() {
                   {sale.id}
                 </AdminTableCell>
 
-                <AdminTableCell label="Estudiante" className="admin-table__strong">
-                  {getStudentName(sale.studentId)}
-                </AdminTableCell>
+<AdminTableCell label="Estudiante">
+                    <AdminPerson name={getStudentName(sale.studentId)} size="sm" />
+                  </AdminTableCell>
 
                 <AdminTableCell label="Curso" className="admin-table__muted">
                   {getCourseTitle(sale.courseId)}

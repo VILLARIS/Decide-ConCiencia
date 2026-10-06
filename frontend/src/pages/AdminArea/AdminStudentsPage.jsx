@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { UserRound } from 'lucide-react'
+import { ClipboardList, UserCheck, UserRound, Users, UserX } from 'lucide-react'
 import AdminShell from './AdminShell'
 import {
   AdminBadge,
@@ -7,6 +7,7 @@ import {
   AdminEmptyState,
   AdminFilters,
   AdminPageHeader,
+  AdminPerson,
   AdminSection,
   AdminStat,
   AdminStatRow,
@@ -82,25 +83,33 @@ function StudentsView() {
 
   const openStudent = DEMO_ADMIN_STUDENTS.find((student) => student.id === openId) ?? null
 
-  /* Las cuatro cifras salen de contar la misma lista, no de un sitio aparte. */
+  /* Las cuatro cifras salen de contar la misma lista, no de un sitio aparte.
+     El icono y el tono van aqui porque son eleccion de presentacion: cuentan
+     las mismas personas que la tabla de abajo. */
   const stats = [
-    { id: 'total', label: 'Estudiantes', value: DEMO_ADMIN_STUDENTS.length },
+    { id: 'total', label: 'Estudiantes', value: DEMO_ADMIN_STUDENTS.length, icon: Users, tone: 'blue' },
     {
       id: 'active',
       label: 'Activos',
       value: DEMO_ADMIN_STUDENTS.filter((student) => student.status === STUDENT_STATUS.active)
         .length,
+      icon: UserCheck,
+      tone: 'green',
     },
     {
       id: 'inactive',
       label: 'Inactivos',
       value: DEMO_ADMIN_STUDENTS.filter((student) => student.status === STUDENT_STATUS.inactive)
         .length,
+      icon: UserX,
+      tone: 'sand',
     },
     {
       id: 'purchases',
       label: 'Inscripciones',
       value: DEMO_ADMIN_STUDENTS.reduce((total, student) => total + student.purchases.length, 0),
+      icon: ClipboardList,
+      tone: 'sage',
     },
   ]
 
@@ -108,12 +117,20 @@ function StudentsView() {
     <AdminShell>
       <AdminPageHeader
         title="Estudiantes"
-        subtitle="Personas inscritas en la plataforma y sus compras."
+        subtitle="Visualiza el avance y la información de tus estudiantes: qué cursos toman y desde cuándo forman parte de la plataforma."
+        eyebrow="Comunidad"
+        icon={Users}
       />
 
       <AdminStatRow>
         {stats.map((stat) => (
-          <AdminStat key={stat.id} label={stat.label} value={stat.value} />
+          <AdminStat
+            key={stat.id}
+            label={stat.label}
+            value={stat.value}
+            icon={stat.icon}
+            tone={stat.tone}
+          />
         ))}
       </AdminStatRow>
 
@@ -139,11 +156,7 @@ function StudentsView() {
                     type="button"
                     onClick={() => setOpenId(student.id)}
                   >
-                    <span className="admin-avatar" aria-hidden="true">
-                      {student.name.charAt(0)}
-                    </span>
-
-                    <span className="admin-personrow__name">{student.name}</span>
+                    <AdminPerson name={student.name} size="sm" />
                   </button>
                 </AdminTableCell>
 

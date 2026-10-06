@@ -56,7 +56,9 @@ function EvaluationsView() {
     <AdminShell>
       <AdminPageHeader
         title="Evaluaciones"
-        subtitle="Evaluaciones creadas en tus cursos y su estado de publicación."
+        subtitle="Organiza exámenes, resultados y seguimiento de los cursos que ya tienen evaluación."
+        eyebrow="Contenido"
+        icon={FileCheck2}
         actions={
           courseFilter === 'all' ? null : (
             <Link

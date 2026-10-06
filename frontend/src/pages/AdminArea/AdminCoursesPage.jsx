@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Copy, Eye, EyeOff, Plus, Search } from 'lucide-react'
+import { BookOpen, Copy, Eye, EyeOff, Plus, Search } from 'lucide-react'
 import AdminShell from './AdminShell'
 import {
   AdminActionMenu,
@@ -105,7 +105,10 @@ function CoursesView() {
     <AdminShell>
       <AdminPageHeader
         title="Cursos"
-        subtitle={`Gestiona el contenido de tu plataforma. Plan ${ADMIN_PLAN.name}.`}
+        subtitle="Gestiona el contenido de tu plataforma: qué está publicado, qué está en borrador y quién lo está tomando."
+        eyebrow="Catálogo"
+        icon={BookOpen}
+        meta={<span className="admin-pagehead__fact">Plan {ADMIN_PLAN.name}</span>}
         actions={
           <Link className="admin-btn admin-btn--primary" to="/admin/cursos/nuevo">
             <Plus size={16} strokeWidth={2.2} aria-hidden="true" />
