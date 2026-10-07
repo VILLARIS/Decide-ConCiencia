@@ -1,4 +1,4 @@
-﻿import {
+﻿﻿import {
   ArrowRight,
   Award,
   BadgeCheck,
@@ -49,7 +49,7 @@ const COURSE = {
   badge: 'Curso destacado',
   title: CATALOG_COURSE.title,
   description:
-    'Comprende cómo funcionan los nutrientes a nivel molecular y aprende a aplicar la bioquímica en la práctica nutricional con un enfoque claro, actual y basado en evidencia.',
+    'Comprende c├│mo funcionan los nutrientes a nivel molecular y aprende a aplicar la bioqu├¡mica en la pr├íctica nutricional con un enfoque claro, actual y basado en evidencia.',
   price: CATALOG_COURSE.price,
   previousPrice: CATALOG_COURSE.previousPrice,
   discount: CATALOG_COURSE.discountLabel,
@@ -61,26 +61,26 @@ const COURSE = {
     { id: 'nivel', label: 'Nivel intermedio', icon: GraduationCap },
   ],
   highlights: [
-    'Nutrición basada en la ciencia',
-    'De la teoría a la práctica',
+    'Nutrici├│n basada en la ciencia',
+    'De la teor├¡a a la pr├íctica',
     'Casos reales y aplicados',
-'Acompañamiento docente',
+    'Acompa├▒amiento docente',
   ],
 }
 
 const LEARNINGS = [
-  'Comprender el metabolismo de carbohidratos, lípidos y proteínas.',
-  'Relacionar la bioquímica con la evaluación y el plan nutricional.',
-  'Analizar casos clínicos con base en evidencia científica.',
-  'Aplicar el conocimiento bioquímico en la práctica profesional.',
-  'Desarrollar pensamiento crítico para la toma de decisiones.',
+  'Comprender el metabolismo de carbohidratos, l├¡pidos y prote├¡nas.',
+  'Relacionar la bioqu├¡mica con la evaluaci├│n y el plan nutricional.',
+  'Analizar casos cl├¡nicos con base en evidencia cient├¡fica.',
+  'Aplicar el conocimiento bioqu├¡mico en la pr├íctica profesional.',
+  'Desarrollar pensamiento cr├¡tico para la toma de decisiones.',
 ]
 
 const AUDIENCES = [
   {
     id: 'formacion',
-    title: 'Estás en formación',
-    text: 'Estudiantes de Nutrición que buscan bases sólidas.',
+    title: 'Est├ís en formaci├│n',
+    text: 'Estudiantes de Nutrici├│n que buscan bases s├│lidas.',
     icon: BookOpen,
   },
   {
@@ -92,13 +92,13 @@ const AUDIENCES = [
   {
     id: 'pasion',
     title: 'Te apasiona',
-    text: 'La ciencia de la nutrición y su aplicación en la vida real.',
+    text: 'La ciencia de la nutrici├│n y su aplicaci├│n en la vida real.',
     icon: Sparkles,
   },
   {
     id: 'evidencia',
     title: 'Buscas evidencia',
-    text: 'Quieres tomar mejores decisiones en tu práctica diaria.',
+    text: 'Quieres tomar mejores decisiones en tu pr├íctica diaria.',
     icon: FileText,
   },
 ]
@@ -107,11 +107,11 @@ const MODULES = [
   {
     id: 'm1',
     number: '01',
-    title: 'Fundamentos de bioquímica en nutrición',
+    title: 'Fundamentos de bioqu├¡mica en nutrici├│n',
     lessons: [
-      'Qué es la bioquímica y por qué importa en nutrición',
-      'Estructura y función de biomoléculas',
-      'Enzimas: cómo catalizan las reacciones',
+      'Qu├® es la bioqu├¡mica y por qu├® importa en nutrici├│n',
+      'Estructura y funci├│n de biomol├®culas',
+      'Enzimas: c├│mo catalizan las reacciones',
     ],
     classes: 4,
     hours: 6,
@@ -120,39 +120,39 @@ const MODULES = [
     id: 'm2',
     number: '02',
     title: 'Metabolismo de carbohidratos',
-    lessons: ['Glucólisis y producción de ATP', 'Glucogenogénesis y glucogenólisis', 'Vía pentosa fosfato'],
+    lessons: ['Gluc├│lisis y producci├│n de ATP', 'Glucogenog├®nesis y glucogen├│lisis', 'V├¡a pentosa fosfato'],
     classes: 5,
     hours: 7,
   },
   {
     id: 'm3',
     number: '03',
-    title: 'Lípidos y metabolismo energético',
-    lessons: ['Digestión y absorción de grasas', 'Beta oxidación', 'Lipoproteínas y transporte'],
+    title: 'L├¡pidos y metabolismo energ├®tico',
+    lessons: ['Digesti├│n y absorci├│n de grasas', 'Beta oxidaci├│n', 'Lipoprote├¡nas y transporte'],
     classes: 5,
     hours: 7,
   },
   {
     id: 'm4',
     number: '04',
-    title: 'Proteínas y aminoácidos',
-    lessons: ['Aminoácidos esenciales', 'Balance nitrogenado', 'Proteínas en la dieta'],
+    title: 'Prote├¡nas y amino├ícidos',
+    lessons: ['Amino├ícidos esenciales', 'Balance nitrogenado', 'Prote├¡nas en la dieta'],
     classes: 4,
     hours: 6,
   },
   {
     id: 'm5',
     number: '05',
-    title: 'Integración metabólica',
-    lessons: ['Interrelación de vías metabólicas', 'Regulación hormonal', 'Estrés metabólico y ayuno'],
+    title: 'Integraci├│n metab├│lica',
+    lessons: ['Interrelaci├│n de v├¡as metab├│licas', 'Regulaci├│n hormonal', 'Estr├®s metab├│lico y ayuno'],
     classes: 5,
     hours: 7,
   },
   {
     id: 'm6',
     number: '06',
-    title: 'Aplicación clínica y casos',
-    lessons: [      'Análisis de casos clínicos', 'Interpretación de laboratorio', 'Discusión y cierre'],
+    title: 'Aplicaci├│n cl├¡nica y casos',
+    lessons: ['An├ílisis de casos cl├¡nicos', 'Interpretaci├│n de laboratorio', 'Discusi├│n y cierre'],
     classes: 5,
     hours: 7,
   },
@@ -161,40 +161,40 @@ const MODULES = [
 const INCLUDES = [
   { id: 'video', text: '40 horas de contenido en video', icon: Video },
   { id: 'materiales', text: 'Materiales descargables', icon: Download },
-  { id: 'certificado', text: 'Certificado de finalización', icon: Award },
+  { id: 'certificado', text: 'Certificado de finalizaci├│n', icon: Award },
   { id: 'acceso', text: 'Acceso por 12 meses', icon: Clock },
   { id: 'ritmo', text: 'Aprendizaje a tu ritmo', icon: InfinityIcon },
-  { id: 'soporte', text: 'Soporte académico', icon: MessageCircle },
+  { id: 'soporte', text: 'Soporte acad├®mico', icon: MessageCircle },
 ]
 
 const FAQ = [
   {
     id: 'faq-1',
-    question: '¿Necesito conocimientos previos?',
+    question: '┬┐Necesito conocimientos previos?',
     answer:
-      'Está pensado para quienes tienen una base inicial en nutrición o bioquímica. El nivel es intermedio, pero el curso repasa los conceptos fundamentales antes de avanzar.',
+      'Est├í pensado para quienes tienen una base inicial en nutrici├│n o bioqu├¡mica. El nivel es intermedio, pero el curso repasa los conceptos fundamentales antes de avanzar.',
   },
   {
     id: 'faq-2',
-    question: '¿Cuánto tiempo tendré acceso al curso?',
-    answer: 'El acceso al contenido está planteado por 12 meses desde la inscripción. El detalle definitivo se comunicará al momento de la compra.',
+    question: '┬┐Cu├ínto tiempo tendr├® acceso al curso?',
+    answer: 'El acceso al contenido est├í planteado por 12 meses desde la inscripci├│n. El detalle definitivo se comunicar├í al momento de la compra.',
   },
   {
     id: 'faq-3',
-    question: '¿El curso incluye certificado?',
+    question: '┬┐El curso incluye certificado?',
     answer:
-      'Al completar los requisitos del curso podrás obtener un certificado de finalización. Los detalles sobre su emisión se confirmarán antes del inicio.',
+      'Al completar los requisitos del curso podr├ís obtener un certificado de finalizaci├│n. Los detalles sobre su emisi├│n se confirmar├ín antes del inicio.',
   },
   {
     id: 'faq-4',
-    question: '¿Puedo avanzar a mi propio ritmo?',
-    answer: 'Sí. Las clases están grabadas y se consultan a tu ritmo, dentro del periodo de acceso.',
+    question: '┬┐Puedo avanzar a mi propio ritmo?',
+    answer: 'S├¡. Las clases est├ín grabadas y se consultan a tu ritmo, dentro del periodo de acceso.',
   },
   {
     id: 'faq-5',
-    question: '¿Cómo se realiza la evaluación?',
+    question: '┬┐C├│mo se realiza la evaluaci├│n?',
     answer:
-      'La forma de evaluación está en definición y se comunicará antes del inicio del curso.',
+      'La forma de evaluaci├│n est├í en definici├│n y se comunicar├í antes del inicio del curso.',
   },
 ]
 
@@ -210,7 +210,7 @@ function CourseCover() {
     >
       <rect width="560" height="400" fill="#EAF1F8" />
 
-      {/* Círculos suaves de fondo */}
+      {/* C├¡rculos suaves de fondo */}
       <circle cx="452" cy="74" r="54" fill="rgba(255,255,255,0.55)" />
       <circle cx="96" cy="330" r="40" fill="rgba(255,255,255,0.45)" />
       <circle cx="486" cy="318" r="26" fill="rgba(98,183,71,0.10)" />
@@ -287,7 +287,7 @@ function CertificatePreview() {
       viewBox="0 0 420 260"
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label="Vista previa de un certificado de finalización"
+      aria-label="Vista previa de un certificado de finalizaci├│n"
     >
       <rect width="420" height="260" rx="10" fill="#FFFFFF" stroke="#D8E4EF" strokeWidth="2" />
       <rect x="16" y="16" width="388" height="228" rx="6" fill="#F7FAFC" />
@@ -345,7 +345,7 @@ export default function CourseDetailPage() {
     /* El contenido del curso vive en el area de estudiante, no en esta ficha
        comercial: por eso "Ir al curso" entra a Mi aprendizaje. */
     if (action === BUY_ACTION.course) {
-      navigate(`/mi-aprendizaje/${CATALOG_COURSE.id}`)
+      navigate('/mi-aprendizaje')
       return
     }
 
@@ -361,7 +361,7 @@ export default function CourseDetailPage() {
       </li>
       <li>
         <BadgeCheck size={14} strokeWidth={1.9} aria-hidden="true" />
-        Acceso después de confirmar el pago
+        Acceso despu├®s de confirmar el pago
       </li>
       <li>
         <Award size={14} strokeWidth={1.9} aria-hidden="true" />
@@ -378,7 +378,7 @@ export default function CourseDetailPage() {
         {/* ---------- 1. Hero ---------- */}
         <section className="course-hero" aria-labelledby="course-title">
           <div className="course-hero__container">
-            <nav className="course-breadcrumb" aria-label="Ruta de navegación">
+            <nav className="course-breadcrumb" aria-label="Ruta de navegaci├│n">
               <Link to="/">Inicio</Link>
               <span aria-hidden="true">/</span>
               <Link to="/cursos">Cursos</Link>
@@ -405,9 +405,9 @@ export default function CourseDetailPage() {
                   ))}
                 </ul>
 
-                {!isEnrolled ? (
-                  <>
-                    <div className="course-hero__price">
+                <div className="course-hero__price">
+                  {!isEnrolled ? (
+                    <>
                       <span className="course-hero__price-current">
                         <span className="course-price__currency">S/</span>
                         {COURSE.price}
@@ -416,9 +416,17 @@ export default function CourseDetailPage() {
                         S/ {COURSE.previousPrice}
                       </span>
                       <span className="course-hero__price-discount">{COURSE.discount}</span>
-                    </div>
+                    </>
+                  ) : (
+                    <span className="course-hero__price-current course-hero__price-current--acquired">
+                      Curso adquirido
+                    </span>
+                  )}
+                </div>
 
-                    <div className="course-hero__actions">
+                <div className="course-hero__actions">
+                  {!isEnrolled ? (
+                    <>
                       <button
                         className="course-btn course-btn--primary"
                         type="button"
@@ -430,41 +438,46 @@ export default function CourseDetailPage() {
                       <a className="course-btn course-btn--ghost" href="#contenido">
                         Ver temario
                       </a>
-                    </div>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        className="course-btn course-btn--primary course-btn--enrolled"
+                        to={`/mi-aprendizaje/${CATALOG_COURSE.id}`}
+                      >
+                        <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
+                        Entrar al curso
+                        <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
+                      </Link>
+                      <span className="course-enrolled-badge">
+                        <BadgeCheck size={14} strokeWidth={2} aria-hidden="true" />
+                        Ya tienes acceso a este curso
+                      </span>
+                    </>
+                  )}
+                </div>
 
-                    <ul className="course-buy__assurance course-buy__assurance--hero">
-                      <li>
-                        <ShieldCheck size={14} strokeWidth={1.9} aria-hidden="true" />
-                        Pago seguro
-                      </li>
-                      <li>
-                        <BadgeCheck size={14} strokeWidth={1.9} aria-hidden="true" />
-                        Acceso después de confirmar el pago
-                      </li>
-                      <li>
-                        <Award size={14} strokeWidth={1.9} aria-hidden="true" />
-                        Certificado al completar el curso
-                      </li>
-                    </ul>
-                  </>
+                {!isEnrolled ? (
+                  <ul className="course-buy__assurance course-buy__assurance--hero">
+                    <li>
+                      <ShieldCheck size={14} strokeWidth={1.9} aria-hidden="true" />
+                      Pago seguro
+                    </li>
+                    <li>
+                      <BadgeCheck size={14} strokeWidth={1.9} aria-hidden="true" />
+                      Acceso después de confirmar el pago
+                    </li>
+                    <li>
+                      <Award size={14} strokeWidth={1.9} aria-hidden="true" />
+                      Certificado al completar el curso
+                    </li>
+                  </ul>
                 ) : (
-                  <div className="course-hero__acquired">
-                    <span className="course-acquired-badge">
-                      <BadgeCheck size={14} strokeWidth={2.2} aria-hidden="true" />
-                      CURSO ADQUIRIDO
+                  <div className="course-enrolled-cta">
+                    <span className="course-enrolled-badge course-enrolled-badge--inline">
+                      <BadgeCheck size={14} strokeWidth={2} aria-hidden="true" />
+                      Ya tienes acceso a este curso
                     </span>
-                    <p className="course-acquired__title">¡Tu aprendizaje continúa aquí!</p>
-                    <p className="course-acquired__text">
-                      Ya tienes acceso a este curso. Puedes entrar cuando quieras y continuar aprendiendo.
-                    </p>
-                    <Link
-                      className="course-btn course-btn--enrolled"
-                      to={`/mi-aprendizaje/${CATALOG_COURSE.id}`}
-                    >
-                      <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
-                      Entrar al curso
-                      <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-                    </Link>
                   </div>
                 )}
               </div>
@@ -475,13 +488,13 @@ export default function CourseDetailPage() {
                   <button
                     className="course-cover__play"
                     type="button"
-                    aria-label="Ver video de presentación del curso"
+                    aria-label="Ver video de presentaci├│n del curso"
                   >
                     <Play size={22} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
 
-                <p className="course-cover__caption">Ver video de presentación</p>
+                <p className="course-cover__caption">Ver video de presentaci├│n</p>
 
                 <ul className="course-highlights">
                   {COURSE.highlights.map((item) => (
@@ -500,10 +513,10 @@ export default function CourseDetailPage() {
         <section className="course-body" aria-label="Detalle del curso">
           <div className="course-body__container">
             <div className="course-body__main">
-              {/* Qué aprenderís */}
+              {/* Qu├® aprender├ís */}
               <section className="course-block" aria-labelledby="course-learn-title">
                 <h2 className="course-block__title" id="course-learn-title">
-                  Qué aprenderás
+                  Qu├® aprender├ís
                 </h2>
 
                 <ul className="course-learn__list">
@@ -518,7 +531,7 @@ export default function CourseDetailPage() {
                 </ul>
               </section>
 
-              {/* Para quién */}
+              {/* Para qui├®n */}
               <section className="course-block" aria-labelledby="course-audience-title">
                 <h2 className="course-block__title" id="course-audience-title">
                   Este curso es para ti si...
@@ -544,7 +557,7 @@ export default function CourseDetailPage() {
                 </h2>
 
                 <ul className="course-summary">
-                  <li>6 módulos</li>
+                  <li>6 m├│dulos</li>
                   <li>{totalClasses} clases</li>
                   <li>{totalHours} horas</li>
                 </ul>
@@ -556,7 +569,7 @@ export default function CourseDetailPage() {
                         <span className="course-module__number">{module.number}</span>
                         <span className="course-module__title">{module.title}</span>
                         <span className="course-module__meta">
-                          {module.classes} clases · {module.hours} horas
+                          {module.classes} clases ┬À {module.hours} horas
                         </span>
                         <ChevronDown className="course-module__chevron" size={18} aria-hidden="true" />
                       </summary>
@@ -591,14 +604,14 @@ export default function CourseDetailPage() {
 
                   <div className="course-teacher__copy">
                     <p className="course-teacher__name">Dra. Yulia</p>
-                    <p className="course-teacher__role">Nutricionista · Educadora</p>
+                    <p className="course-teacher__role">Nutricionista ┬À Educadora</p>
                     <p className="course-teacher__text">
-                      Especialista en bioquímica nutricional y docencia.
+                      Especialista en bioqu├¡mica nutricional y docencia.
                     </p>
                   </div>
 
                   <Link className="course-teacher__link" to="/servicios">
-                    Conoce más sobre la Dra. Yulia
+                    Conoce m├ís sobre la Dra. Yulia
                     <ArrowRight size={15} strokeWidth={2.2} aria-hidden="true" />
                   </Link>
                 </div>
@@ -607,7 +620,7 @@ export default function CourseDetailPage() {
               {/* Certificado */}
               <section className="course-block" aria-labelledby="course-certificate-title">
                 <h2 className="course-block__title" id="course-certificate-title">
-                  Tu certificado de finalización
+                  Tu certificado de finalizaci├│n
                 </h2>
 
                 <div className="course-certificate">
@@ -615,11 +628,11 @@ export default function CourseDetailPage() {
 
                   <div className="course-certificate__copy">
                     <p className="course-certificate__text">
-                      Al completar los requisitos del curso podrás obtener un certificado
-                      de finalización.
+                      Al completar los requisitos del curso podr├ís obtener un certificado
+                      de finalizaci├│n.
                     </p>
                     <p className="course-certificate__note">
-                      Los detalles sobre su emisión se confirmarán antes del inicio del
+                      Los detalles sobre su emisi├│n se confirmar├ín antes del inicio del
                       curso.
                     </p>
                   </div>
@@ -651,45 +664,28 @@ export default function CourseDetailPage() {
               <div className="course-buy">
                 <p className="course-buy__name">{COURSE.title}</p>
 
-                {!isEnrolled ? (
-                  <>
-                    <div className="course-buy__price">
-                      <span className="course-buy__price-current">
-                        <span className="course-price__currency">S/</span>
-                        {COURSE.price}
-                      </span>
-                      <span className="course-buy__price-previous">S/ {COURSE.previousPrice}</span>
-                    </div>
+                <div className="course-buy__price">
+                  <span className="course-buy__price-current">
+                    <span className="course-price__currency">S/</span>
+                    {COURSE.price}
+                  </span>
+                  <span className="course-buy__price-previous">S/ {COURSE.previousPrice}</span>
+                </div>
 
-                    <span className="course-buy__discount">{COURSE.discount}</span>
+                <span className="course-buy__discount">{COURSE.discount}</span>
 
-                    <button
-                      className="course-btn course-btn--primary course-btn--block"
-                      type="button"
-                      onClick={handleBuy}
-                    >
-                      Comprar ahora
-                      <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-                    </button>
+                <button
+                  className="course-btn course-btn--primary course-btn--block"
+                  type="button"
+                  onClick={handleBuy}
+                >
+                  {isEnrolled ? 'Entrar al curso' : 'Comprar ahora'}
+                  {isEnrolled ? null : (
+                    <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
+                  )}
+                </button>
 
-                    {buyMicrocopy}
-                  </>
-                ) : (
-                  <div className="course-buy__acquired">
-                    <span className="course-acquired-badge course-acquired-badge--sidebar">
-                      <BadgeCheck size={14} strokeWidth={2.2} aria-hidden="true" />
-                      CURSO ADQUIRIDO
-                    </span>
-                    <Link
-                      className="course-btn course-btn--enrolled course-btn--block"
-                      to={`/mi-aprendizaje/${CATALOG_COURSE.id}`}
-                    >
-                      <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
-                      Entrar al curso
-                      <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-                    </Link>
-                  </div>
-                )}
+                {!isEnrolled ? buyMicrocopy : null}
 
                 <h2 className="course-buy__heading">Este curso incluye</h2>
 
@@ -702,12 +698,10 @@ export default function CourseDetailPage() {
                   ))}
                 </ul>
 
-                {!isEnrolled && (
-                  <p className="course-buy__trust">
-                    <ShieldCheck size={16} strokeWidth={1.9} aria-hidden="true" />
-                    Pago seguro y confiable
-                  </p>
-                )}
+                <p className="course-buy__trust">
+                  <ShieldCheck size={16} strokeWidth={1.9} aria-hidden="true" />
+                  Pago seguro y confiable
+                </p>
               </div>
             </aside>
           </div>
@@ -721,30 +715,21 @@ export default function CourseDetailPage() {
                 Empieza a fortalecer tu criterio profesional
               </h2>
               <p className="course-final__text">
-                Aprende bioquímica aplicada a la nutrición con un enfoque práctico y
+                Aprende bioqu├¡mica aplicada a la nutrici├│n con un enfoque pr├íctico y
                 basado en evidencia.
               </p>
             </div>
 
-            {!isEnrolled ? (
-              <button
-                className="course-btn course-btn--primary course-btn--final"
-                type="button"
-                onClick={handleBuy}
-              >
-                Comprar ahora
+            <button
+              className="course-btn course-btn--primary course-btn--final"
+              type="button"
+              onClick={handleBuy}
+            >
+              {isEnrolled ? 'Entrar al curso' : 'Comprar ahora'}
+              {isEnrolled ? null : (
                 <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-              </button>
-            ) : (
-              <Link
-                className="course-btn course-btn--enrolled course-btn--final"
-                to={`/mi-aprendizaje/${CATALOG_COURSE.id}`}
-              >
-                <BookOpen size={16} strokeWidth={2} aria-hidden="true" />
-                Entrar al curso
-                <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-              </Link>
-            )}
+              )}
+            </button>
           </div>
         </section>
       </main>
@@ -753,9 +738,4 @@ export default function CourseDetailPage() {
     </>
   )
 }
-
-
-
-
-
 

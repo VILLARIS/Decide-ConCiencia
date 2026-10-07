@@ -118,20 +118,27 @@ function CheckoutView() {
 
   /* Cambia el estado de la compra y refleja el resultado en pantalla. */
   const settle = (id, outcome) => {
-    updatePurchaseStatus(id, PURCHASE_STATUS[outcome])
-    setPhase(outcome)
+    const success = updatePurchaseStatus(id, PURCHASE_STATUS[outcome])
+    if (success) {
+      setPhase(outcome)
+    } else {
+      setPhase(PHASE.rejected)
+    }
   }
 
   const startPayment = (outcome) => {
-    /* Evita doble clic mientras se procesa. */
     if (!course || phase === PHASE.processing) return
+
+    if (enrolled) {
+      setPhase(PHASE.approved)
+      return
+    }
 
     const amount = getFinalPrice(course)
     const purchase = startPurchase({ courseId: course.id, amount })
 
-    /* startPurchase devuelve null si ya estaba inscrito o ya habia compra abierta. */
     if (!purchase) {
-      setPhase(enrolled ? PHASE.approved : PHASE.rejected)
+      setPhase(PHASE.rejected)
       return
     }
 
@@ -199,8 +206,8 @@ function CheckoutView() {
             </p>
 
             <div className="checkout-result__actions">
-              <Link className="checkout-btn checkout-btn--primary" to={courseHref}>
-                Ir al curso
+              <Link className="checkout-btn checkout-btn--primary" to={`/mi-aprendizaje/${course.id}`}>
+                Entrar al curso
                 <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
               </Link>
 

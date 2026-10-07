@@ -1,60 +1,34 @@
-﻿/*
+/*
   Intencion de compra pendiente.
 
   Cuando alguien pulsa "Comprar ahora" sin sesion, el curso que queria se
-  guarda aqui. Ahora persiste en localStorage para que sobreviva a F5.
+  guarda aqui. Al terminar el acceso, la pagina de login devuelve al checkout
+  de ESE curso, en vez de mandar al inicio.
+
+  Es memoria del modulo: se pierde al recargar la pagina. Es lo correcto para
+  una demo, porque no deja datos de la compra en el equipo de quien prueba.
+  En produccion, la pasarela y el backend guardarian el intento real.
 */
 
-const PENDING_STORAGE_KEY = 'yumibiotic.demo.pending-checkout'
-
-function readPending() {
-  try {
-    const raw = localStorage.getItem(PENDING_STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw)
-    if (typeof parsed === 'string' && parsed.length > 0) {
-      return parsed
-    }
-    return null
-  } catch {
-    return null
-  }
-}
-
-function writePending(value) {
-  try {
-    if (value == null || value === '') {
-      localStorage.removeItem(PENDING_STORAGE_KEY)
-      return
-    }
-    localStorage.setItem(PENDING_STORAGE_KEY, JSON.stringify(value))
-  } catch {
-    /* ignorar errores de almacenamiento */
-  }
-}
-
-let pendingCourseId = readPending()
+let pendingCourseId = null
 
 export function rememberPendingCheckout(courseId) {
   pendingCourseId = courseId ?? null
-  writePending(pendingCourseId)
 }
 
 export function peekPendingCheckout() {
   return pendingCourseId
 }
 
-/* Lee y limpia: el checkout es due��o de la intencion una sola vez. */
+/* Lee y limpia: el checkout es dueño de la intencion una sola vez. */
 export function takePendingCheckout() {
   const courseId = pendingCourseId
   pendingCourseId = null
-  writePending(null)
   return courseId
 }
 
 export function clearPendingCheckout() {
   pendingCourseId = null
-  writePending(null)
 }
 
 /* ---------- Que hace el boton "Comprar ahora" ---------- */

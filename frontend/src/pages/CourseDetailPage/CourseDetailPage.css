@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    Pagina de detalle de curso
    Mismo sistema del catalogo (--cat-*): navy #173f67, azul
    #2e5b87, verde #62b747, radios 11-18px, sombras minimas.
@@ -216,15 +216,50 @@
   color: var(--course-green-deep);
 }
 
-/* Ya inscrita: sustituye al bloque de confianza. */
-.course-hero__enrolled-note {
-  display: flex;
+.course-hero__acquired {
+  margin-top: 28px;
+  padding: 24px 26px;
+  background-color: rgba(98, 183, 71, 0.06);
+  border: 1px solid rgba(98, 183, 71, 0.18);
+  border-radius: 14px;
+}
+
+.course-acquired-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin: 18px 0 0;
-  font-size: 13.5px;
-  font-weight: 600;
+  gap: 7px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--course-green-deep);
+  background-color: rgba(98, 183, 71, 0.14);
+  border-radius: 999px;
+}
+
+.course-acquired-badge svg {
+  flex-shrink: 0;
+}
+
+.course-acquired__title {
+  margin: 14px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--course-navy);
+}
+
+.course-acquired__text {
+  margin: 8px 0 0;
+  max-width: 48ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--course-muted);
+}
+
+.course-hero__acquired .course-btn--enrolled {
+  margin-top: 18px;
 }
 
 /* ---------- Columna derecha: portada ---------- */
@@ -353,7 +388,7 @@
   color: var(--course-navy);
 }
 
-/* ---------- Qué aprenderás ---------- */
+/* ---------- QuÃ© aprenderÃ¡s ---------- */
 
 .course-learn__list {
   display: grid;
@@ -386,7 +421,7 @@
   border-radius: 7px;
 }
 
-/* ---------- Para quién: tarjetas ligeras ---------- */
+/* ---------- Para quiÃ©n: tarjetas ligeras ---------- */
 
 .course-audience__grid {
   display: grid;
@@ -447,7 +482,7 @@
 }
 
 .course-summary li + li::before {
-  content: '·';
+  content: 'Â·';
   margin-right: 10px;
   color: #b9c6d3;
 }
@@ -786,6 +821,17 @@
   color: var(--course-blue);
 }
 
+.course-buy__acquired {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+  padding-bottom: 4px;
+}
+
+.course-acquired-badge--sidebar {
+  justify-self: start;
+}
+
 /* =========================================================
    BOTONES
    ========================================================= */
@@ -817,6 +863,17 @@
 .course-btn--primary:hover {
   background-color: var(--course-blue-deep);
   border-color: var(--course-blue-deep);
+}
+
+.course-btn--enrolled {
+  color: #ffffff;
+  background-color: var(--course-green);
+  border: 1px solid var(--course-green);
+}
+
+.course-btn--enrolled:hover {
+  background-color: var(--course-green-deep);
+  border-color: var(--course-green-deep);
 }
 
 .course-btn--ghost {
@@ -940,192 +997,5 @@
   .course-buy {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: 28px;
-    row-gap: 0;
-    align-items: center;
-  }
-
-  .course-buy__name,
-  .course-buy__price,
-  .course-buy__discount,
-  .course-btn--block {
-    grid-column: 1;
-  }
-
-  .course-buy__heading,
-  .course-buy__list,
-  .course-buy__trust {
-    grid-column: 2;
-  }
-
-  .course-buy__heading {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 0;
-    align-self: start;
-  }
-
-  .course-buy__list {
-    margin-top: 10px;
-    align-self: start;
-  }
-
-  .course-buy__trust {
-    grid-row: 4;
-    margin: 0;
-    padding-top: 12px;
-    align-self: end;
-  }
-
-  .course-final {
-    padding: 52px 28px;
-  }
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 720px) {
-  .course-hero {
-    padding: 20px 20px 44px;
-  }
-
-  .course-breadcrumb {
-    margin-bottom: 22px;
-    font-size: 12.5px;
-  }
-
-  .course-hero__meta {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 9px;
-    margin-top: 22px;
-  }
-
-  .course-hero__price {
-    margin-top: 24px;
-  }
-
-  .course-hero__price-current,
-  .course-buy__price-current {
-    font-size: 32px;
-  }
-
-  .course-hero__actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
-    margin-top: 22px;
-  }
-
-  .course-btn {
-    width: 100%;
-  }
-
-  .course-cover {
-    border-radius: 14px;
-  }
-
-  .course-cover__play {
-    width: 58px;
-    height: 58px;
-  }
-
-  .course-cover__play svg {
-    width: 19px;
-    height: 19px;
-  }
-
-  .course-highlights {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .course-body {
-    padding: 40px 20px 48px;
-  }
-
-  .course-block + .course-block {
-    margin-top: 40px;
-    padding-top: 40px;
-  }
-
-  .course-learn__list {
-    margin-top: 20px;
-  }
-
-  .course-learn__item {
-    font-size: 15.5px;
-  }
-
-  .course-audience__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-  }
-
-  .course-audience {
-    padding: 18px 18px 20px;
-  }
-
-  .course-module__summary {
-    flex-wrap: wrap;
-    gap: 6px 12px;
-    padding: 14px 15px;
-    font-size: 15px;
-  }
-
-  .course-module__meta {
-    order: 3;
-    width: 100%;
-    margin-left: 46px;
-  }
-
-  .course-module__lessons {
-    padding: 0 15px 16px 15px;
-  }
-
-  .course-teacher {
-    grid-template-columns: 76px minmax(0, 1fr);
-    gap: 18px;
-  }
-
-  .course-teacher__avatar {
-    width: 76px;
-    height: 96px;
-  }
-
-  .course-teacher__link {
-    grid-column: 1 / -1;
-  }
-
-  .course-certificate {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .course-final {
-    padding: 40px 20px;
-  }
-
-  .course-final__container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .course-btn--final {
-    width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .course-breadcrumb a,
-  .course-cover__play,
-  .course-module,
-  .course-module__chevron,
-  .course-faq__chevron,
-  .course-btn,
-  .course-teacher__link {
-    transition: none;
   }
 }

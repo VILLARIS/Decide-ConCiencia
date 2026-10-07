@@ -419,18 +419,9 @@ function CourseLearningView() {
   const navigate = useNavigate()
   const { hasEnrollment } = useDemoPurchases()
 
-  /*
-    La URL puede traer id o slug. Se normaliza UNA vez y ese mismo valor se usa
-    para buscar el contenido y para hasEnrollment, de modo que la inscripcion que
-    guardo la compra y el courseId de la ruta son siempre comparables.
-  */
   const courseId = useMemo(() => normalizeCourseId(rawCourseId), [rawCourseId])
   const course = useMemo(() => getLearningCourse(courseId), [courseId])
 
-  /*
-    Sin inscripcion no se muestra el contenido: se vuelve a la ficha publica
-    del curso. Comprar es lo que da acceso; entrar a la URL no.
-  */
   if (!hasEnrollment(courseId)) {
     return <Navigate to={`/cursos/${courseId}`} replace />
   }

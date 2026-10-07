@@ -11,25 +11,37 @@ import {
 } from './demoAuthStore'
 
 /*
-  Sesion de demostracion, unicamente en memoria.
+  Sesion de demostracion.
 
-  MODO DEMO
-  - No hay backend, ni hash de contrasa, ni cookie, ni sesion de servidor.
-  - La comparacion de credenciales ocurre en el navegador. Eso es UX de
-     prototipo, NO es seguridad: cualquiera que abra las herramientas del
-     desarrollador ve las credenciales y puede saltarse esta pantalla.
-  - No se persiste nada. Al recargar la pagina se pierde la sesion, por
-     diseno, para no dejar datos en el equipo de quien prueba la demo.
-  - El objeto de usuario nunca incluye la contrasena.
-
-  ROLES
-  -----
-  Un unico provider maneja los dos perfiles: Andrea (student) y la doctora
-  (admin). El rol se copia del perfil que coincidio con el formulario, nunca
-  se elige en la interfaz, asi que no se puede "elevar" el rol desde el login.
-  Montarlo en mas de un sitio haria que se reinicie al navegar: vive solo en
-  <Root> (ver Root.jsx), por encima de las rutas.
+  Ahora persiste la sesion en localStorage para que sobreviva a F5 y al
+  volver a abrir la pestaña. Solo se guarda el perfil limpio (sin contraseña).
 */
+
+const AUTH_STORAGE_KEY = 'yumibiotic.demo.auth'
+
+function isValidDemoUser(user) {
+  if (!user || typeof user !== 'object') return false
+  if (typeof user.id !== 'string') return false
+  if (typeof user.firstName !== 'string') return false
+  if (typeof user.lastName !== 'string') return false
+  if (typeof user.email !== 'string') return false
+  if (user.role !== DEMO_ROLES.student && user.role !== DEMO_ROLES.admin) return false
+  return true
+}
+
+function readStoredAuth() {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw)
+    if (isValidDemoUser(parsed)) {
+      return parsed
+    }
+    return null
+  } catch {
+    return null
+  }
+}
 
 function toSessionUser(profile) {
   /* Copia limpia: se descarta cualquier campo extra. */
@@ -38,7 +50,7 @@ function toSessionUser(profile) {
 }
 
 export function DemoAuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => readStoredAuth())
 
   /* Compara contra las dos credenciales ficticias y devuelve el usuario con
      su rol, o null si no coincide. La comparacion vive en findDemoAccount.
@@ -54,10 +66,22 @@ export function DemoAuthProvider({ children }) {
     const sessionUser = toSessionUser(profile)
 
     setUser(sessionUser)
+    try {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(sessionUser))
+    } catch {
+      /* ignorar errores de almacenamiento */
+    }
     return sessionUser
   }, [])
 
-  const logoutDemo = useCallback(() => setUser(null), [])
+  const logoutDemo = useCallback(() => {
+    setUser(null)
+    try {
+      localStorage.removeItem(AUTH_STORAGE_KEY)
+    } catch {
+      /* ignorar errores de almacenamiento */
+    }
+  }, [])
 
   const value = useMemo(
     () => ({
