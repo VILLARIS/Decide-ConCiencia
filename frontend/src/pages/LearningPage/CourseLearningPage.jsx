@@ -6,10 +6,10 @@ import {
   Check,
   ChevronDown,
   Circle,
+  Clock,
   Download,
   FileText,
   HelpCircle,
-  ListVideo,
   Lock,
   NotebookPen,
   PlayCircle,
@@ -55,69 +55,54 @@ const TABS = [
 
 function LearningHeader({ course, onBack }) {
   return (
-    <header className="course-head">
-      <button className="course-head__back" type="button" onClick={onBack}>
-        <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />
+    <header className="course-head course-head--compact">
+      <button className="course-head__back-link" type="button" onClick={onBack}>
+        <ArrowLeft size={14} strokeWidth={2.2} aria-hidden="true" />
         Volver a mis cursos
       </button>
 
       <h1 className="course-head__title">{course.title}</h1>
-
-      <p className="course-head__description">{course.description}</p>
-
-      <ul className="course-head__meta">
-        <li>{course.duration}</li>
-        <li>{course.level}</li>
-        <li>{course.modality}</li>
-      </ul>
+      {course.description ? (
+        <p className="course-head__description">{course.description}</p>
+      ) : null}
     </header>
   )
 }
 
-function ProgressPanel({ course, lesson, nextLesson, progress }) {
+function ProgressPanel({ course, progress }) {
   const completedModules = getCompletedModulesCount(course)
+  const lessons = getCourseLessons(course)
+  const completedLessons = lessons.filter((item) => item.status === LESSON_STATUS.completed).length
 
   return (
-    <div className="course-aside__block">
+    <div className="course-aside__block course-aside__block--progress">
       <h2 className="course-aside__title">Tu progreso</h2>
 
-      <p className="course-aside__progress-value">{progress}%</p>
+      <div className="course-aside__progress-top">
+        <span className="course-aside__progress-value">{progress}%</span>
+      </div>
 
       <span className="progress-track progress-track--thin">
         <span className="progress-track__fill" style={{ width: `${progress}%` }} />
       </span>
 
       <p className="course-aside__progress-note">
-        {completedModules} de {course.modules.length} módulos completados
+        {completedModules} de {course.modules.length} módulos completados · {completedLessons} de {lessons.length} lecciones completadas
       </p>
-
-      <div className="course-aside__lesson">
-        <p className="course-aside__label">Lección actual</p>
-        <p className="course-aside__lesson-title">{lesson.title}</p>
-      </div>
-
-      <div className="course-aside__lesson">
-        <p className="course-aside__label">Siguiente lección</p>
-        {nextLesson ? (
-          <p className="course-aside__lesson-title">{nextLesson.title}</p>
-        ) : (
-          <p className="course-aside__lesson-muted">Eres la última lección del curso</p>
-        )}
-      </div>
     </div>
   )
 }
 
 function MaterialsPanel({ course, lesson }) {
   /* Materiales de la leccion primero; si no tiene, los generales del curso. */
-  const items = (lesson.materials.length > 0 ? lesson.materials : course.courseMaterials).slice(
-    0,
-    3,
-  )
+  const items = lesson.materials.length > 0 ? lesson.materials : course.courseMaterials
 
   return (
-    <div className="course-aside__block">
-      <h2 className="course-aside__title">Materiales</h2>
+    <div className="course-aside__block course-aside__block--materials">
+      <div className="course-aside__block-header">
+        <FileText size={16} strokeWidth={2} aria-hidden="true" />
+        <h2 className="course-aside__title">Materiales</h2>
+      </div>
 
       <ul className="material-list">
         {items.map((material) => (
@@ -152,7 +137,7 @@ function HelpPanel() {
 function Curriculum({ course, lesson, onSelect }) {
   return (
     <nav className="curriculum" aria-label="Contenido del curso">
-      <h2 className="curriculum__title">Contenido del curso</h2>
+      <h2 className="curriculum__title">Módulos y lecciones</h2>
 
       <ul className="curriculum__modules">
         {course.modules.map((module, moduleIndex) => {
@@ -160,10 +145,13 @@ function Curriculum({ course, lesson, onSelect }) {
 
           return (
             <li className="curriculum__module" key={module.id}>
-              <div className="curriculum__module-head" aria-current={isOpen ? 'true' : undefined}>
-                <span className="curriculum__module-index">
-                  Módulo {moduleIndex + 1}
-                </span>
+              <button
+                className="curriculum__module-head"
+                type="button"
+                aria-current={isOpen ? 'true' : undefined}
+                aria-expanded={isOpen}
+              >
+                <span className="curriculum__module-index">MÓDULO {moduleIndex + 1}</span>
                 <span className="curriculum__module-title">{module.title}</span>
                 <ChevronDown
                   className={`curriculum__chevron${isOpen ? ' is-open' : ''}`}
@@ -171,20 +159,18 @@ function Curriculum({ course, lesson, onSelect }) {
                   strokeWidth={2.2}
                   aria-hidden="true"
                 />
-              </div>
+              </button>
 
-              {/* El módulo con la lección activa es el único que se despliega. */}
               {isOpen ? (
                 <ul className="curriculum__lessons">
                   {module.lessons.map((item) => {
                     const isActive = item.id === lesson.id
+                    const isCompleted = item.status === LESSON_STATUS.completed
 
                     return (
                       <li key={item.id}>
                         <button
-                          className={`curriculum__lesson${
-                            isActive ? ' curriculum__lesson--active' : ''
-                          }`}
+                          className={`curriculum__lesson${isActive ? ' curriculum__lesson--active' : ''}`}
                           type="button"
                           onClick={() => onSelect(item.id)}
                           aria-current={isActive ? 'true' : undefined}
@@ -193,7 +179,7 @@ function Curriculum({ course, lesson, onSelect }) {
                             className={`curriculum__status curriculum__status--${item.status}`}
                             aria-hidden="true"
                           >
-                            {item.status === LESSON_STATUS.completed ? (
+                            {isCompleted ? (
                               <Check size={13} strokeWidth={3} />
                             ) : item.status === LESSON_STATUS.inProgress ? (
                               <PlayCircle size={13} strokeWidth={2.4} />
@@ -204,16 +190,8 @@ function Curriculum({ course, lesson, onSelect }) {
 
                           <span className="curriculum__lesson-body">
                             <span className="curriculum__lesson-title">{item.title}</span>
-                            <span className="curriculum__lesson-meta">
-                              {item.duration}
-                              {item.type === 'lectura' ? ' · Lectura' : ''}
-                              {item.type === 'evaluacion' ? ' · Evaluación' : ''}
-                            </span>
+                            <span className="curriculum__lesson-meta">{item.duration}</span>
                           </span>
-
-                          {item.status === LESSON_STATUS.completed ? (
-                            <span className="visually-hidden">Completada</span>
-                          ) : null}
                         </button>
                       </li>
                     )
@@ -242,10 +220,8 @@ function VideoStage({ lesson }) {
             preload="metadata"
           />
         ) : (
-          /* Sin archivo real en la demo: se muestra el marco 16:9 con la
-             estructura lista para recibir el video del backend. */
           <div className="video__placeholder" role="img" aria-label="Video de la lección">
-            <PlayCircle size={52} strokeWidth={1.5} aria-hidden="true" />
+            <PlayCircle size={56} strokeWidth={1.4} aria-hidden="true" />
             <p className="video__placeholder-title">{lesson.title}</p>
             <p className="video__placeholder-note">
               Vista de demostración: el video se incrustará aquí.
@@ -444,7 +420,6 @@ function CourseLearningView() {
     )
   }
 
-  const lessons = getCourseLessons(course)
   const requested = lessonId ? findLesson(course, lessonId) : null
   const lesson = requested ?? getResumeLesson(course)
   const { previous, next } = getLessonNeighbours(course, lesson.id)
@@ -459,29 +434,35 @@ function CourseLearningView() {
       <LearningHeader
         course={course}
         onBack={() => navigate('/mi-aprendizaje')}
+        progress={progress}
       />
 
       <div className="course-layout">
         {/* ---------- Izquierda: contenido del curso ---------- */}
-        <div className="course-layout__aside course-layout__aside--left">
+        <aside className="course-layout__aside course-layout__aside--left">
           <Curriculum course={course} lesson={lesson} onSelect={goToLesson} />
-        </div>
+        </aside>
 
         {/* ---------- Centro: la lección ---------- */}
         <div className="course-layout__main">
-          <div className="lesson-head">
-            <p className="lesson-head__eyebrow">
-              <ListVideo size={14} strokeWidth={2.2} aria-hidden="true" />
-              {course.title}
-            </p>
+          <div className="lesson-breadcrumb">
+            <span className="lesson-breadcrumb__module">
+              MÓDULO {(() => {
+                const mod = course.modules.find((item) => item.lessons.some((one) => one.id === lesson.id))
+                const idx = mod ? course.modules.indexOf(mod) + 1 : 1
+                return idx
+              })()} · {(() => {
+                const mod = course.modules.find((item) => item.lessons.some((one) => one.id === lesson.id))
+                return mod ? mod.title : ''
+              })()}
+            </span>
+          </div>
 
-            <h2 className="lesson-head__title">{lesson.title}</h2>
+          <h2 className="lesson-main__title">{lesson.title}</h2>
 
-            <p className="lesson-head__meta">
-              {lesson.duration}
-              {lesson.status === LESSON_STATUS.completed ? ' · Completada' : ''}
-              {lesson.status === LESSON_STATUS.inProgress ? ' · En progreso' : ''}
-            </p>
+          <div className="lesson-meta-row">
+            <Clock size={14} strokeWidth={2.2} aria-hidden="true" />
+            <span>{lesson.duration}</span>
           </div>
 
           <VideoStage lesson={lesson} />
@@ -489,16 +470,12 @@ function CourseLearningView() {
           <LessonNavigation previous={previous} next={next} onSelect={goToLesson} />
 
           <LessonTabs key={lesson.id} lesson={lesson} course={course} />
-
-          <p className="course-layout__counter">
-            Lección {lessons.findIndex((item) => item.id === lesson.id) + 1} de {lessons.length}
-          </p>
         </div>
 
-        {/* ---------- Derecha: progreso y apoyo ---------- */}
+        {/* ---------- Derecha: materiales y progreso ---------- */}
         <aside className="course-layout__aside course-layout__aside--right">
-          <ProgressPanel course={course} lesson={lesson} nextLesson={next} progress={progress} />
           <MaterialsPanel course={course} lesson={lesson} />
+          <ProgressPanel course={course} progress={progress} />
           <HelpPanel />
         </aside>
       </div>

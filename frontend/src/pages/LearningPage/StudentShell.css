@@ -40,9 +40,9 @@
 
 .student__container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 32px 72px;
+  padding: 0 24px 72px;
 }
 
 /* =========================================================
@@ -168,7 +168,7 @@
 
 @media (max-width: 860px) {
   .student__container {
-    padding: 0 24px 60px;
+    padding: 0 20px 60px;
   }
 
   .page-head {
@@ -197,7 +197,7 @@
 
 @media (max-width: 560px) {
   .student__container {
-    padding: 0 18px 52px;
+    padding: 0 16px 52px;
   }
 
   .page-head {
